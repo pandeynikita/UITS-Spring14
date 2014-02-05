@@ -1,4 +1,4 @@
-package edu.indiana.oosm.workflowbuilder;
+package controller;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

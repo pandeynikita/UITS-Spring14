@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Testing Page</title>
+<title>Insert title here</title>
 </head>
 <body>
-<h2>Hello World!</h2>
+	<h1>Workflow builder</h1>
+ 
+	<h2>${msg}</h2>
+ 
 </body>
 </html>

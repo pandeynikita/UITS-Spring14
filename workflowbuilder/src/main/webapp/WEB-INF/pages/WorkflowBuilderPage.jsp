@@ -25,7 +25,8 @@
 	.gallery li a.ui-icon-zoomin { float: left; }
 	.gallery li img { width: 100%; cursor: move; }
 
-	#trash { float: left; width: 70%; min-height: 68em; padding: 1%; }
+	#trash { float: left; width: 70%; min-height: 68em; padding: 1%;position:absolute;
+    top:10px; right: 10px; }
     #trash h4 { line-height: 16px; margin: 0 0 0.4em; }
 	#trash h4 .ui-icon { float: left; }
 	#trash .gallery h5 { display: none; }
@@ -189,7 +190,7 @@
 	</div>
 </div>
 <div id="trash" class="ui-widget-content ui-state-default">
-	<h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Workflow Editor</span>Workflow Editor</h4>
+	<h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Workflow Editor</span></h4>
 </div>
 
 </div>

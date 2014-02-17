@@ -21,21 +21,36 @@
 <link rel="stylesheet" href="./resources/css/bootstrap-responsive.css">
 <script>
 	$(function() {
+		
+		var original = false;
+		//To Create single instances of cloned object
+		$('.draggable').mousedown(function(){
+		   original = true;
+		});
 
 		$(".draggable").draggable({
-			revert : "invalid",
-			containment: "#editor-window",
-			helper : "clone",
+			revert : "invalid",					//	To revert back to the same position when dropped on to toolbox
+			containment: "#editor-window",		// 	contain the components inside editor window
+			helper : "clone",					// 	Clone a new instance
 			cursor : "move",
 			scroll : false,
 			appendTo: ".drop-area"
 		});
 
 		$(".drop-area").droppable({
-			activeClass : "ui-state-highlight",
-			drop : function(event, ui) {
-			   	 $(this).append($(ui));
-			}
+			accept: ".draggable",			
+			activeClass : "ui-state-highlight",	//	Highlight the drop area
+			drop : function(event, ui) {		//	when it is dropped, if it is original instance, clone a new instance of it 
+												// 	and append it to drop-area and make original false to avoid multiple instance
+				if(original){
+				 var newDiv = $(ui.helper).clone();
+				 newDiv.draggable({
+					 containment: ".drop-area"
+				 });				
+				 $(this).append(newDiv);
+				  original = false;
+				  
+				}} 
 		})
 	});
 </script>
@@ -52,20 +67,6 @@
 				<div class="draggable circle ui-corner-tr ui-widget-content">
 					<font color="white">Action</font>
 				</div>
-
-
-				<!-- 
-				<div id="gall2" style="text-align: center;">
-					<h5 id="square">
-						<font color="white">Approval</font>
-					</h5>
-				</div>
-
-				<div id="gall3" style="text-align: center;">
-					<h5 id="oval">
-						<font color="white">Cancel</font>
-					</h5>
-				</div> -->
 			</div>
 			<div class="drop-area ui-widget-content ui-state-default"></div>
 		</div>

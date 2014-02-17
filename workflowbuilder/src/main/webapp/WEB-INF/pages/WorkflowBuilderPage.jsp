@@ -65,7 +65,19 @@
 		<div id="editor-window">
 			<div class="tool-box ui-widget ui-helper-clearfix">
 				<div class="draggable circle ui-corner-tr ui-widget-content">
-					<font color="white">Action</font>
+					<font color="white">Start</font>
+				</div>
+				<br>
+				<div class="draggable square ui-corner-tr ui-widget-content">
+					<font color="white">Request</font>
+				</div>
+				<br>
+				<div class="draggable rectangle ui-corner-tr ui-widget-content">
+					<font color="white">Approve</font>
+				</div>
+				<br>
+				<div class="draggable oval ui-corner-tr ui-widget-content">
+					<font color="white">Processed</font>
 				</div>
 			</div>
 			<div class="drop-area ui-widget-content ui-state-default"></div>

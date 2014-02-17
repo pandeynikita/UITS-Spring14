@@ -27,7 +27,7 @@
 .circle {
 	width: 80px;
 	height: 80px;
-	background: teal;
+	background:orange;
 	border-radius: 40px;
 	border:2px solid black;
 	border-style:solid;
@@ -36,33 +36,33 @@
 }
 
 
-#square {
+.square {
 	width: 80px;
 	height: 80px;
-	background: teal;
-	border:0.15em solid black;
-	border-style:inset;
+	background: blue;
+	border:2px solid black;
+	border-style:solid;
 	padding:4px 3px 1px 3px;
 	position:relative;
 }
 
-#rectangle {
+.rectangle {
 	width: 80px;
 	height: 40px;
-	background: teal;
-	border:0.15em solid black;
-	border-style:inset;
+	background:maroon;
+	border:2px solid black;
+	border-style:solid;
 	padding:4px 3px 1px 3px;
 	position:relative;
 }
 
-#oval {
+.oval {
 	width: 100px;
 	height: 50px;
-	background: teal;
+	background:green;
 	border-radius: 100px / 50px;
-	border:0.15em solid black;
-	border-style:inset;
+	border:2px solid black;
+	border-style:solid;
 	padding:4px 3px 1px 3px;
 	position:relative;
 }

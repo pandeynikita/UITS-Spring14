@@ -15,10 +15,10 @@
 <script src="./resources/static/jquery.ui.resizable.js"></script>
 <script src="./resources/static/jquery.ui.dialog.js"></script>
 <script src="./resources/static/custom.js"></script>
-<link rel="stylesheet" href="./resources/css/custom.css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.css">
 <link rel="stylesheet" href="./resources/css/bootstrap-responsive.css">
+<link rel="stylesheet" href="./resources/css/custom.css">
 <script>
 	$(function() {
 		
@@ -62,7 +62,7 @@
 				<h1>WorkFlow Editor</h1>
 			</div>
 		</div>
-		<div id="editor-window">
+		<div id="editor-window" class="container">
 			<div class="tool-box ui-widget ui-helper-clearfix">
 				<div class="draggable circle ui-corner-tr ui-widget-content">
 					<font color="white">Start</font>

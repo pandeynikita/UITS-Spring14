@@ -20,24 +20,24 @@
 	href="./resources/css/bootstrap.css">
 <link rel="stylesheet" href="./resources/css/bootstrap-responsive.css">
 <script>
-$(function(){
+	$(function() {
 
-$( "#draggable" ).draggable({
-		 revert: "invalid", 
-	 	 //appendTo: ".drop-area",
-		 helper: 'clone',
-		 cursor: "auto",
-		 scroll: false
-});
+		$(".draggable").draggable({
+			revert : "invalid",
+			containment: "#editor-window",
+			helper : "clone",
+			cursor : "move",
+			scroll : false,
+			appendTo: ".drop-area"
+		});
 
-$( ".drop-area" ).droppable({
-	activeClass: "ui-state-highlight",
-	drop: function( event, ui ){
-		deleteImage( ui.draggable );
-	}
-})
-});
-
+		$(".drop-area").droppable({
+			activeClass : "ui-state-highlight",
+			drop : function(event, ui) {
+			   	 $(this).append($(ui));
+			}
+		})
+	});
 </script>
 </head>
 <body>
@@ -47,13 +47,27 @@ $( ".drop-area" ).droppable({
 				<h1>WorkFlow Editor</h1>
 			</div>
 		</div>
-		<div class="tool-box ui-widget ui-helper-clearfix">
-			<div id="draggable" class="circle ui-corner-tr ui-widget-content">
-				<font color="white">Action</font>
+		<div id="editor-window">
+			<div class="tool-box ui-widget ui-helper-clearfix">
+				<div class="draggable circle ui-corner-tr ui-widget-content">
+					<font color="white">Action</font>
+				</div>
+
+
+				<!-- 
+				<div id="gall2" style="text-align: center;">
+					<h5 id="square">
+						<font color="white">Approval</font>
+					</h5>
+				</div>
+
+				<div id="gall3" style="text-align: center;">
+					<h5 id="oval">
+						<font color="white">Cancel</font>
+					</h5>
+				</div> -->
 			</div>
-		</div>
-		<div class="drop-area ui-widget-content ui-state-default">
-			<div id="droppable" class="container"></div>
+			<div class="drop-area ui-widget-content ui-state-default"></div>
 		</div>
 	</div>
 </body>

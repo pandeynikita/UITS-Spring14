@@ -21,9 +21,27 @@
 <link rel="stylesheet" href="./resources/css/custom.css">
 <script>
 	$(function() {
-		
-		var original = false;
 		//To Create single instances of cloned object
+		var original = false;
+		//To find which component
+		function getShape(divElement){
+			return $(divElement).hasClass("circle") ? "circle": $(divElement).hasClass("square") ? "square" :$(divElement).hasClass("rectangle") ? "rectangle" : "oval";
+		}
+		//Iterate accross the whole div to retrieve component's data
+		function exportFunction(divElement){
+			var jsonExportData = {component: []};
+			$.each($(divElement).children(),function(index, value){
+				shape 	= getShape(value);
+				subject = $($(value).children()).text();
+				//xTop 	= $(value).children().position().top;
+				//yLeft 	= $(value).children().position().left;
+				//jsonExportData.components.push({Shape:shape,Subject:subject,position:[{top:xTop,left:yLeft}]});
+				jsonExportData.component.push({shape:shape,subject:subject});
+			});
+			console.log(jsonExportData);
+			return jsonExportData;	
+		};
+		
 		$('.draggable').mousedown(function(){
 		   original = true;
 		});
@@ -51,7 +69,29 @@
 				  original = false;
 				  
 				}} 
-		})
+		});
+		$("#export").click(function(){
+			//Get the div and recurse through the div
+			var exportedData = exportFunction(".drop-area");
+			console.log(JSON.stringify(exportedData));
+			$.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: 'export.htm',
+				contentType: 'application/json',
+				data : JSON.stringify(exportedData),
+
+				success: function(data, textStatus ){
+					console.log(data);
+					//alert("success");
+				},
+				error: function(xhr, textStatus, errorThrown){
+					//alert('request failed'+errorThrown);
+					console.log(xhr,textStatus,errorThrown);
+				}
+			});
+
+		});
 	});
 </script>
 </head>
@@ -83,5 +123,6 @@
 			<div class="drop-area ui-widget-content ui-state-default"></div>
 		</div>
 	</div>
+	<input type="button" id="export" value="Export"/>
 </body>
 </html>

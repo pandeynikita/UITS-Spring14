@@ -1,5 +1,6 @@
 package edu.indiana.oosm.workflowbuilder.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class WorkflowBuilderController{
 		return model;
 	}
 	
-	@RequestMapping(value="/export",method = RequestMethod.POST)
+	@RequestMapping(value="/export",method = RequestMethod.POST,consumes="application/json")
 	@ResponseBody
 	public void createComponent(@RequestBody Component[] components){
 		System.out.println("testing");

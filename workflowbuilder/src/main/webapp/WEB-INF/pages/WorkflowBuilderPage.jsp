@@ -21,36 +21,40 @@
 <link rel="stylesheet" href="./resources/css/custom.css">
 <script>
 	$(function() {
-		
+
 		var original = false;
 		//To Create single instances of cloned object
-		$('.draggable').mousedown(function(){
-		   original = true;
+		$('.draggable').mousedown(function() {
+			original = true;
+
 		});
 
 		$(".draggable").draggable({
-			revert : "invalid",					//	To revert back to the same position when dropped on to toolbox
-			containment: "#editor-window",		// 	contain the components inside editor window
-			helper : "clone",					// 	Clone a new instance
+			revert : "invalid", //	To revert back to the same position when dropped on to toolbox
+			containment : "#editor-window", // 	contain the components inside editor window
+			helper : "clone", // 	Clone a new instance
 			cursor : "move",
 			scroll : false,
-			appendTo: ".drop-area"
+			appendTo : ".drop-area"
 		});
 
 		$(".drop-area").droppable({
-			accept: ".draggable",			
-			activeClass : "ui-state-highlight",	//	Highlight the drop area
-			drop : function(event, ui) {		//	when it is dropped, if it is original instance, clone a new instance of it 
-												// 	and append it to drop-area and make original false to avoid multiple instance
-				if(original){
-				 var newDiv = $(ui.helper).clone();
-				 newDiv.draggable({
-					 containment: ".drop-area"
-				 });				
-				 $(this).append(newDiv);
-				  original = false;
-				  
-				}} 
+			accept : ".draggable",
+			containment : ".drop-area",
+			tolerance : "fit",	//The moveable object has to be inside the dropable object area
+			activeClass : "ui-state-highlight", //	Highlight the drop area
+			drop : function(event, ui) { //	when it is dropped, if it is original instance, clone a new instance of it 
+				// 	and append it to drop-area and make original false to avoid multiple instance
+				if (original) {
+					var newDiv = $(ui.helper).clone();
+					newDiv.draggable({
+						containment : ".drop-area"
+					});
+					$(this).append(newDiv);
+					original = false;
+
+				}
+			}
 		})
 	});
 </script>

@@ -22,26 +22,23 @@
 <link rel="stylesheet" href="./resources/css/custom.css">
 <script>
 	$(function() {
-		var docType = $( "#docType" ),
-		email = $( "#email" ),
-		password = $( "#password" ),
-		allFields = $( [] ).add( docType ).add( postProcName ).add( supUsrGrpName ),
-		tips = $( ".validateTips" );
+		var docType = $( "#docType" ),	
+		postProcName = $( "#postProcName" ),
+		supUsrGrpName = $( "#supUsrGrpName" ),
+		allFields = $( [] ).add( docType ).add( postProcName ).add( supUsrGrpName );
+		
 		$( "#dialog-form" ).dialog({
 			autoOpen: false,
 			height: 300,
 			width: 350,
 			modal: true,
 			buttons: {
-				
 				Ok : function()
 				{
 				  $(this).dialog("close");
-				    
 				},
 					Cancel: function() {
 					$(this).dialog( "close" );
-					allFields.val("").removeClass( "ui-state-error" );
 				}
 			},
 			close: function() {
@@ -100,11 +97,11 @@
 	<form>
 	<fieldset>
 		<label for="docType">Document Type</label>
-		<input type="text" name="docType" id="docType"  value="" class="text ui-widget-content ui-corner-all">
+		<input type="text" name="docType" id="docType"  value="Testing long routing path" class="text ui-widget-content ui-corner-all">
 		<label for="postProcName">Post Processor Name</label>
-		<input type="text" name="postProcName" id="postProcName" value="" class="text ui-widget-content ui-corner-all">
+		<input type="text" name="postProcName" id="postProcName" value="org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor" class="text ui-widget-content ui-corner-all">
 		<label for="supUsrGrpName">Super User Group Name</label>
-		<input type="text" name="supUsrGrpName" id="supUsrGrpName" value="" class="text ui-widget-content ui-corner-all">
+		<input type="text" name="supUsrGrpName" id="supUsrGrpName" value="KUALI" class="text ui-widget-content ui-corner-all">
 	</fieldset>
 	</form>
 </div>

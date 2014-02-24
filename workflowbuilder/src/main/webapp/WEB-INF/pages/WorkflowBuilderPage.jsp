@@ -14,6 +14,7 @@
 <script src="./resources/static/jquery.ui.droppable.js"></script>
 <script src="./resources/static/jquery.ui.resizable.js"></script>
 <script src="./resources/static/jquery.ui.dialog.js"></script>
+<script src="./resources/static/jquery.ui.button.js"></script>
 <script src="./resources/static/custom.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.css">
@@ -21,6 +22,38 @@
 <link rel="stylesheet" href="./resources/css/custom.css">
 <script>
 	$(function() {
+		var docType = $( "#docType" ),
+		email = $( "#email" ),
+		password = $( "#password" ),
+		allFields = $( [] ).add( docType ).add( postProcName ).add( supUsrGrpName ),
+		tips = $( ".validateTips" );
+		$( "#dialog-form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+			buttons: {
+				
+				Ok : function()
+				{
+				  $(this).dialog("close");
+				    
+				},
+					Cancel: function() {
+					$(this).dialog( "close" );
+					allFields.val("").removeClass( "ui-state-error" );
+				}
+			},
+			close: function() {
+				
+			}
+		});
+
+		$( "#configure" )
+			.button()
+			.click(function() {
+				$( "#dialog-form" ).dialog( "open" );
+			});
 
 		var original = false;
 		//To Create single instances of cloned object
@@ -60,8 +93,26 @@
 </script>
 </head>
 <body>
+
+<div id="dialog-form" title="Configuration">
+	<p class="validateTips">All form fields are required.</p>
+
+	<form>
+	<fieldset>
+		<label for="docType">Document Type</label>
+		<input type="text" name="docType" id="docType"  value="" class="text ui-widget-content ui-corner-all">
+		<label for="postProcName">Post Processor Name</label>
+		<input type="text" name="postProcName" id="postProcName" value="" class="text ui-widget-content ui-corner-all">
+		<label for="supUsrGrpName">Super User Group Name</label>
+		<input type="text" name="supUsrGrpName" id="supUsrGrpName" value="" class="text ui-widget-content ui-corner-all">
+	</fieldset>
+	</form>
+</div>
+
+
 	<div class="wrapper">
 		<div class="outer">
+		<button style="float: left" id="configure">Configure</button>
 			<div class="container">
 				<h1>WorkFlow Editor</h1>
 			</div>

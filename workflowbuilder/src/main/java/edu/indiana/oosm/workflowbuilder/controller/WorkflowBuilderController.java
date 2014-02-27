@@ -6,14 +6,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
  
 @Controller
-@RequestMapping("/editor")
 public class WorkflowBuilderController{
  
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="/editor",method = RequestMethod.GET)
 	public ModelAndView helloWorld(){
  
 		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
  
 		return model;
 	}
+	@RequestMapping(value="/testing",method = RequestMethod.GET)
+	public ModelAndView helloTesting(){
+ 
+		ModelAndView model = new ModelAndView("TestingPage");
+ 
+		return model;
+	}
+
 }

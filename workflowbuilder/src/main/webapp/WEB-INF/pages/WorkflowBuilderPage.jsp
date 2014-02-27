@@ -89,16 +89,15 @@
 			$.ajax({
 				type : 'POST',
 				url : 'save',
-				dataType : 'json',
 				contentType : 'application/json',
 				data : JSON.stringify(exportedData),
 				
 
 				success : function(data, textStatus) {
-					console.log(data);
+					console.log("data");
 				},
 				error : function(xhr, textStatus, errorThrown) {
-					console.log(xhr, textStatus, errorThrown);
+					console.log(errorThrown);
 				}
 			});
 

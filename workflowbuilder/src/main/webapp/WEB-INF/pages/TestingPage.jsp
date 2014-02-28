@@ -14,12 +14,24 @@
 <body>
 <button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
 
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       ...
     </div>
   </div>
+</div>
+<div class="modal fade bs-example-modal-sm" id="dialog-example">
+	<div class="modal-header">
+		<h4>Dialog page</h4>
+	</div>
+	<div class="modal-body">
+		Testing
+	</div>
+	<div class="modal-footer">
+		<a href="#" data-dismiss="modal" class="btn">Close</a>
+		<a href="#" class="btn btn-primary" id="btn-save">Save</a>
+	</div>
 </div>
 </body>
 </html>

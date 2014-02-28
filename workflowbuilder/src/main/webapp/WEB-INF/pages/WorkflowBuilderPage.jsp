@@ -185,7 +185,7 @@
 		</div>
 		<div id="editor-window" class="container">
 			<div class="tool-box ui-widget ui-helper-clearfix">
-				<div class="draggable circle ui-corner-tr ui-widget-content">
+				<div class="draggable   ui-corner-tr ui-widget-content">
 					<font color="white">Action</font>
 				</div>
 				<br>

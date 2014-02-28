@@ -10,28 +10,74 @@
 <script type="text/javascript" src="./resources/static/bootstrap.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.css">
+<script type="text/javascript">
+
+var nodes= [
+            {
+                "name": "requests",
+                "image": "circle",
+                "header": "Action Configuration",
+                "properties": {
+                  "mandatoryRoute": {
+                    "label": "Mandatory Route",
+                    "type": "radio",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ]
+                  },
+                  "activationType": {
+                    "label": "Activation Type",
+                    "type": "select",
+                    "options": [
+                      "Parallel",
+                      "serial"
+                    ]
+                  }
+                }
+              }
+            ]
+$(function(){
+	$("#buttonid").click(function(e){
+		var obj = nodes[0].header;
+		alert(obj);
+		$(".modal-header").html(obj);		
+		$("#dialog-example").modal('show');
+	});
+});
+	
+	
+	        
+	
+            
+
+</script>
 </head>
 <body>
-<button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
+	<button class="btn btn-primary" data-toggle="modal"
+		data-target="#dialog-example" id="buttonid">Small modal</button>
 
-<div class="modal fade bs-example-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      ...
-    </div>
-  </div>
-</div>
-<div class="modal fade bs-example-modal-sm" id="dialog-example">
-	<div class="modal-header">
-		<h4>Dialog page</h4>
+	<div class="modal fade bs-example-modal" tabindex="-1" role="dialog"
+		aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">...</div>
+		</div>
 	</div>
-	<div class="modal-body">
-		Testing
+	<div class="modal fade" id="dialog-example">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Dialog page</h4>
+				</div>
+				<div class="modal-body">Testing</div>
+				<div class="modal-footer">
+					<a href="#" data-dismiss="modal" class="btn">Close</a> <a href="#"
+						class="btn btn-primary" id="btn-save">Save</a>
+				</div>
+			</div>
+		</div>
+
+
 	</div>
-	<div class="modal-footer">
-		<a href="#" data-dismiss="modal" class="btn">Close</a>
-		<a href="#" class="btn btn-primary" id="btn-save">Save</a>
-	</div>
-</div>
 </body>
 </html>

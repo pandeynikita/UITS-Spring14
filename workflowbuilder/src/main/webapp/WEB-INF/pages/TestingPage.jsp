@@ -10,35 +10,9 @@
 <script type="text/javascript" src="./resources/static/bootstrap.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.css">
-<script type="text/javascript">
+<script type="text/javascript" src="./resources/static/configuration.js"></script>
 
-var nodes= [
-            {
-                "name": "requests",
-                "image": "circle",
-                "header": "Action Configuration",
-                "properties": {
-                  "mandatoryRoute": {
-                    "label": "Mandatory Route",
-                    "type": "radio",
-                    "options": [
-                      "Yes",
-                      "No"
-                    ]
-                  },
-                  "activationType": {
-                    "label": "Activation Type",
-                    "type": "select",
-                    "options": [
-                      "Parallel",
-                      "serial"
-                    ]
-                  }
-                }
-              }
-            ];
-
- 
+<script type="text/javascript"> 
 $(function(){
 	//Get the index of the corresponding div element from configuration json
 	function getIndex(divElement,jsonNodes){
@@ -51,27 +25,99 @@ $(function(){
 		}
 	}
 	
+	//Function to generate label type html
+	function generateLabelHtml(value){
+		return "<label>"+value+"</label>";
+	}
+	
+	//Function to generate label type html
+	function generateOptionHtml(value){
+		return "<option>"+value+"</option>";
+	}
+	
+	//Function to generate input type html
+	function generateInputHtml(className){
+		return "<input type='text' class="+ className + " placeholder='Text input'>";
+	}
+	
+	
 	//Function to set header details dynamically
-	function setDynamicHeader(index,jsonNodes,divElement){
-		$(divElement).html(jsonNodes[index].header);
+	function setDynamicModalHeader(index,jsonNodes,divElement){
+		$(divElement).html(generateLabelHtml(jsonNodes[index].header));
 	}
 
-	//On click of the button
-	$("#buttonid").click(function(event){
-		event.preventDefault();	
-		var jsonNodes = nodes;
-		var index = getIndex($(this),jsonNodes);
-		if(index > -1){
-			setDynamicHeader(index,jsonNodes,".modal-header");	
-			$("#dialog-example").modal('show');
-		} else {
-			alert("Corresponding configuration for the image need to be updated in the configuration file");
-			//Hide dialog box here 
-			$("#dialog-example").modal('hide');
-		}
-	});
-});
+	//Generate radio input type html
+	function generateRadioHtml(className,value){
+		return "<div class='radio'><label><input type='radio' name=" + className + "value=" + value + ">"+value+"</label></div>";
+	}
+	/*Fucntion to generate modal body for property
+	Property should have values for label and type and based on that we are generating 
+	modal body
+	*/
+	
+	function generateModalBodyforProperty(object, divElement) {
+			var labelHtml = generateLabelHtml(object.label);
+			$(divElement).append(labelHtml);
 
+			var typeHtml = "";
+			//Creating unique class name for each input type
+			var className = object.label;
+			className = className.replace(/ /g, "");
+			//Switching to find the appropriate html type element
+
+			switch (object.type) {
+			case "text": {
+				typeHtml = generateInputHtml(className);
+				break;
+			}
+			case "radio": {
+				//Creating radio button for each option
+				$.each(object.options, function(index, value) {
+					typeHtml += generateRadioHtml(className, value);
+				});
+				break;
+			}
+			case "select": {
+				typeHtml = "<select class="+className+">";
+				$.each(object.options, function(index, value) {
+					typeHtml += generateOptionHtml(value);
+				});
+				typeHtml += "</select>";
+				break;
+			}
+			}
+			//Appending Html to the modal body
+			$(divElement).append(typeHtml);
+		}
+		//Function to set body details dynamically
+		function setDynamicModalBody(index, jsonNodes, divElement) {
+			//Access each property and generate the html
+			$.each(jsonNodes[index].properties, function(key, value) {
+				//Send the property object to below function and append the html to the modal body
+				generateModalBodyforProperty(value, divElement);
+			});
+		}
+
+		//On click of the button
+		$("#buttonid")
+				.click(
+						function(event) {
+							event.preventDefault();
+							var jsonNodes = nodes;
+							var index = getIndex($(this), jsonNodes);
+							if (index > -1) {
+								setDynamicModalHeader(index, jsonNodes,
+										".modal-header");
+								setDynamicModalBody(index, jsonNodes,
+										".modal-body");
+								$("#dialog-example").modal('show');
+							} else {
+								alert("Corresponding configuration for the image need to be updated in the configuration file");
+								//Hide dialog box here 
+								$("#dialog-example").modal('hide');
+							}
+						});
+	});
 </script>
 </head>
 <body>
@@ -90,7 +136,7 @@ $(function(){
 				<div class="modal-header">
 					<h4>Dialog page</h4>
 				</div>
-				<div class="modal-body">Testing</div>
+				<div class="modal-body"></div>
 				<div class="modal-footer">
 					<a href="#" data-dismiss="modal" class="btn">Close</a> <a href="#"
 						class="btn btn-primary" id="btn-save">Save</a>

@@ -36,25 +36,46 @@ var nodes= [
                   }
                 }
               }
-            ]
+            ];
+
+ 
 $(function(){
-	$("#buttonid").click(function(e){
-		var obj = nodes[0].header;
-		alert(obj);
-		$(".modal-header").html(obj);		
-		$("#dialog-example").modal('show');
+	//Get the index of the corresponding div element from configuration json
+	function getIndex(divElement,jsonNodes){
+		for(var index=0;index<jsonNodes.length;i++){
+			if($(divElement).hasClass(jsonNodes[index].image)){
+				return index;
+			} else {
+				return -1;
+			}
+		}
+	}
+	
+	//Function to set header details dynamically
+	function setDynamicHeader(index,jsonNodes,divElement){
+		$(divElement).html(jsonNodes[index].header);
+	}
+
+	//On click of the button
+	$("#buttonid").click(function(event){
+		event.preventDefault();	
+		var jsonNodes = nodes;
+		var index = getIndex($(this),jsonNodes);
+		if(index > -1){
+			setDynamicHeader(index,jsonNodes,".modal-header");	
+			$("#dialog-example").modal('show');
+		} else {
+			alert("Corresponding configuration for the image need to be updated in the configuration file");
+			//Hide dialog box here 
+			$("#dialog-example").modal('hide');
+		}
 	});
 });
-	
-	
-	        
-	
-            
 
 </script>
 </head>
 <body>
-	<button class="btn btn-primary" data-toggle="modal"
+	<button class="btn btn-primary circle" data-toggle="modal"
 		data-target="#dialog-example" id="buttonid">Small modal</button>
 
 	<div class="modal fade bs-example-modal" tabindex="-1" role="dialog"

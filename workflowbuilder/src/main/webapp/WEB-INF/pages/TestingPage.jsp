@@ -14,6 +14,10 @@
 
 <script type="text/javascript"> 
 $(function(){
+	
+	//Variable to store the initial HTML of the modal
+	var initialHTML = $("#dialog-example").html();
+	
 	//Get the index of the corresponding div element from configuration json
 	function getIndex(divElement,jsonNodes){
 		for(var index=0;index<jsonNodes.length;i++){
@@ -98,24 +102,39 @@ $(function(){
 			});
 		}
 
+		
+		/* This function is triggered when the modal is hidden - The modal can be hidden
+		either by clicking on "close" or clicking outside the modal  */
+		$('#dialog-example').on('hidden.bs.modal', function () {
+			
+			//restoring the Initial modal HTML when it is hidden
+			 $("#dialog-example").html(initialHTML);
+			}); 
+		
+
 		//On click of the button
 		$("#buttonid")
 				.click(
-						function(event) {
+						function(event)
+						{
 							event.preventDefault();
 							var jsonNodes = nodes;
 							var index = getIndex($(this), jsonNodes);
-							if (index > -1) {
+							if (index > -1)
+							{
 								setDynamicModalHeader(index, jsonNodes,
 										".modal-header");
 								setDynamicModalBody(index, jsonNodes,
 										".modal-body");
-								$("#dialog-example").modal('show');
-							} else {
-								alert("Corresponding configuration for the image need to be updated in the configuration file");
-								//Hide dialog box here 
-								$("#dialog-example").modal('hide');
-							}
+							$("#dialog-example").modal('show');
+						
+							} 
+							else
+								{
+									alert("Corresponding configuration for the image need to be updated in the configuration file");
+									//Hide dialog box here 
+									$("#dialog-example").modal('hide');
+								}
 						});
 	});
 </script>
@@ -138,8 +157,8 @@ $(function(){
 				</div>
 				<div class="modal-body"></div>
 				<div class="modal-footer">
-					<a href="#" data-dismiss="modal" class="btn">Close</a> <a href="#"
-						class="btn btn-primary" id="btn-save">Save</a>
+					<a href="#" data-dismiss="modal" class="btn" id="btn-close">Close</a>
+					 <a href="#" class="btn btn-primary" id="btn-save">Save</a>
 				</div>
 			</div>
 		</div>

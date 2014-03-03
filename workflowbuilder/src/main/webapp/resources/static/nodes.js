@@ -37,9 +37,7 @@ var nodes = [ {
 			"defaultVal" : "value default"
 		}
 	}
-}
-
-];
+}];
 
 var configNodes = [ {
 	"header" : "Workflow Configuration",
@@ -77,7 +75,7 @@ var configNodes = [ {
 		"active" : {
 			"label" : "Active",
 			"type" : "radio",
-			"options" : [ "Yes", "No" ],
+			"options" : [ "Yes", "No" ]
 		},
 		"routingVersion" : {
 				"label" : "Routing Version",

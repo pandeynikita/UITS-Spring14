@@ -76,3 +76,8 @@
 	padding:4px 3px 1px 3px;
 	position:relative;
 }
+
+.modal .modal-body {
+    max-height: 420px;
+    overflow-y: auto;
+}

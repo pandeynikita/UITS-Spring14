@@ -31,14 +31,12 @@
 		
 		//Get the index of the corresponding div element from configuration json
 		function getIndex(divElement,jsonNodes){
-			for(var index=0;index<jsonNodes.length;i++){
-				alert($(divElement).hasClass(jsonNodes[index].image));
+			for(var index=0 ; index<jsonNodes.length ; index++){
 				if($(divElement).hasClass(jsonNodes[index].image)){
 					return index;
-				} else {
-					return -1;
 				}
 			}
+			return -1;
 		}
 		
 		//Function to generate label type html

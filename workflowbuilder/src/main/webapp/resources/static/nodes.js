@@ -78,10 +78,10 @@ var configNodes = [ {
 			"options" : [ "Yes", "No" ]
 		},
 		"routingVersion" : {
-				"label" : "Routing Version",
-				"type" : "text",
-				"defaultVal" : "2"
-		}
+			"label" : "Routing Version",
+			"type" : "text",
+			"defaultVal" : "2"
 		}
 	}
+}
 ];

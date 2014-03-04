@@ -69,67 +69,66 @@
 			return "<div class='radio'><label><input type='radio' name=" + className + "value=" + value + ">"+value+"</label></div>";
 			
 		}
+		
+		
 		/*Fucntion to generate modal body for property
 		Property should have values for label and type and based on that we are generating 
 		modal body
 		*/
-		
 		function generateModalBodyforProperty(object, divElement) {
-				var labelHtml = generateLabelHtml(object.label);
-				$(divElement).append(labelHtml);
+			var labelHtml = generateLabelHtml(object.label);
+			$(divElement).append(labelHtml);
 
-				var typeHtml = "";
-				//Creating unique class name for each input type
-				var className = object.label;
-				className = className.replace(/ /g, "");
-				//Switching to find the appropriate html type element
+			var typeHtml = "";
+			//Creating unique class name for each input type
+			var className = object.label;
+			className = className.replace(/ /g, "");
+			//Switching to find the appropriate html type element
 
-				switch (object.type) {
-				case "text": {
-					typeHtml = generateInputHtml(className,object.defaultVal);
-					break;
-				}
-				case "radio": {
-					//Creating radio button for each option
-					$.each(object.options, function(index, value) {
-						typeHtml += generateRadioHtml(className, value);
-					});
-					break;
-				}
-				case "select": {
-					typeHtml = "<select class="+className+">";
-					$.each(object.options, function(index, value) {
-						typeHtml += generateOptionHtml(value);
-					});
-					typeHtml += "</select>";
-					break;
-				}
-				}
-				//Appending Html to the modal body
-				$(divElement).append(typeHtml);
+			switch (object.type) {
+			case "text": {
+				typeHtml = generateInputHtml(className, object.defaultVal);
+				break;
 			}
-			
-			//Function to set body details dynamically
-			function setDynamicModalBody(index, jsonNodes, divElement) {
-				//Access each property and generate the html
-				$.each(jsonNodes[index].properties, function(key, value) {
-					//Send the property object to below function and append the html to the modal body
-					generateModalBodyforProperty(value, divElement);
+			case "radio": {
+				//Creating radio button for each option
+				$.each(object.options, function(index, value) {
+					typeHtml += generateRadioHtml(className, value);
 				});
+				break;
 			}
+			case "select": {
+				typeHtml = "<select class="+className+">";
+				$.each(object.options, function(index, value) {
+					typeHtml += generateOptionHtml(value);
+				});
+				typeHtml += "</select>";
+				break;
+			}
+			}
+			//Appending Html to the modal body
+			$(divElement).append(typeHtml);
+		}
 
-			
-		
+		//Function to set body details dynamically
+		function setDynamicModalBody(index, jsonNodes, divElement) {
+			//Access each property and generate the html
+			$.each(jsonNodes[index].properties, function(key, value) {
+				//Send the property object to below function and append the html to the modal body
+				generateModalBodyforProperty(value, divElement);
+			});
+		}
+
 		//To Create single instances of cloned object
 		$('.draggable').mousedown(function() {
 			original = true;
+		});
 
-		});
-		
 		$("#configure").click(function(event) {
-		generateModalHeaderBody(configNodes, 0);
+			var index = 0;
+			generateModal(configNodes, index);
 		});
-		
+
 		$(".draggable").draggable({
 			revert : "invalid", //	To revert back to the same position when dropped on to toolbox
 			containment : "#editor-window", // 	contain the components inside editor window
@@ -142,7 +141,7 @@
 		$(".drop-area").droppable({
 			accept : ".draggable",
 			containment : ".drop-area",
-			tolerance : "fit",	//The moveable object has to be inside the dropable object area
+			tolerance : "fit", //The moveable object has to be inside the dropable object area
 			activeClass : "ui-state-highlight", //	Highlight the drop area
 			drop : function(event, ui) { //	when it is dropped, if it is original instance, clone a new instance of it 
 				// 	and append it to drop-area and make original false to avoid multiple instance
@@ -154,47 +153,41 @@
 					$(this).append(newDiv);
 					original = false;
 					$(newDiv).dblclick(function() {
-						generateConfigModal(newDiv);
-						});
+						generateDynamicModal(newDiv);
+					});
 
 				}
 			}
 		});
-		
+
 		/* This function is triggered when the modal is hidden - The modal can be hidden
 		either by clicking on "close" or clicking outside the modal  */
-		$('#dialog-config').on('hidden.bs.modal', function () {
-			
+		$('#dialog-config').on('hidden.bs.modal', function() {
 			//restoring the Initial modal HTML when it is hidden
-			 $("#dialog-config").html(initialConfigHTML);
-			}); 
-		
-		function generateModalHeaderBody(jsonNodes,indexConfig)
-		{
-			setDynamicModalHeader(indexConfig, jsonNodes,".modal-header");
-			setDynamicModalBody(indexConfig, jsonNodes,".modal-body");
+			$("#dialog-config").html(initialConfigHTML);
+		});
+
+		//Generate the dialog menu dynamically. Here, we are setting up
+		//modal header and modal body
+		function generateModal(jsonNodes, configIndex) {
+			setDynamicModalHeader(configIndex, jsonNodes, ".modal-header");
+			setDynamicModalBody(configIndex, jsonNodes, ".modal-body");
 			$("#dialog-config").modal('show');
 		}
-		
-		function generateConfigModal(newDiv)
-		{
+
+		function generateDynamicModal(newDiv) {
 			//event.preventDefault();
 			var jsonNodes = nodes;
 			var index = getIndex($(newDiv), jsonNodes);
-			
-			if (index > -1)
-			{
-				generateModalHeaderBody(jsonNodes, index);
-		
-			} 
-			else
-				{
-					alert("Corresponding configuration for the image need to be updated in the configuration file");
-					//Hide dialog box here 
-					$("#dialog-example").modal('hide');
-				}
+
+			if (index > -1) {
+				generateModal(jsonNodes, index);
+			} else {
+				alert("Corresponding configuration for the image need to be updated in the configuration file");
+				//Hide dialog box here 
+				$("#dialog-example").modal('hide');
+			}
 		}
-	
 	});
 </script>
 </head>
@@ -243,6 +236,7 @@
 				</div>
 			</div>
 		</div>
-		</div>
+	</div>
+</div>
 </body>
 </html>

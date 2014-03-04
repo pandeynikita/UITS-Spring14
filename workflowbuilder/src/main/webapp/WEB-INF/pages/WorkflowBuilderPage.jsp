@@ -44,7 +44,7 @@
 			return "<label>"+value+"</label>";
 		}
 		
-		//Function to generate label type html
+		//Function to generate select type html
 		function generateOptionHtml(value){
 			return "<option>"+value+"</option>";
 		}
@@ -52,14 +52,16 @@
 		//Function to generate input type html
 		function generateInputHtml(className, defaultValue){
 			return "<input type='text' class=' form-control "  + className  + "' value=" +defaultValue+ " placeholder='Text input'><br>";
-			;
 		}
 		
+		function generateCloseButton(){
+			return "<button class='close' data-dismiss='modal'>×</button>";
+		}
 		
 		//Function to set header details dynamically
 		function setDynamicModalHeader(index,jsonNodes,divElement){
 			$(divElement).html(generateLabelHtml(jsonNodes[index].header));
-			$(divElement).append("<button class='close' data-dismiss='modal'>×</button>");
+			$(divElement).append(generateCloseButton());
 		}
 
 		//Generate radio input type html
@@ -106,6 +108,7 @@
 				//Appending Html to the modal body
 				$(divElement).append(typeHtml);
 			}
+			
 			//Function to set body details dynamically
 			function setDynamicModalBody(index, jsonNodes, divElement) {
 				//Access each property and generate the html

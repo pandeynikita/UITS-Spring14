@@ -231,8 +231,8 @@
 				</div>
 				<div class="modal-body"></div>
 				<div class="modal-footer">
+				<a href="#" class="btn btn-primary" id="btn-save">Save</a>
 					<a href="#" data-dismiss="modal" class="btn" id="btn-close">Close</a>
-					 <a href="#" class="btn btn-primary" id="btn-save">Save</a>
 				</div>
 			</div>
 		</div>

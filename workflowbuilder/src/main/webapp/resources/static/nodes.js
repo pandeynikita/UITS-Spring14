@@ -39,49 +39,32 @@ var nodes = [ {
 	}
 }];
 
-var configNodes = [ {
-	"header" : "Workflow Configuration",
-	"properties" : {
-		"name" : {
-			"label" : "Name",
-			"type" : "text",
-			"defaultVal" : "RoleBasedRoutingTest.Type"
-		},
-		"description" : {
-			"label" : "Description",
-			"type" : "text",
-			"defaultVal" : "Role-based routing test document"
-		},
-		"label" : {
-			"label" : "Label",
-			"type" : "text",
-			"defaultVal" : "Role-based Routing Test Document"
-		},
-		"postProcessorName" : {
-			"label" : "Post Processor Name",
-			"type" : "text",
-			"defaultVal" : "org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor"
-		},
-		"superUserGroupName" : {
-			"label" : "Super User Group Name",
-			"type" : "text",
-			"defaultVal" : "WorkflowAdmin"
-		},
-		"docHandler" : {
-			"label" : "Document Handler",
-			"type" : "text",
-			"defaultVal" : "${workflow.url}/EDocLite"
-		},
-		"active" : {
-			"label" : "Active",
-			"type" : "radio",
-			"options" : [ "Yes", "No" ]
-		},
-		"routingVersion" : {
-			"label" : "Routing Version",
-			"type" : "text",
-			"defaultVal" : "2"
-		}
-	}
-}
-];
+
+var app = angular.module('myApp', []);
+
+/* $http ajax calls really belongs in a service, 
+but I'll be using them inside the controller for this demo */ 
+
+app.controller('myCtrl', function($scope, $http) {
+  /*$http.get('path/to/json').then(function(data) {
+    $scope.config = data;
+  });*/
+  //inputting json directly for this example
+  $scope.config = [ 
+			{"label" : "Name",	"type" : "text", "defaultVal" : "RoleBasedRoutingTest.Type"},
+			{"label" : "Description","type" : "text","defaultVal" : "Role-based routing test document"},
+			{"label" : "Label","type" : "text","defaultVal" : "Role-based Routing Test Document"},
+			{"label" : "Post Processor Name","type" : "text","defaultVal" : "org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor"},
+			{"label" : "Super User Group Name","type" : "text","defaultVal" : "WorkflowAdmin"},
+			{"label" : "Document Handler","type" : "text","defaultVal" : "${workflow.url}/EDocLite"},
+			{"label" : "Active","type" : "radio","options" : [ "Yes", "No" ]},
+			{"label" : "Routing Version","type" : "text","defaultVal" : "2"}
+	];
+
+  $scope.save = function() {
+	alert(JSON.stringify($scope.config));
+	  $scope.saveConfig = JSON.stringify($scope.config);
+	  var config2 = JSON.stringify($scope.config);
+	 
+  };
+});

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html ng-app="myApp" ng-controller="myCtrl" lang="en">
 <head>
 <meta charset="utf-8" name="viewport"
 	content="width=device-width, initial-scale=1.0">
@@ -14,6 +14,8 @@
 <script src="./resources/static/jquery.ui.droppable.js"></script>
 <script src="./resources/static/jquery.ui.resizable.js"></script>
 <script src="./resources/static/jquery.ui.dialog.js"></script>
+<script type="text/javascript" src="./resources/static/angular.min.js"></script>
+<script type="text/javascript" src="./resources/static/angular-resource.min.js"></script>
 <script src="./resources/static/custom.js"></script>
 <script src="./resources/static/nodes.js"></script>
 <script type="text/javascript" src="./resources/static/bootstrap.js"></script>
@@ -23,101 +25,8 @@
 <link rel="stylesheet" href="./resources/css/custom.css">
 <script>
 	$(function() {
-
 		var original = false;
 		
-		//Variable to store the initial HTML of the Config modal
-		var initialConfigHTML = $("#dialog-config").html();
-		
-		//Get the index of the corresponding div element from configuration json
-		function getIndex(divElement,jsonNodes){
-			for(var index=0 ; index<jsonNodes.length ; index++){
-				if($(divElement).hasClass(jsonNodes[index].image)){
-					return index;
-				}
-			}
-			return -1;
-		}
-		
-		//Function to generate label type html
-		function generateLabelHtml(value){
-			return "<label>"+value+"</label>";
-		}
-		
-		//Function to generate select type html
-		function generateOptionHtml(value){
-			return "<option>"+value+"</option>";
-		}
-		
-		//Function to generate input type html
-		function generateInputHtml(className, defaultValue){
-			return "<input type='text' class=' form-control "  + className  + "' value=" +defaultValue+ " placeholder='Text input'><br>";
-		}
-		
-		function generateCloseButton(){
-			return "<button class='close' data-dismiss='modal'>×</button>";
-		}
-		
-		//Function to set header details dynamically
-		function setDynamicModalHeader(index,jsonNodes,divElement){
-			$(divElement).html(generateLabelHtml(jsonNodes[index].header));
-			$(divElement).append(generateCloseButton());
-		}
-
-		//Generate radio input type html
-		function generateRadioHtml(className,value){
-			return "<div class='radio'><label><input type='radio' name=" + className + "value=" + value + ">"+value+"</label></div>";
-			
-		}
-		
-		
-		/*Fucntion to generate modal body for property
-		Property should have values for label and type and based on that we are generating 
-		modal body
-		*/
-		function generateModalBodyforProperty(object, divElement) {
-			var labelHtml = generateLabelHtml(object.label);
-			$(divElement).append(labelHtml);
-
-			var typeHtml = "";
-			//Creating unique class name for each input type
-			var className = object.label;
-			className = className.replace(/ /g, "");
-			//Switching to find the appropriate html type element
-
-			switch (object.type) {
-			case "text": {
-				typeHtml = generateInputHtml(className, object.defaultVal);
-				break;
-			}
-			case "radio": {
-				//Creating radio button for each option
-				$.each(object.options, function(index, value) {
-					typeHtml += generateRadioHtml(className, value);
-				});
-				break;
-			}
-			case "select": {
-				typeHtml = "<select class="+className+">";
-				$.each(object.options, function(index, value) {
-					typeHtml += generateOptionHtml(value);
-				});
-				typeHtml += "</select>";
-				break;
-			}
-			}
-			//Appending Html to the modal body
-			$(divElement).append(typeHtml);
-		}
-
-		//Function to set body details dynamically
-		function setDynamicModalBody(index, jsonNodes, divElement) {
-			//Access each property and generate the html
-			$.each(jsonNodes[index].properties, function(key, value) {
-				//Send the property object to below function and append the html to the modal body
-				generateModalBodyforProperty(value, divElement);
-			});
-		}
 
 		//To Create single instances of cloned object
 		$('.draggable').mousedown(function() {
@@ -125,8 +34,26 @@
 		});
 
 		$("#configure").click(function(event) {
-			var index = 0;
-			generateModal(configNodes, index);
+			 if(saved ==0)
+			  {
+		  $scope.config = [ 
+					{"label" : "Name",	"type" : "text", "defaultVal" : "RoleBasedRoutingTest.Type"},
+					{"label" : "Description","type" : "text","defaultVal" : "Role-based routing test document"},
+					{"label" : "Label","type" : "text","defaultVal" : "Role-based Routing Test Document"},
+					{"label" : "Post Processor Name","type" : "text","defaultVal" : "org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor"},
+					{"label" : "Super User Group Name","type" : "text","defaultVal" : "WorkflowAdmin"},
+					{"label" : "Document Handler","type" : "text","defaultVal" : "${workflow.url}/EDocLite"},
+					{"label" : "Active","type" : "radio","options" : [ "Yes", "No" ]},
+					{"label" : "Routing Version","type" : "text","defaultVal" : "2"}
+			];
+		}
+			 else 
+				 
+				 {
+				 
+				 $scope.config =$scope.config;
+				 }
+				 
 		});
 
 		$(".draggable").draggable({
@@ -160,34 +87,7 @@
 			}
 		});
 
-		/* This function is triggered when the modal is hidden - The modal can be hidden
-		either by clicking on "close" or clicking outside the modal  */
-		$('#dialog-config').on('hidden.bs.modal', function() {
-			//restoring the Initial modal HTML when it is hidden
-			$("#dialog-config").html(initialConfigHTML);
-		});
 
-		//Generate the dialog menu dynamically. Here, we are setting up
-		//modal header and modal body
-		function generateModal(jsonNodes, configIndex) {
-			setDynamicModalHeader(configIndex, jsonNodes, ".modal-header");
-			setDynamicModalBody(configIndex, jsonNodes, ".modal-body");
-			$("#dialog-config").modal('show');
-		}
-
-		function generateDynamicModal(newDiv) {
-			//event.preventDefault();
-			var jsonNodes = nodes;
-			var index = getIndex($(newDiv), jsonNodes);
-
-			if (index > -1) {
-				generateModal(jsonNodes, index);
-			} else {
-				alert("Corresponding configuration for the image need to be updated in the configuration file");
-				//Hide dialog box here 
-				$("#dialog-example").modal('hide');
-			}
-		}
 	});
 </script>
 </head>
@@ -224,15 +124,24 @@
 	
 	<div class="modal fade" id="dialog-config">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" >
 				<div class="modal-header">
 				
 					<h4>Dialog page</h4>
 				</div>
-				<div class="modal-body"></div>
-				<div class="modal-footer">
+					<div class="modal-body">
+
+						<form>
+							<div ng-repeat="node in config">
+								<label>{{node.label}}</label> 
+								<input type="{{node.type}}" class="form-control" ng-model="node.defaultVal" min="0" max="4">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+					<a href="#" data-dismiss="modal" class="btn btn-primary" ng-click="save()" id="btn-save">Save</a>
 					<a href="#" data-dismiss="modal" class="btn" id="btn-close">Close</a>
-					 <a href="#" class="btn btn-primary" id="btn-save">Save</a>
+					 
 				</div>
 			</div>
 		</div>

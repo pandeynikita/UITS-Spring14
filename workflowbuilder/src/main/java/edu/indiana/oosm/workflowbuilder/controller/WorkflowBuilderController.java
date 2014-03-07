@@ -22,5 +22,12 @@ public class WorkflowBuilderController{
  
 		return model;
 	}
+	@RequestMapping(value="/angular",method = RequestMethod.GET)
+	public ModelAndView angularTesting(){
+ 
+		ModelAndView model = new ModelAndView("angularTesting");
+ 
+		return model;
+	}
 
 }

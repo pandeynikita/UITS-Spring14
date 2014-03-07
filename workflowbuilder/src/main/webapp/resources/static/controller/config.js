@@ -1,5 +1,6 @@
 angular.module('angularJs',['ui.bootstrap']);
 var ModalDemoCtrl = function($scope,$modal){
+	$scope.dataStorage = null;
 	$scope.items = ['item1', 'item2', 'item3'];
 	$scope.nodes = {
 			"circle":{
@@ -15,22 +16,22 @@ var ModalDemoCtrl = function($scope,$modal){
 						            "No"
 						            ]
 					},
-                  "activationType": {
-                    "label": "Activation Type",
-                    "type": "select",
-                    "options": [
-                      "Parallel",
-                      "serial"
-                    ]
-                  },
-                  "From": {
-                      "label": "From",
-                      "type": "email"
-                  },
-                  "To": {
-                      "label": "To",
-                      "type": "email"
-                  }
+					"activationType": {
+						"label": "Activation Type",
+						"type": "select",
+						"options": [
+						            "Parallel",
+						            "serial"
+						            ]
+					},
+					"From": {
+						"label": "From",
+						"type": "email"
+					},
+					"To": {
+						"label": "To",
+						"type": "email"
+					}
 				}
 			}
 	};
@@ -39,14 +40,12 @@ var ModalDemoCtrl = function($scope,$modal){
 		$scope.test = $scope.nodes[image];
 	};
 
-	$scope.component = null;
-	$scope.property = null;
 	$scope.open = function (image) {
 		var modalInstance = $modal.open({
 			templateUrl: 'myModalContent.html',
 			controller: ModalInstanceCtrl,
 			resolve: {
-				parameter: function(){
+				localParameter: function(){
 					return $scope.nodes[image];
 				}
 			}
@@ -61,15 +60,18 @@ var ModalDemoCtrl = function($scope,$modal){
 	};
 
 };
-var ModalInstanceCtrl = function ($scope, $modalInstance, parameter) {
+var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	
-	$scope.test = "Yes";
-	$scope.select = "serial";
-	$scope.component = parameter;
+	$scope.dataStorage = { radioValue: 'No' };
+	$scope.dataStorage.selectValue = 'serial';
+	$scope.component = localParameter;
 	$scope.properties = $scope.component.properties;
+	console.log($scope.dataStorage);
 	console.log($scope.properties);
+	
 	$scope.ok = function () {
-		$modalInstance.close(parameter);
+		console.log($scope.dataStorage);
+		$modalInstance.close(localParameter);
 	};
 
 	$scope.cancel = function () {

@@ -11,7 +11,7 @@
 <script type="text/javascript"
 	src="./resources/static/controller/config.js"></script>
 <script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	src="./resources/static/jquery.min.js"></script>
 <script type="text/javascript" src="./resources/static/bootstrap.js"></script>
 <script type="text/javascript"
 	src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
@@ -39,25 +39,37 @@
 			<div ng-repeat="property in properties">
 				<label>{{property.label}}</label> 
 				<div ng-if="isRadioType(property)">
-					<label ng-repeat="option in property.options"><input type="radio" name="sth" ng-model="test" value="{{option}}"> {{option}} </label>
+					<label ng-repeat="option in property.options" for="{{option}}">
+						{{option}}
+						<input 	type="radio"	 
+								name="route" 
+								ng-model="dataStorage.radioValue" 
+								ng-value="option"> 
+					</label>
+					<div>Your choice :{{dataStorage.radioValue}}</div>
 				</div>
 				<div ng-if="isTextType(property)">
-					<label><input type="text" ng-model="test" placeholder="Text"> {{option}} </label>
+					<label><input type="text" ng-model="textValue" placeholder="Text"> {{option}} </label>
 				</div>
 				<div ng-if="isSelectType(property)">
-					<select ng-model="select" ng-options="option as option for option in property.options"></select>
+					<select ng-model="dataStorage.selectValue" 
+							ng-options="option as option for option in property.options">
+					</select>
+					<div>Your choice :{{dataStorage.selectValue}}</div>
 				</div>
 				<div ng-if="isEmailType(property)">
-					<label><input class="form-control" type="email" ng-model="test" placeholder="Email"> {{option}} </label>
+					<label><input class="form-control" type="email" ng-model="emailValue" placeholder="Email"> {{option}} </label>
 				</div>
+				
 			</div>
+			
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     	</script>
-		<button class="btn btn-default" ng-click="open('circle')">Open me!</button>
+		<button class="btn btn-default" ng-dblclick="open('circle')">Open me!</button>
 	</div>
 </body>
 </html>

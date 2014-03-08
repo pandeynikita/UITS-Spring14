@@ -10,8 +10,7 @@
 	src="./resources/static/angular-route.min.js"></script>
 <script type="text/javascript"
 	src="./resources/static/controller/config.js"></script>
-<script type="text/javascript"
-	src="./resources/static/jquery.min.js"></script>
+<script type="text/javascript" src="./resources/static/jquery.min.js"></script>
 <script type="text/javascript" src="./resources/static/bootstrap.js"></script>
 <script type="text/javascript"
 	src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
@@ -19,18 +18,10 @@
 	href="./resources/css/bootstrap.css">
 </head>
 <body>
+	<!-- 	Adding whole modal content inside a container -->
 	<div class="container" ng-controller="ModalDemoCtrl">
-		<h1>Configuration</h1>
-		<ul ng-repeat="node in nodes">
-			<li>{{node.image}} <a href=""
-				ng-click="setDynamicTest('circle')"> Edit</a>
-			</li>
-			<li>{{test.image}}</li>
-		</ul>
-		<button class="btn btn-primary id="
-			buttonid" ng-dblclick="testFunction('circle',false)">Test</button>
+		<!-- 		Template of angular modal -->
 		<script type="text/ng-template" id="myModalContent.html">
-        
 		<div class="modal-header">
 			<button class="close" ng-click="cancel()">x</button>
             <label>{{component.header}}</label> 
@@ -38,38 +29,50 @@
         <div class="modal-body">
 			<div ng-repeat="property in properties">
 				<label>{{property.label}}</label> 
+
 				<div ng-if="isRadioType(property)">
 					<label ng-repeat="option in property.options" for="{{option}}">
-						{{option}}
 						<input 	type="radio"	 
 								name="route" 
-								ng-model="dataStorage.radioValue" 
+								ng-model="dataStorage[property.label]" 
 								ng-value="option"> 
+						{{option}}
 					</label>
-					<div>Your choice :{{dataStorage.radioValue}}</div>
 				</div>
-				<div ng-if="isTextType(property)">
-					<label><input type="text" ng-model="textValue" placeholder="Text"> {{option}} </label>
-				</div>
+
 				<div ng-if="isSelectType(property)">
-					<select ng-model="dataStorage.selectValue" 
+					<select ng-model="dataStorage[property.label]" 
 							ng-options="option as option for option in property.options">
 					</select>
-					<div>Your choice :{{dataStorage.selectValue}}</div>
 				</div>
-				<div ng-if="isEmailType(property)">
-					<label><input class="form-control" type="email" ng-model="emailValue" placeholder="Email"> {{option}} </label>
+
+				<div ng-if="isTextType(property)">
+					<label>
+						<input 	type="text" 
+								ng-model="dataStorage[property.label]" 
+								placeholder="Text"> 
+						{{option}} 
+					</label>
 				</div>
 				
+				<div ng-if="isEmailType(property)">
+					<form name="myForm">
+						<label><input name="input" type="email" ng-model="dataStorage[property.label]" placeholder="example@domain.com"> {{option}} </label>
+						<span class="error" ng-show="myForm.input.$error.email">Not valid email!</span>
+					</form>
+				</div>				
 			</div>
 			
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="save()">Save</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     	</script>
-		<button class="btn btn-default" ng-dblclick="open('circle')">Open me!</button>
+		<button class="btn btn-default circle" id="circleButton"
+			ng-dblclick="open('circle',$event)">Circle</button>
+		<button class="btn btn-default rectangle" id="rectangleButton"
+			ng-dblclick="open('rectangle',$event)">Rectangle</button>
 	</div>
 </body>
 </html>

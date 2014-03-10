@@ -137,13 +137,14 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//INITIALIZATION
 	$scope.dataStorage = {};
 	$scope.component = localParameter.selectedNode;
-	localJsonData = localParameter.data;//
+	localJsonData = localParameter.data;
 	idOfDiv = localParameter.idOfDiv;
 	$scope.properties = $scope.component.properties;
 	
 	//Check, whether the data is already present in the system
 	//if so, please update those values through two way binding of angular
-	//else leave those feild blank
+	//else leave those field blank
+	console.log(localParameter.alreadyPresent);
 	if(localParameter.alreadyPresent){
 		$.each($scope.properties, function(key, value) {
 			label = $scope.properties[key].label;

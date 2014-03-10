@@ -66,39 +66,40 @@
 					$(this).append(newDiv);
 					original = false;
 					$(newDiv).click(function() {
-						/* var id = $(ui.draggable).attr("id"); */
-						var id = $(newDiv).attr("id");
-						i = i + 1;
-						generateCoord(newDiv, id);
+					var id = $(newDiv).attr("id");
+					i = i + 1;
+					generateCoord(newDiv, id);
 						
-						if (i == 2 && id != oldid) {
-							toId = newId;
-							findPath(list);
-							drawLine(coord);
-							i = k = 0;
-							coord[0] = coord[1] = coord[2] = coord[3] = 0;
-
-							for (j = 0; j < 16; j++)
-								list[j] = 0;
-							j = 0;
-							oldid = null;
-							id = null;
-						} else if (i == 2 && id == oldid) {
-							i = k = 0;
-							coord[0] = coord[1] = coord[2] = coord[3] = 0;
-							for (j = 0; j < 16; j++)
-								list[j] = 0;
-							j = 0;
-							oldid = null;
-							id = null;
-						} else {
-							oldid = id;
-						}
+					if (i == 2 && id != oldid) {
+					findPath(list);
+					drawLine(coord);
+					i = k = 0;
+					coord[0] = coord[1] = coord[2] = coord[3] = 0;
+					
+					for (j = 0; j < 16; j++)
+						list[j] = 0;
+					j = 0;
+					oldid = null;
+					id = null;
+					} else if (i == 2 && id == oldid) {
+					i = k = 0;
+					coord[0] = coord[1] = coord[2] = coord[3] = 0;
+					for (j = 0; j < 16; j++)
+						list[j] = 0;
+					j = 0;
+					oldid = null;
+					id = null;
+					} else {
+					oldid = id;
+					
+			}
+					
 					});
 				}
 			}
 		})
-	});
+			});
+		
 	//Get the absolute position of a DOM object on a page
 	function findPos(obj) {
 		var currLeft = currTop = 0;
@@ -115,7 +116,7 @@
 		}
 	}
 
-	function generateCoord(newDiv, id) {
+function generateCoord(newDiv, id) {
 		curLeft = newDiv.offset().left;
 		curTop = newDiv.offset().top;
 
@@ -156,15 +157,24 @@
 		}
 
 	}
-	function drawLine(coord, fromId, toId) {
+	function drawLine(coord) {
 		var ctx = document.getElementById('myCanvas').getContext('2d');
+		curLeft += (document.getElementById(id).offsetWidth) / 2;
+		curTop  += (document.getElementById(id).offsetHeight) / 2;
+	}
+	
+	function drawLine(coord) {
+		var ctx = document.getElementById('myCanvas').getContext('2d');
+		//To draw the Line
+
 		ctx.beginPath();
 		ctx.moveTo(coord[0], coord[1]);
 		ctx.lineTo(coord[2], coord[3]);
 		ctx.stroke();
-		//To draw the Arrowhead
-		var endRadians = Math.atan((coord[3] - coord[1])
-				/ (coord[2] - coord[0]));
+		//To draw the Arrowhead		
+		
+		var endRadians = Math.atan((coord[3] - coord[1])/ (coord[2] - coord[0]));
+
 		endRadians += ((coord[2] > coord[0]) ? 90 : -90) * Math.PI / 180;
 		ctx.save();
 		ctx.translate(coord[2], coord[3]);
@@ -175,8 +185,8 @@
 		ctx.closePath();
 		ctx.restore();
 		ctx.fill();
-
 	}
+		
 </script>
 </head>
 <body>
@@ -188,19 +198,22 @@
 		</div>
 		<div id="editor-window" class="container">
 			<div class="tool-box ui-widget ui-helper-clearfix">
-				<div class="draggable circle ui-corner-tr ui-widget-content">
+				<div id="circle"
+					class="draggable circle ui-corner-tr ui-widget-content">
 					<font color="white">Start</font>
 				</div>
 				<br>
-				<div class="draggable square ui-corner-tr ui-widget-content">
+				<div id="square"
+					class="draggable square ui-corner-tr ui-widget-content">
 					<font color="white">Request</font>
 				</div>
 				<br>
-				<div class="draggable rectangle ui-corner-tr ui-widget-content">
+				<div id="rectangle"
+					class="draggable rectangle ui-corner-tr ui-widget-content">
 					<font color="white">Approve</font>
 				</div>
 				<br>
-				<div class="draggable oval ui-corner-tr ui-widget-content">
+				<div id="oval" class="draggable oval ui-corner-tr ui-widget-content">
 					<font color="white">Processed</font>
 				</div>
 			</div>

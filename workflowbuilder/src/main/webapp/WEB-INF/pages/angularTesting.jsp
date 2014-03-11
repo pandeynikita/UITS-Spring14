@@ -16,6 +16,7 @@
 	src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.css">
+<script src="./resources/static/configuration.js"></script>
 </head>
 <body>
 	<!-- 	Adding whole modal content inside a container -->

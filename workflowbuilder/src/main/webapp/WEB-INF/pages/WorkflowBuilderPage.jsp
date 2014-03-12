@@ -1,10 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="workFlowBuilder">
 <head>
 <meta charset="utf-8" name="viewport"
 	content="width=device-width, initial-scale=1.0">
 <title>Workflow Editor</title>
-<link rel="stylesheet" href="./resources/css/jquery.ui.all.css">
 <script src="./resources/static/jquery-1.10.2.js"></script>
 <script src="./resources/static/jquery.ui.position.js"></script>
 <script src="./resources/static/jquery.ui.core.js"></script>
@@ -15,13 +14,17 @@
 <script src="./resources/static/jquery.ui.resizable.js"></script>
 <script src="./resources/static/jquery.ui.dialog.js"></script>
 <script src="./resources/static/custom.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="./resources/css/bootstrap.css">
-<link rel="stylesheet" href="./resources/css/bootstrap-responsive.css">
+<script type="text/javascript" src="./resources/static/angular.min.js"></script>
+<script type="text/javascript" src="./resources/static/angular-route.min.js"></script>
+<script type="text/javascript" src="./resources/static/config.js"></script>
+<script type="text/javascript" src="./resources/static/bootstrap.js"></script>
+<script type="text/javascript" src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<link rel="stylesheet" type="text/css"	href="./resources/css/bootstrap.css">
 <link rel="stylesheet" href="./resources/css/custom.css">
 <script>
 	$(function() {
-
+		
+		var counter=0;
 		var original = false;
 		//To Create single instances of cloned object
 		$('.draggable').mousedown(function() {
@@ -46,10 +49,14 @@
 			drop : function(event, ui) { //	when it is dropped, if it is original instance, clone a new instance of it 
 				// 	and append it to drop-area and make original false to avoid multiple instance
 				if (original) {
-					var newDiv = $(ui.helper).clone();
+					var newDiv = $(ui.helper).clone( true );
 					newDiv.draggable({
 						containment : ".drop-area"
 					});
+					counter++;
+					$(newDiv).attr("id", "dragged" + counter);
+					$(newDiv).attr("ng-dblclick", "test()"); 
+
 					$(this).append(newDiv);
 					original = false;
 
@@ -60,15 +67,15 @@
 </script>
 </head>
 <body>
-	<div class="wrapper">
+	<div class="wrapper" ng-controller="ModalDemoCtrl">
 		<div class="outer">
 			<div class="container">
 				<h1>WorkFlow Editor</h1>
 			</div>
 		</div>
-		<div id="editor-window" class="container">
+		<div id="editor-window" class="container" >
 			<div class="tool-box ui-widget ui-helper-clearfix">
-				<div class="draggable circle ui-corner-tr ui-widget-content">
+				<div class="draggable circle ui-corner-tr ui-widget-content ">
 					<font color="white">Start</font>
 				</div>
 				<br>

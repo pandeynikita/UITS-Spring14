@@ -13,7 +13,6 @@
                     length:14,
                     foldback:0.8
 				} ],
-                [ "Label", { label:"FOO", id:"label", cssClass:"aLabel" }]
 			],
 			Container:"statemachine-demo"
 		});
@@ -34,9 +33,6 @@
 		// just the new connection - see the documentation for a full list of what is included in 'info'.
 		// this listener sets the connection's internal
 		// id as the label overlay's text.
-        instance.bind("connection", function(info) {
-			info.connection.getOverlay("label").setLabel(info.connection.id);
-        });
 
 		// suspend drawing and initialise.
 		instance.doWhileSuspended(function() {
@@ -65,9 +61,6 @@
 			});
 			
 			// and finally, make a couple of connections
-			instance.connect({ source:"opened", target:"phone1" });
-			instance.connect({ source:"phone1", target:"inperson" });              
-			instance.connect({ source:"phone1", target:"phone1" });
 		});
 	
 	});

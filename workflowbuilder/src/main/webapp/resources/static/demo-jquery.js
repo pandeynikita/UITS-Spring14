@@ -64,6 +64,10 @@
 				anchor:"Continuous"				
 			});
 			
+			// and finally, make a couple of connections
+			instance.connect({ source:"opened", target:"phone1" });
+			instance.connect({ source:"phone1", target:"inperson" });              
+			instance.connect({ source:"phone1", target:"phone1" });
 		});
 	
 	});

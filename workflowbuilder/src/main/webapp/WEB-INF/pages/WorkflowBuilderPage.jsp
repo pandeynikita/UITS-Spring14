@@ -46,13 +46,11 @@
 		});
 
 		$(".statemachine-demo").droppable({
-			cept : ".w",
+			accept : ".w",
 			containment : "#statemachine-demo",
 			tolerance : "fit", //The moveable object has to be inside the dropable object area
-			activeClass : "ui-state-highlight", //	Highlight the drop area
 			drop : function(event, ui) { //	when it is dropped, if it is original instance, clone a new instance of it 
 				// 	and append it to drop-area and make original false to avoid multiple instance		
-					   
 				if (original) {
 					var newDiv = $(ui.helper).clone();
 					newDiv.draggable({
@@ -61,7 +59,6 @@
 					$(newDiv).attr('id', 'jsPlumb_2_' + idCount);
 					   idCount++;
 					$(this).append(newDiv);
-					
 					original = false;
 				}
 			}
@@ -80,19 +77,19 @@
 		</div>
 		<div id="editor-window" class="container">
 			<div class="tool-box ui-widget ui-helper-clearfix">
-				<div class="circle w  ui-droppable ">
+				<div class="circle w ui-corner-tr ui-widget-content ui-droppable ">
 					<font color="white">Start</font><div class="ep"></div>
 				</div>
 				<br>
-				<div  class="square ui-corner-tr  ui-droppable ui-widget-content w">
+				<div  class="square ui-corner-tr ui-widget-content w ui-droppable">
 					<font color="white">Request</font><div class="ep"></div>
 				</div>
 				<br>
-				<div class="rectangle ui-corner-tr ui-droppable ui-widget-content w">
+				<div class="rectangle ui-corner-tr ui-widget-content w ui-droppable">
 					<font color="white">Approve</font><div class="ep"></div>
 				</div>
 				<br>
-				<div class="oval ui-corner-tr  ui-droppable ui-widget-content w">
+				<div class="oval ui-corner-tr ui-widget-content w ui-droppable">
 					<font color="white">Processed</font><div class="ep"></div>
 				</div>
 			</div>

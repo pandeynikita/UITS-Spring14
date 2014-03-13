@@ -46,12 +46,13 @@ function jsplumbConnector()
 		],
 		Container:"statemachine-demo"
 	});
-	alert(instance);
+	alert(JSON.stringify(instance));
 	var windows = jsPlumb.getSelector(".statemachine-demo .w");
-	alert(windows);
+	alert(JSON.stringify(windows));
 	console.log(windows);
 	
     // initialise draggable elements.  
+    instance.draggable();
 	instance.draggable(windows);
 
     // bind a click listener to each connection; the connection is deleted. you could of course
@@ -82,60 +83,10 @@ function jsplumbConnector()
 		});						
 
 		// initialise all '.w' elements as connection targets.
-        instance.makeTarget(windows, {
-			dropOptions:{ hoverClass:"dragHover" },
-			anchor:"Continuous"				
-		});
-		
-		// and finally, make a couple of connections
-		instance.connect({ source:"opened", target:"phone1" });
-		instance.connect({ source:"phone1", target:"inperson" });              
-		instance.connect({ source:"phone1", target:"phone1" });
 	});
 	
 }
 
-$(function() {
-		var idCount = 1;
-		//To Create single instances of cloned object
-		$('.w').mousedown(function() {
-			original = true;
-		});
-
-
-
-		$(".w").draggable({
-			revert : "invalid", //	To revert back to the same position when dropped on to toolbox
-			containment : "#editor-window", //
-			helper : "clone", // 	Clone a new instance
-			cursor : "move",
-			scroll : false,
-			appendTo : ".statemachine-demo"
-		});
-
-		$(".statemachine-demo").droppable({
-			accept : ".w",
-			containment : "#statemachine-demo",
-			tolerance : "fit", //The moveable object has to be inside the dropable object area
-			drop : function(event, ui) { //	when it is dropped, if it is original instance, clone a new instance of it 
-				// 	and append it to drop-area and make original false to avoid multiple instance		
-				if (original) {
-					var newDiv = $(ui.helper).clone();
-					newDiv.draggable({
-						containment : ".statemachine-demo"
-					});
-					 $(newDiv).attr('id', 'jsPlumb_2_' + idCount);
-					   idCount++; 
-					 
-					$(this).append(newDiv);
-					   jsplumbConnector();
-					original = false;
-				}
-			}
-		});
-
-
-	});
 </script>
 </head>
 <body>
@@ -145,7 +96,7 @@ $(function() {
 			<div class="container"><h1>WorkFlow Editor</h1>
 			</div>
 		</div>
-		<div id="editor-window" class="container">
+		<div id="statemachine-demo" class="statemachine-demo class="container">
 			<div class="tool-box ui-widget ui-helper-clearfix">
 				<div class="circle w ui-corner-tr ui-widget-content">
 					<font color="white">Start</font><div class="ep"></div>
@@ -164,7 +115,6 @@ $(function() {
 				</div>
 			</div>
 		
-			<div id="statemachine-demo" class="statemachine-demo drop-area ui-widget-content ui-state-default"></div>
 		
 		</div>
 </div>

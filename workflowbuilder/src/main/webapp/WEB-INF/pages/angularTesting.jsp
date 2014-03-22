@@ -17,6 +17,28 @@
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.css">
 <script src="./resources/static/configuration.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//Retrieve nodes type for the selected div element through 
+		//recursively looping through allNodesType which is mentioned in configuration
+		function getNodeType(element){
+			for( var index=0; index<allNodesType.length; index++){
+				if((element).hasClass(allNodesType[index])){
+					return allNodesType[index];
+				}	
+			}
+		};
+		//Get the angular scope for the mentioned controller
+		var _scope = angular.element($('.container')).scope();
+		
+		$('#rectangleButton').dblclick(function($event){
+			var nodeType 	= getNodeType($(this));
+			var divId 		= $(this).attr("id");	
+			//Call the angular function from jquery event handler
+			_scope.test(nodeType,divId);
+		});
+	});
+</script>
 </head>
 <body>
 	<!-- 	Adding whole modal content inside a container -->
@@ -70,10 +92,8 @@
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     	</script>
-		<button class="btn btn-default circle" id="circleButton"
-			ng-dblclick="open('circle',$event)">Circle</button>
-		<button class="btn btn-default rectangle" id="rectangleButton"
-			ng-dblclick="open('rectangle',$event)">Rectangle</button>
+		<button class="btn btn-default rectangle" id="rectangleButton">Rectangle</button>
+			
 	</div>
 </body>
 </html>

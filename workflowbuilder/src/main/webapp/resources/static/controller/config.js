@@ -74,17 +74,21 @@ var ModalDemoCtrl = function($scope,$modal){
 				}
 			}
 	};
+	
+	//Testing to check how apply can be used in our project, Test will be called 
+	//by jquery event handler.
+	//$apply is to access angular funciton from other functions
+	$scope.test = function(image,idOfDiv){
+		$scope.$apply(function(){
+			$scope.open(image,idOfDiv);
+		});
+		
+	};
 
 //	On double clicking on each components which are in drop-area
 //	this function will be called
 //	IMPORTANT UPDATE ORIGINAL condition to avoid tool box accessing
-	$scope.open = function (image,event) {
-
-//		Retrieve element of the invoking object through angular event
-//		Get id attribute from the retrieved element
-		//INITIALIZATION
-		var element = angular.element(event.srcElement);
-		var idOfDiv = ($(element).attr("id"));
+	$scope.open = function (image,idOfDiv) {
 
 //		the $modal service has only one method: open(options)
 //		templateUrl - a path to a template representing modal's content

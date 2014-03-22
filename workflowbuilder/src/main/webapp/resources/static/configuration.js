@@ -1,3 +1,8 @@
+
+//Add node type before adding nodes configuration
+var allNodesType = ['circle','rectangle','configurationNode'];
+
+
 var exampleNodes = { 
 		"circle" :{
 			"name" : "requests",

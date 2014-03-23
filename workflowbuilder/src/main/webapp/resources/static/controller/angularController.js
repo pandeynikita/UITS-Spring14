@@ -1,5 +1,5 @@
 angular.module('workFlowBuilder',['ui.bootstrap']);
-var ModalDemoCtrl = function($scope,$modal){
+var angularModalCtrl = function($scope,$modal){
 //	Master json storage, which will have unique div 
 //	idOfDiv as key and its properties values
 	//INITIALIZATION
@@ -10,87 +10,23 @@ var ModalDemoCtrl = function($scope,$modal){
 	 */
 
 //	Need to be stored in a seperate file and assign it to this variable
-	$scope.nodes = {
-			"circle":{
-				"image": "circle", 
-				"name": "requests",
-				"header": "Action Configuration",
-				"properties": {
-					"mandatoryRoute": {
-						"label": "Mandatory Route",
-						"type": "radio",
-						"options": [
-						            "Yes",
-						            "No"
-						            ]
-					},
-					"activationType": {
-						"label": "Activation Type",
-						"type": "select",
-						"options": [
-						            "Parallel",
-						            "serial"
-						            ]
-					},
-					"from": {
-						"label": "From",
-						"type": "email"
-					},
-					"to": {
-						"label": "To",
-						"type": "email"
-					}
-				}
-			},
-			"rectangle":{
-				"image": "circle", 
-				"name": "requests",
-				"header": "Action Configuration",
-				"properties": {
-					"mandatoryRoute": {
-						"label": "Mandatory Route",
-						"type": "radio",
-						"options": [
-						            "Yes",
-						            "No"
-						            ]
-					},
-					"activationType": {
-						"label": "Activation Type",
-						"type": "select",
-						"options": [
-						            "Parallel",
-						            "serial"
-						            ]
-					},
-					"from": {
-						"label": "From",
-						"type": "email"
-					},
-					"to": {
-						"label": "To",
-						"type": "email"
-					}
-				}
-			}
-	};
-	
-	$scope.test = function(){
-		
-		alert("Inside Test");
-		
+	$scope.nodes = null;
+
+	//Testing to check how apply can be used in our project, Test will be called 
+	//by jquery event handler.
+	//$apply is to access angular funciton from other functions
+	$scope.angularOpenFunction = function(image,idOfDiv,nodesConfiguration){
+		$scope.nodes = nodesConfiguration;
+		$scope.$apply(function(){
+			$scope.open(image,idOfDiv);
+		});
+
 	};
 
 //	On double clicking on each components which are in drop-area
 //	this function will be called
 //	IMPORTANT UPDATE ORIGINAL condition to avoid tool box accessing
-	$scope.open = function (image,event) {
-
-//		Retrieve element of the invoking object through angular event
-//		Get id attribute from the retrieved element
-		//INITIALIZATION
-		var element = angular.element(event.srcElement);
-		var idOfDiv = ($(element).attr("id"));
+	$scope.open = function (image,idOfDiv) {
 
 //		the $modal service has only one method: open(options)
 //		templateUrl - a path to a template representing modal's content
@@ -98,7 +34,7 @@ var ModalDemoCtrl = function($scope,$modal){
 //		A controller can be injected with $modalInstance
 //		members that will be resolved and passed to the controller as locals;
 		var modalInstance = $modal.open({
-			templateUrl: 'myModalContent.html',
+			templateUrl: 'dynamicModalContent.html',
 			controller: ModalInstanceCtrl,
 			resolve: {
 				localParameter: function(){
@@ -143,7 +79,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//INITIALIZATION
 	$scope.dataStorage = {};
 	$scope.component = localParameter.selectedNode;
-	localJsonData = localParameter.data;//
+	localJsonData = localParameter.data;
 	idOfDiv = localParameter.idOfDiv;
 	$scope.properties = $scope.component.properties;
 
@@ -203,3 +139,5 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 		}
 	};
 };
+
+

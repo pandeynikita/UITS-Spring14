@@ -42,6 +42,19 @@
 			return -1;
 		};
 		
+		//on click event handler for configuration node 
+		$('#configurationId').click(function(){
+			var nodeType 	= getNodeType($(this));
+			//Check whether the configuration is available, else report an error
+			if(nodeType == -1){
+				alert(nodeConfigurationNotAddedError);
+			} else {
+				var divId 		= $(this).attr("id");	
+				//Call the angular function from jquery event handler
+				_scope.angularOpenFunction(nodeType,divId,nodesConfiguration);
+			}
+		});
+		
 		//To Create single instances of cloned object
 		$('.draggable').mousedown(function() {
 			original = true;
@@ -140,6 +153,7 @@
         </div>
     	</script>
 		<div class="outer">
+			<button class="btn btn-primary configure" style="float:left" id="configurationId")">Configure</button>
 			<div class="container">
 				<h1>WorkFlow Editor</h1>
 			</div>

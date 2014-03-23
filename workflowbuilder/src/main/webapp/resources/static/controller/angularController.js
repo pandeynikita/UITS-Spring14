@@ -16,18 +16,20 @@ var angularModalCtrl = function($scope,$modal){
 	//by jquery event handler.
 	//$apply is to access angular funciton from other functions
 	$scope.angularOpenFunction = function(image,idOfDiv,nodesConfiguration){
-		$scope.nodes = nodesConfiguration;
 		$scope.$apply(function(){
-			$scope.open(image,idOfDiv);
+			$scope.open(image,idOfDiv,nodesConfiguration);
 		});
 
 	};
+	
+	
 
 //	On double clicking on each components which are in drop-area
 //	this function will be called
 //	IMPORTANT UPDATE ORIGINAL condition to avoid tool box accessing
-	$scope.open = function (image,idOfDiv) {
-
+	$scope.open = function (image,idOfDiv,nodesConfiguration) {
+		$scope.nodes = nodesConfiguration;
+		
 //		the $modal service has only one method: open(options)
 //		templateUrl - a path to a template representing modal's content
 //		a controller for a modal instance - it can initialize scope used by modal.
@@ -85,11 +87,18 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 
 	//Check, whether the data is already present in the system
 	//if so, please update those values through two way binding of angular
-	//else leave those feild blank
+	//else check if it has any default values display those else leave those field blank
 	if(localParameter.alreadyPresent){
 		$.each($scope.properties, function(key, value) {
 			label = $scope.properties[key].label;
 			$scope.dataStorage[label] = localJsonData[idOfDiv][label];
+		});
+	} else {
+		$.each($scope.properties, function(key, value) {
+			if($scope.properties[key].defaultVal){
+				label = $scope.properties[key].label;
+				$scope.dataStorage[label]=$scope.properties[key].defaultVal;
+			}
 		});
 	}
 

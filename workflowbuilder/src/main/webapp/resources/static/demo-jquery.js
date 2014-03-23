@@ -54,7 +54,7 @@
 				}
 			});						
 
-			// initialise all '.w' elements as connection targets.
+			// initialize all '.w' elements as connection targets.
 	        instance.makeTarget(windows, {
 				dropOptions:{ hoverClass:"dragHover" },
 				anchor:"Continuous"				

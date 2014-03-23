@@ -1,10 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="workFlowBuilder">
 <head>
 <meta charset="utf-8" name="viewport"
 	content="width=device-width, initial-scale=1.0">
 <title>Workflow Editor</title>
-<link rel="stylesheet" href="./resources/css/jquery.ui.all.css">
 <script src="./resources/static/jquery-1.10.2.js"></script>
 <script src="./resources/static/jquery.ui.position.js"></script>
 <script src="./resources/static/jquery.ui.core.js"></script>
@@ -15,18 +14,50 @@
 <script src="./resources/static/jquery.ui.resizable.js"></script>
 <script src="./resources/static/jquery.ui.dialog.js"></script>
 <script src="./resources/static/custom.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="./resources/css/bootstrap.css">
-<link rel="stylesheet" href="./resources/css/bootstrap-responsive.css">
+<script type="text/javascript" src="./resources/static/angular.min.js"></script>
+<script type="text/javascript" src="./resources/static/angular-route.min.js"></script>
+<script type="text/javascript" src="./resources/static/controller/angularController.js"></script>
+<script type="text/javascript" src="./resources/static/configuration.js"></script>
+<script type="text/javascript" src="./resources/static/bootstrap.js"></script>
+<script type="text/javascript" src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<link rel="stylesheet" type="text/css"	href="./resources/css/bootstrap.css">
 <link rel="stylesheet" href="./resources/css/custom.css">
+
 <script>
 	$(function() {
-
+		
+		var counter=0;
 		var original = false;
+		//Get the angular scope for the mentioned controller
+		var _scope = angular.element($('.container')).scope();
+		
+		//Retrieve nodes type for the selected div element through 
+		//recursively looping through allNodesType which is mentioned in configuration
+		function getNodeType(element){
+			for(var node in nodesConfiguration ){
+				if((element).hasClass(node)){
+					return node;
+				}
+			}
+			return -1;
+		};
+		
+		//on click event handler for configuration node 
+		$('#configurationId').click(function(){
+			var nodeType 	= getNodeType($(this));
+			//Check whether the configuration is available, else report an error
+			if(nodeType == -1){
+				alert(nodeConfigurationNotAddedError);
+			} else {
+				var divId 		= $(this).attr("id");	
+				//Call the angular function from jquery event handler
+				_scope.angularOpenFunction(nodeType,divId,nodesConfiguration);
+			}
+		});
+		
 		//To Create single instances of cloned object
 		$('.draggable').mousedown(function() {
 			original = true;
-
 		});
 
 		$(".draggable").draggable({
@@ -50,25 +81,86 @@
 					newDiv.draggable({
 						containment : ".drop-area"
 					});
+					counter++;
+					$(newDiv).attr("id", "dragged" + counter);
 					$(this).append(newDiv);
 					original = false;
-
+					$(newDiv).dblclick(function(){
+						var nodeType 	= getNodeType($(this));
+						if(nodeType == -1){
+							alert(nodeConfigurationNotAddedError);
+						} else {
+							var divId 		= $(this).attr("id");	
+							//Call the angular function from jquery event handler
+ 							_scope.angularOpenFunction(nodeType,divId,nodesConfiguration);
+						}
+					});
 				}
 			}
-		})
+		});
 	});
 </script>
 </head>
 <body>
-	<div class="wrapper">
+	<div class="wrapper" ng-controller="angularModalCtrl">
+		<!-- 		Template of angular modal -->
+		<script type="text/ng-template" id="dynamicModalContent.html">
+		<div class="modal-header">
+			<button class="close" ng-click="cancel()">x</button>
+            <label>{{component.header}}</label> 
+        </div>
+        <div class="modal-body">
+			<div ng-repeat="property in properties">
+				<label>{{property.label}}</label> 
+
+				<div ng-if="isRadioType(property)">
+					<label ng-repeat="option in property.options" for="{{option}}">
+						<input 	type="radio"	 
+								name="route" 
+								ng-model="dataStorage[property.label]" 
+								ng-value="option"> 
+						{{option}}
+					</label>
+				</div>
+
+				<div ng-if="isSelectType(property)">
+					<select ng-model="dataStorage[property.label]" 
+							ng-options="option as option for option in property.options">
+					</select>
+				</div>
+
+				<div ng-if="isTextType(property)">
+					<label>
+						<input 	type="text" 
+								ng-model="dataStorage[property.label]" 
+								placeholder="Text"> 
+						{{option}} 
+					</label>
+				</div>
+				
+				<div ng-if="isEmailType(property)">
+					<form name="myForm">
+						<label><input name="input" type="email" ng-model="dataStorage[property.label]" placeholder="example@domain.com"> {{option}} </label>
+						<span class="error" ng-show="myForm.input.$error.email">Not valid email!</span>
+					</form>
+				</div>				
+			</div>
+			
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="save()">Save</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    	</script>
 		<div class="outer">
+			<button class="btn btn-primary configure" style="float:left" id="configurationId")">Configure</button>
 			<div class="container">
 				<h1>WorkFlow Editor</h1>
 			</div>
 		</div>
-		<div id="editor-window" class="container">
+		<div id="editor-window" class="container" >
 			<div class="tool-box ui-widget ui-helper-clearfix">
-				<div class="draggable circle ui-corner-tr ui-widget-content">
+				<div class="draggable circle ui-corner-tr ui-widget-content ">
 					<font color="white">Start</font>
 				</div>
 				<br>

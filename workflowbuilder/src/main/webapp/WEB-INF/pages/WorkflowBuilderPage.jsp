@@ -18,12 +18,81 @@
 <script type="text/javascript" src="./resources/static/angular-route.min.js"></script>
 <script type="text/javascript" src="./resources/static/controller/angularController.js"></script>
 <script type="text/javascript" src="./resources/static/configuration.js"></script>
+<script src="./resources/static/jquery.jsPlumb-1.5.5-min.js"></script>
+<script src="./resources/static/demo-jquery.js"></script>
+<script src="./resources/static/demo-list.js"></script>
+<link rel="stylesheet" href="./resources/css/demo.css">
 <script type="text/javascript" src="./resources/static/bootstrap.js"></script>
 <script type="text/javascript" src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
 <link rel="stylesheet" type="text/css"	href="./resources/css/bootstrap.css">
 <link rel="stylesheet" href="./resources/css/custom.css">
 
 <script>
+function makeConnectors()
+{
+	var editorInstance = jsPlumb.getInstance({
+		Endpoint : ["Dot", {radius:2}],
+		HoverPaintStyle : {strokeStyle:"#1e8151", lineWidth:2 },
+		ConnectionOverlays : [
+			[ "Arrow", { 
+				location:1,
+				id:"arrow",
+                length:14,
+                foldback:0.8
+			} ],
+            [ "Label", { label:"FOO", id:"label", cssClass:"aLabel" }]
+		],
+		Container:"statemachine-demo"
+	});
+
+	var editorWindow = jsPlumb.getSelector(".statemachine-demo .w");
+
+    // initialise draggable elements.  
+	editorInstance.draggable(editorWindow);
+
+    // bind a click listener to each connection; the connection is deleted. you could of course
+	// just do this: jsPlumb.bind("click", jsPlumb.detach), but I wanted to make it clear what was
+	// happening.
+	editorInstance.bind("click", function(cl) { 
+		editorInstance.detach(cl); 
+	});
+
+	// bind a connection listener. note that the parameter passed to this function contains more than
+	// just the new connection - see the documentation for a full list of what is included in 'info'.
+	// this listener sets the connection's internal
+	// id as the label overlay's text.
+    editorInstance.bind("connection", function(info) {
+		info.connection.getOverlay("label").setLabel(info.connection.id);
+    });
+
+	// suspend drawing and initialise.
+	editorInstance.doWhileSuspended(function() {
+		alert("doWhileSuspended");			
+		// make each ".ep" div a source and give it some parameters to work with.  here we tell it
+		// to use a Continuous anchor and the StateMachine connectors, and also we give it the
+		// connector's paint style.  note that in this demo the strokeStyle is dynamically generated,
+		// which prevents us from just setting a jsPlumb.Defaults.PaintStyle.  but that is what i
+		// would recommend you do. Note also here that we use the 'filter' option to tell jsPlumb
+		instance.makeSource(windows, {
+			filter:".ep",				// only supported by jquery
+			anchor:"Continuous",
+			connector:[ "StateMachine", { curviness:20 } ],
+			connectorStyle:{ strokeStyle:"#5c96bc", lineWidth:2, outlineColor:"transparent", outlineWidth:4 },
+			maxConnections:5,
+			onMaxConnections:function(info, e) {
+				alert("Maximum connections (" + info.maxConnections + ") reached");
+			}
+		});						
+
+		// initialise all '.w' elements as connection targets.
+        instance.makeTarget(windows, {
+			dropOptions:{ hoverClass:"dragHover" },
+			anchor:"Continuous"				
+		});
+	});
+		
+}
+
 	$(function() {
 		
 		var counter=0;
@@ -95,10 +164,15 @@
  							_scope.angularOpenFunction(nodeType,divId,nodesConfiguration);
 						}
 					});
+					
+					//insert js plumb here
+					makeConnectors();
 				}
 			}
 		});
 	});
+	
+	
 </script>
 </head>
 <body>
@@ -116,7 +190,7 @@
 				<div ng-if="isRadioType(property)">
 					<label ng-repeat="option in property.options" for="{{option}}">
 						<input 	type="radio"	 
-								name="route" 
+								name="route"
 								ng-model="dataStorage[property.label]" 
 								ng-value="option"> 
 						{{option}}
@@ -124,7 +198,7 @@
 				</div>
 
 				<div ng-if="isSelectType(property)">
-					<select ng-model="dataStorage[property.label]" 
+					<select ng-model="dataStorage[property.label]" class="form-control"
 							ng-options="option as option for option in property.options">
 					</select>
 				</div>
@@ -133,7 +207,8 @@
 					<label>
 						<input 	type="text" 
 								ng-model="dataStorage[property.label]" 
-								placeholder="Text"> 
+								placeholder="Text" 
+								class="form-control"> 
 						{{option}} 
 					</label>
 				</div>
@@ -160,23 +235,23 @@
 		</div>
 		<div id="editor-window" class="container" >
 			<div class="tool-box ui-widget ui-helper-clearfix">
-				<div class="draggable circle ui-corner-tr ui-widget-content ">
-					<font color="white">Start</font>
+				<div class="draggable w circle ui-corner-tr ui-widget-content ">
+					<font color="white">Start</font><div class="ep"></div>
 				</div>
 				<br>
-				<div class="draggable square ui-corner-tr ui-widget-content">
-					<font color="white">Request</font>
+				<div class="draggable w square ui-corner-tr ui-widget-content">
+					<font color="white">Request</font><div class="ep"></div>
 				</div>
 				<br>
-				<div class="draggable rectangle ui-corner-tr ui-widget-content">
-					<font color="white">Approve</font>
+				<div class="draggable w rectangle ui-corner-tr ui-widget-content">
+					<font color="white">Approve</font><div class="ep"></div>
 				</div>
 				<br>
-				<div class="draggable oval ui-corner-tr ui-widget-content">
-					<font color="white">Processed</font>
+				<div class="draggable w oval ui-corner-tr ui-widget-content">
+					<font color="white">Processed</font><div class="ep"></div>
 				</div>
 			</div>
-			<div class="drop-area ui-widget-content ui-state-default"></div>
+			<div class="drop-area statemachine-demo ui-widget-content ui-state-default"></div>
 		</div>
 	</div>
 </body>

@@ -48,7 +48,7 @@
 				anchor:"Continuous",
 				connector:[ "StateMachine", { curviness:20 } ],
 				connectorStyle:{ strokeStyle:"#5c96bc", lineWidth:2, outlineColor:"transparent", outlineWidth:4 },
-				maxConnections:2,
+				maxConnections:1,
 				onMaxConnections:function(info, e) {
 					alert("Maximum connections (" + info.maxConnections + ") reached");
 				}

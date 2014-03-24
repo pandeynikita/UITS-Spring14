@@ -153,7 +153,7 @@
         </div>
     	</script>
 		<div class="outer">
-			<button class="btn btn-primary configure" style="float:left" id="configurationId")">Configure</button>
+			<button class="btn btn-primary configure" id="configurationId">Configure</button>
 			<div class="container">
 				<h1>WorkFlow Editor</h1>
 			</div>
@@ -178,6 +178,7 @@
 			</div>
 			<div class="drop-area ui-widget-content ui-state-default"></div>
 		</div>
+		<button class="btn btn-primary" id="exportId" ng-click="angularExport()">Export</button>
 	</div>
 </body>
 </html>

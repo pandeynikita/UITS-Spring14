@@ -1,5 +1,5 @@
 angular.module('workFlowBuilder',['ui.bootstrap']);
-var angularModalCtrl = function($scope,$modal){
+var angularModalCtrl = function($scope,$modal,$http){
 //	Master json storage, which will have unique div 
 //	idOfDiv as key and its properties values
 	//INITIALIZATION
@@ -68,6 +68,28 @@ var angularModalCtrl = function($scope,$modal){
 			//Called when, cancel is pressed
 			console.log("Modal:cancel has been pressed");
 		});
+	};
+	
+	$scope.angularExport= function(){
+		console.log(JSON.stringify({"example": $scope.jsonData}));
+		$http({
+			url: 'export.htm',
+			method: "POST",
+//			data: {"example":"app"},
+			headers: {'Content-Type': 'application/json'}
+		}).success(function (data, status, headers, config) {
+			console.log("success"); 
+		}).error(function (data, status, headers, config) {
+			console.log(status + ' ' + headers);
+		});
+//		var responsePromise = $http.post("export.htm","example=test", {'headers':{'Content-Type': 'application/json'}});
+//		responsePromise.success(function(data,status,headers,config){
+//			console.log(status);
+//		});
+//		
+//		responsePromise.error(function(data,status,headers,config){
+//			console.log(status+" "+" "+ data);
+//		});
 	};
 
 };

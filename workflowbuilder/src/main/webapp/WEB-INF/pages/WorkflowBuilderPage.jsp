@@ -45,11 +45,6 @@ function makeConnectors()
 		Container:"statemachine-demo"
 	});
 
-	var editorWindow = jsPlumb.getSelector(".statemachine-demo .w");
-
-    // initialise draggable elements.  
-	editorInstance.draggable(editorWindow);
-
     // bind a click listener to each connection; the connection is deleted. you could of course
 	// just do this: jsPlumb.bind("click", jsPlumb.detach), but I wanted to make it clear what was
 	// happening.
@@ -83,14 +78,21 @@ function makeConnectors()
 				alert("Maximum connections (" + info.maxConnections + ") reached");
 			}
 		});						
-
+		
 		// initialise all '.w' elements as connection targets.
         instance.makeTarget(windows, {
 			dropOptions:{ hoverClass:"dragHover" },
 			anchor:"Continuous"				
 		});
 	});
-		
+	alert(jsPlumb.getConnections());
+	
+	jsPlumb.connect({
+	    source:'dragged1',
+	    target:'dragged2',
+	    paintStyle:{lineWidth:15,strokeStyle:'rgb(243,230,18)'},
+	    endpointStyle:{fillStyle:'rgb(243,229,0)'}
+	});
 }
 
 	$(function() {
@@ -152,7 +154,30 @@ function makeConnectors()
 					});
 					counter++;
 					$(newDiv).attr("id", "dragged" + counter);
+					
 					$(this).append(newDiv);
+					$(newDiv).removeClass( "ui-draggable" );				 
+					
+					jsPlumb.draggable("dragged" + counter);
+					var endpointOptions = { 
+							isSource:true, 
+							isTarget:true, 
+							anchor:"Continuous",
+							endpoint : ["Dot", {radius:8, cssClass : "connectorTrans"}],
+							HoverPaintStyle : {strokeStyle:"#1e8151", lineWidth:2 },
+							connector:[ "StateMachine", { curviness:20 } ],
+							connectorOverlays:[ 
+							                   [ "Arrow", { width:10, length:20, location:1, id:"arrow" } ]],
+							            connectorStyle:{ strokeStyle:"#5c96bc", lineWidth:2 },
+							            maxConnections:2}; 
+					jsPlumb.addEndpoint("dragged" + counter,endpointOptions);
+					
+					jsPlumb.bind("click", function(c) { 
+						jsPlumb.detach(c); 
+					});
+					jsPlumb.repaintEverything(); 
+					
+					
 					original = false;
 					$(newDiv).dblclick(function(){
 						var nodeType 	= getNodeType($(this));
@@ -166,7 +191,7 @@ function makeConnectors()
 					});
 					
 					//insert js plumb here
-					makeConnectors();
+					
 				}
 			}
 		});
@@ -236,19 +261,19 @@ function makeConnectors()
 		<div id="editor-window" class="container" >
 			<div class="tool-box ui-widget ui-helper-clearfix">
 				<div class="draggable w circle ui-corner-tr ui-widget-content ">
-					<font color="white">Start</font><div class="ep"></div>
+					<font color="white">Start</font>
 				</div>
 				<br>
 				<div class="draggable w square ui-corner-tr ui-widget-content">
-					<font color="white">Request</font><div class="ep"></div>
+					<font color="white">Request</font>
 				</div>
 				<br>
 				<div class="draggable w rectangle ui-corner-tr ui-widget-content">
-					<font color="white">Approve</font><div class="ep"></div>
+					<font color="white">Approve</font>
 				</div>
 				<br>
 				<div class="draggable w oval ui-corner-tr ui-widget-content">
-					<font color="white">Processed</font><div class="ep"></div>
+					<font color="white">Processed</font>
 				</div>
 			</div>
 			<div class="drop-area statemachine-demo ui-widget-content ui-state-default"></div>

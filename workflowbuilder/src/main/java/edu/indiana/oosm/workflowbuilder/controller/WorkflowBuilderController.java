@@ -18,8 +18,10 @@ public class WorkflowBuilderController{
 		return model;
 	}
 	
-	@RequestMapping(value="export",method = RequestMethod.POST)
-	public void exportToXML(@RequestParam("example") String example){
-		System.out.println(example);
+	@RequestMapping(value="export",method = RequestMethod.GET)
+	public ModelAndView exportToXML(){
+		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
+		System.out.println("success");
+		return model;
 	}
 }

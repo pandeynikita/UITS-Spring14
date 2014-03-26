@@ -72,11 +72,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 	
 	$scope.angularExport= function(){
 		console.log(JSON.stringify({"example": $scope.jsonData}));
-		$http({
-			url: 'export.htm',
-			method: "POST",
-//			data: {"example":"app"},
-			headers: {'Content-Type': 'application/json'}
+		$http({method: 'GET', url: 'export.htm'
 		}).success(function (data, status, headers, config) {
 			console.log("success"); 
 		}).error(function (data, status, headers, config) {

@@ -70,22 +70,15 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 	};
 	
+	//Example for Ajax post for JSON
 	$scope.angularExport= function(){
-		console.log(JSON.stringify({"example": $scope.jsonData}));
-		$http({method: 'GET', url: 'export.htm'
-		}).success(function (data, status, headers, config) {
-			console.log("success"); 
-		}).error(function (data, status, headers, config) {
-			console.log(status + ' ' + headers);
+		var responsePromise = $http.post("export.htm",JSON.stringify({activationType:"Series",mandatoryRoute:"Yes"}));
+		responsePromise.success(function(data,status,headers,config){
+			console.log(status);
 		});
-//		var responsePromise = $http.post("export.htm","example=test", {'headers':{'Content-Type': 'application/json'}});
-//		responsePromise.success(function(data,status,headers,config){
-//			console.log(status);
-//		});
-//		
-//		responsePromise.error(function(data,status,headers,config){
-//			console.log(status+" "+" "+ data);
-//		});
+		responsePromise.error(function(data,status,headers,config){
+			console.log(status+" "+" "+ data);
+		});
 	};
 
 };

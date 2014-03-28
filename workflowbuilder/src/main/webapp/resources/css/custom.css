@@ -81,3 +81,8 @@
 {
 opacity : 0.2;
 }
+
+.modal .modal-body {
+    max-height: 420px;
+    overflow-y: auto;
+}

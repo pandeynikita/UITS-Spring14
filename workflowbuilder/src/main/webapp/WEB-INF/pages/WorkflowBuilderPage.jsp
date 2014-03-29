@@ -33,6 +33,8 @@
 		
 		var counter=0;
 		var original = false;
+		var id_circle;
+		var flag = 0;
 		//Get the angular scope for the mentioned controller
 		var _scope = angular.element($('.container')).scope();
 		
@@ -54,17 +56,22 @@
 			if(nodeType == -1){
 				alert(nodeConfigurationNotAddedError);
 			} else {
-				var divId 		= $(this).attr("id");	
+				var divId 		= $(this).attr("id");
 				//Call the angular function from jquery event handler
 				_scope.angularOpenFunction(nodeType,divId,nodesConfiguration);
 			}
 		});
-		
 		//To Create single instances of cloned object
+	
 		$('.draggable').mousedown(function() {
+			id_circle = getNodeType($(this));
+			if((flag == 1) && (id_circle == "circle")) {
+				alert("Only one Start per Workflow is allowed");
+				exit;
+			}
 			original = true;
-		});
-
+		});  
+	    
 		$(".draggable").draggable({
 			revert : "invalid", //	To revert back to the same position when dropped on to toolbox
 			containment : "#editor-window", // 	contain the components inside editor window
@@ -73,7 +80,7 @@
 			scroll : false,
 			appendTo : ".drop-area"
 		});
-
+		
 		$(".drop-area").droppable({
 			accept : ".draggable",
 			containment : ".drop-area",
@@ -91,7 +98,7 @@
 					
 					$(this).append(newDiv);
 					$(newDiv).removeClass( "ui-draggable" );				 
-					
+					//}
 					jsPlumb.draggable("dragged" + counter);
 					var endpointOptions = { 
 							isSource:true, 
@@ -102,17 +109,19 @@
 							connector:[ "StateMachine", { curviness:20 } ],
 							connectorOverlays:[ 
 							                   [ "Arrow", { width:10, length:20, location:1, id:"arrow" } ]],
-							            connectorStyle:{ strokeStyle:"#5c96bc", lineWidth:2 },
-							            maxConnections:2}; 
+							connectorStyle:{ strokeStyle:"#5c96bc", lineWidth:2 },
+							maxConnections:2};
+					if (id_circle == "circle" )
+					{
+						endpointOptions.isTarget = false;
+						cendpointOptions.maxConnections = 1;
+					}
 					jsPlumb.addEndpoint("dragged" + counter,endpointOptions);
 					
 					jsPlumb.bind("click", function(c) { 
 						jsPlumb.detach(c); 
 					});
-					jsPlumb.repaintEverything(); 
-
-					
-					
+					jsPlumb.repaintEverything(); 					
 					
 					original = false;
 					$(newDiv).dblclick(function(){
@@ -125,7 +134,8 @@
  							_scope.angularOpenFunction(nodeType,divId,nodesConfiguration);
 						}
 					});
-					
+					if (id_circle == "circle")
+						flag = 1;
 					//insert js plumb here
 					
 				}

@@ -114,7 +114,7 @@
 					if (id_circle == "circle" )
 					{
 						endpointOptions.isTarget = false;
-						cendpointOptions.maxConnections = 1;
+						endpointOptions.maxConnections = 1;
 					}
 					jsPlumb.addEndpoint("dragged" + counter,endpointOptions);
 					
@@ -196,7 +196,7 @@
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="save()">Save</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
+1        </div>
     	</script>
 		<div class="outer">
 			<button class="btn btn-primary configure" style="float:left" id="configurationId")">Configure</button>

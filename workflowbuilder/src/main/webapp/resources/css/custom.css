@@ -66,6 +66,16 @@
 	position:relative;
 }
 
+.rect {
+	width: 80px;
+	height: 40px;
+	background:coral;
+	border:2px solid black;
+	border-style:solid;
+	padding:4px 3px 1px 3px;
+	position:relative;
+}
+
 .oval {
 	width: 100px;
 	height: 50px;

@@ -15,7 +15,13 @@ var nodesConfiguration = {
 					"label" : "Activation Type",
 					"type" : "select",
 					"options" : [ "Parallel", "serial" ]
+				},
+				"finalApproval":{
+					"label": "Final Approval",
+					"type" : "radio",
+					"options":["Yes", "No"]
 				}
+				
 			}
 		},
 		"rectangle" :{
@@ -23,16 +29,27 @@ var nodesConfiguration = {
 			"image" : "rectangle",
 			"header" : "Action Configuration",
 			"properties" : {
+				
+				"activationType" : {
+					"label" : "Activation Type",
+					"type" : "select",
+					"options" : [ "Parallel", "serial" ]
+				},
 				"mandatoryRoute" : {
 					"label" : "Mandatory Route",
 					"type" : "radio",
 					"options" : [ "Yes", "No" ]
 				},
-				"activationType" : {
-					"label" : "Activation Type",
-					"type" : "select",
-					"options" : [ "Parallel", "serial" ]
+				"ruleTemplate":{
+					"label":"Rule Template",
+					"type":"text"
+				},
+				"finalApproval":{
+					"label": "Final Approval",
+					"type" : "radio",
+					"options":["Yes", "No"]
 				}
+				
 			}
 		},
 		"square":{
@@ -54,6 +71,39 @@ var nodesConfiguration = {
 					"label" : "Test Address",
 					"type" : "text"
 				}
+			}
+		},
+		"oval":{
+			"name" : "requests",
+			"image": "oval",
+			"header":"Simple Node",
+			"properties":{
+				"activationType" : {
+				"label" : "Activation Type",
+				"type" : "select",
+				"options" : [ "Parallel", "serial" ]
+				},
+				"type":{
+					"label":"Type",
+					"type":"text"
+			}
+			}
+		},
+		"rect":{
+			"name" : "requests",
+			"image": "rect",
+			"header":"Role Based Routing",
+			"properties":{
+				"type":{
+					"label":"Qualifier Resolver Class",
+					"type":"text"
+				},
+				"activationType" : {
+					"label" : "Activation Type",
+					"type" : "select",
+					"options" : [ "Parallel", "serial" ]
+				}
+		
 			}
 		},
 		"configure" : {

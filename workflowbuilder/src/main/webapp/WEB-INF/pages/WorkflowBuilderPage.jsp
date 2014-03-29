@@ -28,72 +28,6 @@
 <link rel="stylesheet" href="./resources/css/custom.css">
 
 <script>
-function makeConnectors()
-{
-	var editorInstance = jsPlumb.getInstance({
-		Endpoint : ["Dot", {radius:2}],
-		HoverPaintStyle : {strokeStyle:"#1e8151", lineWidth:2 },
-		ConnectionOverlays : [
-			[ "Arrow", { 
-				location:1,
-				id:"arrow",
-                length:14,
-                foldback:0.8
-			} ],
-            [ "Label", { label:"FOO", id:"label", cssClass:"aLabel" }]
-		],
-		Container:"statemachine-demo"
-	});
-
-    // bind a click listener to each connection; the connection is deleted. you could of course
-	// just do this: jsPlumb.bind("click", jsPlumb.detach), but I wanted to make it clear what was
-	// happening.
-	editorInstance.bind("click", function(cl) { 
-		editorInstance.detach(cl); 
-	});
-
-	// bind a connection listener. note that the parameter passed to this function contains more than
-	// just the new connection - see the documentation for a full list of what is included in 'info'.
-	// this listener sets the connection's internal
-	// id as the label overlay's text.
-    editorInstance.bind("connection", function(info) {
-		info.connection.getOverlay("label").setLabel(info.connection.id);
-    });
-
-	// suspend drawing and initialise.
-	editorInstance.doWhileSuspended(function() {
-		alert("doWhileSuspended");			
-		// make each ".ep" div a source and give it some parameters to work with.  here we tell it
-		// to use a Continuous anchor and the StateMachine connectors, and also we give it the
-		// connector's paint style.  note that in this demo the strokeStyle is dynamically generated,
-		// which prevents us from just setting a jsPlumb.Defaults.PaintStyle.  but that is what i
-		// would recommend you do. Note also here that we use the 'filter' option to tell jsPlumb
-		instance.makeSource(windows, {
-			filter:".ep",				// only supported by jquery
-			anchor:"Continuous",
-			connector:[ "StateMachine", { curviness:20 } ],
-			connectorStyle:{ strokeStyle:"#5c96bc", lineWidth:2, outlineColor:"transparent", outlineWidth:4 },
-			maxConnections:5,
-			onMaxConnections:function(info, e) {
-				alert("Maximum connections (" + info.maxConnections + ") reached");
-			}
-		});						
-		
-		// initialise all '.w' elements as connection targets.
-        instance.makeTarget(windows, {
-			dropOptions:{ hoverClass:"dragHover" },
-			anchor:"Continuous"				
-		});
-	});
-	alert(jsPlumb.getConnections());
-	
-	jsPlumb.connect({
-	    source:'dragged1',
-	    target:'dragged2',
-	    paintStyle:{lineWidth:15,strokeStyle:'rgb(243,230,18)'},
-	    endpointStyle:{fillStyle:'rgb(243,229,0)'}
-	});
-}
 
 	$(function() {
 		
@@ -176,6 +110,8 @@ function makeConnectors()
 						jsPlumb.detach(c); 
 					});
 					jsPlumb.repaintEverything(); 
+
+					
 					
 					
 					original = false;
@@ -265,15 +201,19 @@ function makeConnectors()
 				</div>
 				<br>
 				<div class="draggable w square ui-corner-tr ui-widget-content">
-					<font color="white">Request</font>
+					<font color="white">Email</font>
 				</div>
 				<br>
 				<div class="draggable w rectangle ui-corner-tr ui-widget-content">
-					<font color="white">Approve</font>
+					<font color="white">Request</font>
 				</div>
 				<br>
 				<div class="draggable w oval ui-corner-tr ui-widget-content">
-					<font color="white">Processed</font>
+					<font color="white">Simple</font>
+				</div>
+				<br>
+				<div class="draggable w rect r ui-corner-tr ui-widget-content">
+					<font color="white">Role</font>
 				</div>
 			</div>
 			<div class="drop-area statemachine-demo ui-widget-content ui-state-default"></div>

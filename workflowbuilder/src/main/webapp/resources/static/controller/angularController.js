@@ -72,7 +72,19 @@ var angularModalCtrl = function($scope,$modal,$http){
 	
 	//Example for Ajax post for JSON
 	$scope.angularExport= function(){
-		var responsePromise = $http.post("export.htm",JSON.stringify({activationType:"Series",mandatoryRoute:"Yes"}));
+		console.log($scope.jsonData);
+//		var responsePromise = $http.post("export.htm",JSON.stringify({"property":['test1','test2']}));
+
+		var responsePromise = $http.post("export.htm",JSON.stringify({"properties":[{
+		        ActivationType:"serial"
+		    },{ActivationType:"parallel"}]}
+	));
+//		var responsePromise = $http.post("export.htm",JSON.stringify({"object":[{"property":[{
+//			        ActivationType:"serial"
+//			    },{ActivationType:"parallel"}]},{"property":[{
+//			        ActivationType:"serial"
+//			    },{ActivationType:"parallel"}]}]}
+//		));
 		responsePromise.success(function(data,status,headers,config){
 			console.log(status);
 		});
@@ -80,7 +92,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 			console.log(status+" "+" "+ data);
 		});
 	};
-
 };
 
 //ModalController will be called by modal with local parameter and $modalInstance

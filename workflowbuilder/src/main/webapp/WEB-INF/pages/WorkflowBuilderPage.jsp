@@ -28,13 +28,14 @@
 <link rel="stylesheet" href="./resources/css/custom.css">
 
 <script>
-
 	$(function() {
 		
-		var counter=0;
+		var counter = flag = fire_check = 0;
+		var i = 0;
+		var source = [];
+		var target = [];
 		var original = false;
 		var id_circle;
-		var flag = 0;
 		//Get the angular scope for the mentioned controller
 		var _scope = angular.element($('.container')).scope();
 		
@@ -73,7 +74,7 @@
 		});  
 	    
 		$(".draggable").draggable({
-			revert : "invalid", //	To revert back to the same position when dropped on to toolbox
+			revert : "invalid" , //	To revert back to the same position when dropped on to toolbox
 			containment : "#editor-window", // 	contain the components inside editor window
 			helper : "clone", // 	Clone a new instance
 			cursor : "move",
@@ -111,13 +112,45 @@
 							                   [ "Arrow", { width:10, length:20, location:1, id:"arrow" } ]],
 							connectorStyle:{ strokeStyle:"#5c96bc", lineWidth:2 },
 							maxConnections:2};
-					if (id_circle == "circle" )
+					if (id_circle == "circle")
 					{
 						endpointOptions.isTarget = false;
 						endpointOptions.maxConnections = 1;
 					}
 					jsPlumb.addEndpoint("dragged" + counter,endpointOptions);
-					
+				  //beforeDrop is fired every time a connection is dropped for 
+				  //as many number of divs dropped onto the screen
+                    jsPlumb.bind("beforeDrop", function(c) {
+                    	fire_check ++;
+                  //To control the firing of this event
+                    if(fire_check == counter)
+                    {
+                		for(var k=0; k<source.length; k++)
+                		{
+                			if(c.sourceId == source[k])
+                	    	{
+                		 		alert("Only one outgoing connection per node is allowed");
+                		 		fire_check = 0;
+                		 		return false;
+                	    	}
+                		}
+                		for(var k=0; k<source.length; k++)
+                		{
+                			if(c.targetId == target[k])
+                	    	{
+                		 		alert("Only one incoming connection per node is allowed");
+                		 		fire_check = 0;
+                		 		return false;
+                	    	}
+                		}
+                		source[i] = c.sourceId;
+                		target[i] = c.targetId;
+                		i++; 
+                        fire_check = 0;
+                    }
+                    return true;
+                    }); 
+
 					jsPlumb.bind("click", function(c) { 
 						jsPlumb.detach(c); 
 					});

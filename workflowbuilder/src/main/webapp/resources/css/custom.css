@@ -16,13 +16,11 @@
 }
  
  .container{
-  
 	width: 100%;
 	padding-right: 1px;
     padding-left: 1px;
     margin-bottom: 1px;
     margin-top: 1px;
-	       
   }
  
  .tool-box {
@@ -45,7 +43,6 @@
 	position:relative;
 }
 
-
 .square {
 	width: 80px;
 	height: 80px;
@@ -66,7 +63,7 @@
 	position:relative;
 }
 
-.rect {
+.rectangleCoral {
 	width: 80px;
 	height: 40px;
 	background:coral;
@@ -77,8 +74,8 @@
 }
 
 .oval {
-	width: 100px;
-	height: 50px;
+	width: 80px;
+	height: 40px;
 	background:green;
 	border-radius: 100px / 50px;
 	border:2px solid black;
@@ -87,7 +84,7 @@
 	position:relative;
 }
 
-.connectorTrans
+.connectorEndPoint
 {
 opacity : 0.2;
 }

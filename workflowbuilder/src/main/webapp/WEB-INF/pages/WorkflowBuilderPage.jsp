@@ -183,10 +183,6 @@
 										jsPlumb.detach(c);
 									});
 
-									$(newDiv).bind("click", function() {
-										$(newDiv).remove();
-										jsPlumb.deleteEndpoint(divID);
-									});
 									jsPlumb.repaintEverything();
 
 									original = false;

@@ -1,12 +1,16 @@
 package edu.indiana.oosm.workflowbuilder.controller;
 
+import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +30,10 @@ public class WorkflowBuilderController{
 
 	//Recieving input using @RequestBody
 	@RequestMapping(value="export", method = RequestMethod.POST)
-	public ModelAndView exportToXML(@RequestBody Map<String,List<Map<String,String>>> properties){
+	public ModelAndView exportToXML(@RequestBody Properties properties) throws JAXBException{
 		System.out.println("After success");
+		System.out.println(properties.getProperty());
+		jsonToXml(properties);
 		
 //		System.out.println(object.getObject().get(0).getProperty());
 //		PropertyClass property = new PropertyClass();
@@ -43,6 +49,21 @@ public class WorkflowBuilderController{
 		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
 		return model;
 	}
+	
+	public void moxyXml() throws JAXBException{
+		JAXBContext jc = JAXBContext.newInstance(Foo.class);
+		Foo f=new Foo();
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		Map<String,String> m= new HashMap<String,String>();
+		f.setMap(m);
+		m.put("Name","Prashanth");
+		m.put("Address", "Info West");
+		
+		list.add(m);
+		
+		System.out.println(list.get(0));
+		marshallUnmarshall(jc,f);
+	}
 		
 		public String pojo2Xml(Property property) throws JAXBException{
 			return "test";
@@ -50,8 +71,58 @@ public class WorkflowBuilderController{
 		
 
 	
+	public void jsonToXml(Properties properties) throws JAXBException{
+		JAXBContext jc = JAXBContext.newInstance(ListHashMap.class);
+		ListHashMap l=new ListHashMap();
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		Map<String,String> m= new HashMap<String,String>();
+		
+		Map<String,String> m1= new HashMap<String,String>();
+		
+		m.put("Address", "Info West");
+		m1.put("Name","Prashanth");
+		
+		list.add(m);
+		list.add(m1);
+		
+		l.setList(properties.getProperty());
+		
+		System.out.println(list.get(0));
+		marshallUnmarshallForListMap(jc, l);
+		
+	}
 	
+	private void marshallUnmarshall(JAXBContext jaxbContext, Foo foo)throws JAXBException{
+		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		
+		StringWriter result = new StringWriter();
+		jaxbMarshaller.marshal(foo, result);
+		
+		String xml = result.toString();
+		System.out.println(xml);
+		
+		
+		/*
+		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+		StringReader*/
+	}
 	
+	private void marshallUnmarshallForListMap(JAXBContext jaxbContext, ListHashMap lhm)throws JAXBException{
+		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		
+		StringWriter result = new StringWriter();
+		jaxbMarshaller.marshal(lhm, result);
+		
+		String xml = result.toString();
+		System.out.println(xml);
+		
+		
+		/*
+		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+		StringReader*/
+	}
 	//Recieving input using @RequestBody
 //	@RequestMapping(value="export", method = RequestMethod.POST)
 //	public ModelAndView exportToXML(@RequestBody Property property){

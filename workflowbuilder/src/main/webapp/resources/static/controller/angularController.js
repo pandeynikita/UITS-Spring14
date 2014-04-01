@@ -73,12 +73,23 @@ var angularModalCtrl = function($scope,$modal,$http){
 	//Example for Ajax post for JSON
 	$scope.angularExport= function(){
 		console.log($scope.jsonData);
+		var propertyData = convertJsonDataToPropertyData($scope.jsonData);
+		var arr = [];
+		for (elem in $scope.jsonData["configurationId"]) {
+			var test = {};
+			test[elem] = $scope.jsonData["configurationId"][elem];
+			arr.push(test);
+		}
 //		var responsePromise = $http.post("export.htm",JSON.stringify({"property":['test1','test2']}));
-
-		var responsePromise = $http.post("export.htm",JSON.stringify({"properties":[{
+		/*console.log({"property":[{
 		        ActivationType:"serial"
-		    },{ActivationType:"parallel"}]}
-	));
+		    },{ActivationType:"parallel"}]});*/
+		/*var responsePromise = $http.post("export.htm",JSON.stringify({"property":[{
+		        ActivationType:"serial"
+		    },{ActivationType:"parallel"}]}*/
+		
+		var responsePromise = $http.post("export.htm",JSON.stringify({"property":arr}));
+		
 //		var responsePromise = $http.post("export.htm",JSON.stringify({"object":[{"property":[{
 //			        ActivationType:"serial"
 //			    },{ActivationType:"parallel"}]},{"property":[{
@@ -92,6 +103,12 @@ var angularModalCtrl = function($scope,$modal,$http){
 			console.log(status+" "+" "+ data);
 		});
 	};
+};
+
+var convertJsonDataToPropertyData = function(jsonData){
+	
+	console.log({"properties":jsonData['configurationId']});
+	return {"properties":jsonData['configurationId']};
 };
 
 //ModalController will be called by modal with local parameter and $modalInstance

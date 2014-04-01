@@ -3,6 +3,7 @@ package edu.indiana.oosm.workflowbuilder.controller;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -18,9 +19,9 @@ public class TestMap {
 //		this.testMap = testMap;
 //	}
 	
-	@XmlAttribute
+	@XmlElement
 	public String key;
 	
-	@XmlValue
+	@XmlElement
 	public String value;
 }

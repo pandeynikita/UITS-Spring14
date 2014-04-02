@@ -16,13 +16,11 @@
 }
  
  .container{
-  
 	width: 100%;
 	padding-right: 1px;
     padding-left: 1px;
     margin-bottom: 1px;
     margin-top: 1px;
-	       
   }
  
  .tool-box {
@@ -45,7 +43,6 @@
 	position:relative;
 }
 
-
 .square {
 	width: 80px;
 	height: 80px;
@@ -66,13 +63,33 @@
 	position:relative;
 }
 
+.rectangleCoral {
+	width: 80px;
+	height: 40px;
+	background:coral;
+	border:2px solid black;
+	border-style:solid;
+	padding:4px 3px 1px 3px;
+	position:relative;
+}
+
 .oval {
-	width: 100px;
-	height: 50px;
+	width: 80px;
+	height: 40px;
 	background:green;
 	border-radius: 100px / 50px;
 	border:2px solid black;
 	border-style:solid;
 	padding:4px 3px 1px 3px;
 	position:relative;
+}
+
+.connectorEndPoint
+{
+opacity : 0.2;
+}
+
+.modal .modal-body {
+    max-height: 420px;
+    overflow-y: auto;
 }

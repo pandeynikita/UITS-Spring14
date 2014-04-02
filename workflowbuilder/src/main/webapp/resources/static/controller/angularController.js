@@ -73,37 +73,51 @@ var angularModalCtrl = function($scope,$modal,$http){
 	};
 	//Example for Ajax post for JSON
 	$scope.angularExport= function(){
-		console.log($scope.jsonData);
+		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post("export.htm",
-				JSON.stringify({
-					name:"Test.RequestDoctype",
-					parent:"Test.ParentDoctype",
-					description:"Test.Request DocumentType",
-					label:"Test.Request DocumentType",
-					postProcessorName:"org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor",
-					superUserGroupName:"Test.Superusers",
-					blanketApprovePolicy:"NONE",
-					reportingGroupName:"Test.Reporting.Workgroup",
-					defaultExceptionGroupName:"Test.Superusers",
-					docHandler:"${workflow.url}/EDocLite",
-					active:"true",
-					routingVersion:2,
-					routeNodes:{
-						start:[{
-							activationType:"P",
-							mandatoryRoute:"false",
-							finalApproval:"false"
-						}],
-						requests:[],
-						simple:[]
-					}
-				}));
+				JSON.stringify(serverSideInputData
+						));
 		responsePromise.success(function(data,status,headers,config){
 			console.log(status);
 		});
 		responsePromise.error(function(data,status,headers,config){
 			console.log(status+" "+data);
 		});
+	};
+	var customizeTheJsonDataForServerSide = function(clientSideJsonData){
+		console.log(clientSideJsonData);
+		var serverSideJsonData ={};
+		
+		if(clientSideJsonData["configurationId"]){
+			serverSideJsonData["parent"] = clientSideJsonData["configurationId"]["Parent"];
+		} else {
+			console.log("ERROR:Configure need to added before pressing export");
+		}
+		console.log(serverSideJsonData);
+		var serverData = {
+				parent:"Test.ParentDoctype",
+				name:"Test.RequestDoctype",
+				description:"Test.Request DocumentType",
+				label:"Test.Request DocumentType",
+				postProcessorName:"org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor",
+				superUserGroupName:"Test.Superusers",
+				blanketApprovePolicy:"NONE",
+				reportingGroupName:"Test.Reporting.Workgroup",
+				defaultExceptionGroupName:"Test.Superusers",
+				docHandler:"${workflow.url}/EDocLite",
+				active:"true",
+				routingVersion:2,
+				routeNodes:{
+					start:[{
+						activationType:"P",
+						mandatoryRoute:"false",
+						finalApproval:"false"
+					}],
+					requests:[],
+					simple:[]
+				}
+			};
+		return serverData;
 	};
 };
 

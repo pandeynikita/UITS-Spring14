@@ -165,7 +165,7 @@ var nodesConfiguration = {
 					"edit" : "Yes"
 				},
 				"defaultExceptionGroupName " : {
-					"label" : "Default Exception Group Name ",
+					"label" : "Default Exception Group Name",
 					"type" : "text",
 					"defaultVal" : "Test.Superusers",
 					"edit" : "Yes"

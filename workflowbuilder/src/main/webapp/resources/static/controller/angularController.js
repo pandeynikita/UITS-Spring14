@@ -1,5 +1,5 @@
 angular.module('workFlowBuilder',['ui.bootstrap']);
-var angularModalCtrl = function($scope,$modal){
+var angularModalCtrl = function($scope,$modal,$http){
 //	Master json storage, which will have unique div 
 //	idOfDiv as key and its properties values
 	//INITIALIZATION
@@ -21,15 +21,15 @@ var angularModalCtrl = function($scope,$modal){
 		});
 
 	};
-	
-	
+
+
 
 //	On double clicking on each components which are in drop-area
 //	this function will be called
 //	IMPORTANT UPDATE ORIGINAL condition to avoid tool box accessing
 	$scope.open = function (image,idOfDiv,nodesConfiguration) {
 		$scope.nodes = nodesConfiguration;
-		
+
 //		the $modal service has only one method: open(options)
 //		templateUrl - a path to a template representing modal's content
 //		a controller for a modal instance - it can initialize scope used by modal.
@@ -52,7 +52,8 @@ var angularModalCtrl = function($scope,$modal){
 						"selectedNode":$scope.nodes[image],	//Current Node which we are dealling
 						"alreadyPresent":alreadyPresentFlag,//Data already present or not
 						"data":$scope.jsonData,				//Master storage- jsonData
-						"idOfDiv":idOfDiv								//Id of the current div element, which is the key for jsonData
+						"idOfDiv":idOfDiv,					//Id of the current div element, which is the key for jsonData
+						"image":image						//Used to customize the input for server
 					};
 				}
 			}
@@ -62,6 +63,7 @@ var angularModalCtrl = function($scope,$modal){
 		//perform all house keeping tasks here
 		modalInstance.result.then(function (objectNeedToBeStored) {
 			//Called when, save is pressed
+			console.log(objectNeedToBeStored);
 			$scope.jsonData[idOfDiv]= objectNeedToBeStored;
 			console.log("Modal:Save has been pressed");
 		}, function (string) {
@@ -69,7 +71,54 @@ var angularModalCtrl = function($scope,$modal){
 			console.log("Modal:cancel has been pressed");
 		});
 	};
-
+	//Example for Ajax post for JSON
+	$scope.angularExport= function(){
+		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
+		var responsePromise = $http.post("export.htm",
+				JSON.stringify(serverSideInputData
+						));
+		responsePromise.success(function(data,status,headers,config){
+			console.log(status);
+		});
+		responsePromise.error(function(data,status,headers,config){
+			console.log(status+" "+data);
+		});
+	};
+	var customizeTheJsonDataForServerSide = function(clientSideJsonData){
+		console.log(clientSideJsonData);
+		var serverSideJsonData ={};
+		
+		if(clientSideJsonData["configurationId"]){
+			serverSideJsonData["parent"] = clientSideJsonData["configurationId"]["Parent"];
+		} else {
+			console.log("ERROR:Configure need to added before pressing export");
+		}
+		console.log(serverSideJsonData);
+		var serverData = {
+				parent:"Test.ParentDoctype",
+				name:"Test.RequestDoctype",
+				description:"Test.Request DocumentType",
+				label:"Test.Request DocumentType",
+				postProcessorName:"org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor",
+				superUserGroupName:"Test.Superusers",
+				blanketApprovePolicy:"NONE",
+				reportingGroupName:"Test.Reporting.Workgroup",
+				defaultExceptionGroupName:"Test.Superusers",
+				docHandler:"${workflow.url}/EDocLite",
+				active:"true",
+				routingVersion:2,
+				routeNodes:{
+					start:[{
+						activationType:"P",
+						mandatoryRoute:"false",
+						finalApproval:"false"
+					}],
+					requests:[],
+					simple:[]
+				}
+			};
+		return serverData;
+	};
 };
 
 //ModalController will be called by modal with local parameter and $modalInstance
@@ -79,11 +128,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//but, will be populated by the dynamic modal with keys as property -> label
 	//and value as the value we type.
 	//INITIALIZATION
-	$scope.dataStorage = {};
-	$scope.component = localParameter.selectedNode;
-	localJsonData = localParameter.data;
-	idOfDiv = localParameter.idOfDiv;
+	$scope.dataStorage 	= {};
+	$scope.component 	= localParameter.selectedNode;
+	localJsonData 		= localParameter.data;
+	idOfDiv 			= localParameter.idOfDiv;
+	image 				= localParameter.image; 
 	$scope.properties = $scope.component.properties;
+
 
 	//Check, whether the data is already present in the system
 	//if so, please update those values through two way binding of angular
@@ -94,6 +145,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			$scope.dataStorage[label] = localJsonData[idOfDiv][label];
 		});
 	} else {
+		$scope.dataStorage["image"] = image;
 		$.each($scope.properties, function(key, value) {
 			if($scope.properties[key].defaultVal){
 				label = $scope.properties[key].label;
@@ -147,7 +199,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
-	
+
 	//Checking whether the input type is email, if so return true
 	$scope.isEditable= function(property) {
 		if(property.edit =="Yes"){

@@ -88,7 +88,30 @@ var angularModalCtrl = function($scope,$modal,$http){
 		        ActivationType:"serial"
 		    },{ActivationType:"parallel"}]}*/
 		
-		var responsePromise = $http.post("export.htm",JSON.stringify({"property":arr}));
+		var responsePromise = $http.post("exportFinal.htm",
+				JSON.stringify({
+					name:"Test.RequestDoctype",
+					parent:"Test.ParentDoctype",
+					description:"Test.Request DocumentType",
+					label:"Test.Request DocumentType",
+					postProcessorName:"org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor",
+					superUserGroupName:"Test.Superusers",
+					blanketApprovePolicy:"NONE",
+					reportingGroupName:"Test.Reporting.Workgroup",
+					defaultExceptionGroupName:"Test.Superusers",
+					docHandler:"${workflow.url}/EDocLite",
+					active:"true",
+					routingVersion:2,
+					routeNodes:{
+					start:[{
+						activationType:"P",
+						mandatoryRoute:"false",
+						finalApproval:"false"
+						}],
+					requests:[],
+					simple:[]
+					}
+				}));
 		
 //		var responsePromise = $http.post("export.htm",JSON.stringify({"object":[{"property":[{
 //			        ActivationType:"serial"

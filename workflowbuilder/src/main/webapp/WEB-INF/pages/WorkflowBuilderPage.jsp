@@ -55,11 +55,18 @@
 					</select>
 				</div>
 
-				<div ng-if="isTextType(property)">
+				<div ng-if="isTextType(property) && isEditable(property)">
 								<input 	type="text" 
 								ng-model="dataStorage[property.label]" 
 								placeholder="Text" 
 								class="form-control"> 
+				</div>
+
+				<div ng-if="isTextType(property) && !isEditable(property)">
+								<input 	type="text" 
+								ng-model="dataStorage[property.label]" 
+								placeholder="Text" 
+								class="form-control" readonly> 
 				</div>
 				
 				<div ng-if="isEmailType(property)">

@@ -147,6 +147,15 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
+	
+	//Checking whether the input type is email, if so return true
+	$scope.isEditable= function(property) {
+		if(property.edit =="Yes"){
+			return true;
+		} else {
+			return false;
+		}
+	};
 };
 
 

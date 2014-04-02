@@ -88,26 +88,53 @@
 		</div>
 		<div id="editor-window" class="container">
 			<div class="tool-box ui-widget ui-helper-clearfix">
-				<div class="draggable w circle ui-corner-tr ui-widget-content ">
-					<font color="white">Start</font>
-				</div>
-				<br>
-				<div class="draggable w square ui-corner-tr ui-widget-content">
-					<font color="white">Email</font>
-				</div>
-				<br>
-				<div class="draggable w rectangle ui-corner-tr ui-widget-content">
-					<font color="white">Request</font>
-				</div>
-				<br>
-				<div class="draggable w oval ui-corner-tr ui-widget-content">
-					<font color="white">Simple</font>
-				</div>
-				<br>
-				<div class="draggable w rectangleCoral r ui-corner-tr ui-widget-content">
-					<font color="white">Role</font>
-				</div>
-			</div>
+				<div class="panel-group" id="accordion">
+  					<div class="panel panel-default">
+    					<div class="panel-heading">
+    						<h4 class="panel-title">
+      							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+        							Components
+      							</a>
+      						</h4>
+    					</div>
+    					<div id = "collapseOne" class="panel-collapse collapse">
+    						<div class="panel-body">
+								<div class="draggable w circle ui-corner-tr ui-widget-content ">
+									<font color="white">Start</font>
+								</div>
+								<br>
+								<div class="draggable w square ui-corner-tr ui-widget-content">
+									<font color="white">Email</font>
+								</div>
+								<br>
+								<div class="draggable w rectangle ui-corner-tr ui-widget-content">
+									<font color="white">Request</font>
+								</div>
+								<br>
+								<div class="draggable w oval ui-corner-tr ui-widget-content">
+									<font color="white">Simple</font>
+								</div>
+								<br>
+								<div class="draggable w rectangleCoral r ui-corner-tr ui-widget-content">
+									<font color="white">Role</font>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">For other tabs</a>
+      						</h4>
+    					</div>
+    					<div id="collapseTwo" class="panel-collapse collapse">
+      						<div class="panel-body">
+        						<p>Include information for other tabs</p>
+        					</div>
+    					</div>
+  					</div>	
+  				</div>
+  			</div>			
 			<div class="drop-area statemachine-demo ui-widget-content ui-state-default"></div>
 		</div>
 	</div>

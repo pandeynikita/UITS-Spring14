@@ -1,5 +1,5 @@
 angular.module('workFlowBuilder',['ui.bootstrap']);
-var angularModalCtrl = function($scope,$modal){
+var angularModalCtrl = function($scope,$modal,$http){
 //	Master json storage, which will have unique div 
 //	idOfDiv as key and its properties values
 	//INITIALIZATION
@@ -21,15 +21,15 @@ var angularModalCtrl = function($scope,$modal){
 		});
 
 	};
-	
-	
+
+
 
 //	On double clicking on each components which are in drop-area
 //	this function will be called
 //	IMPORTANT UPDATE ORIGINAL condition to avoid tool box accessing
 	$scope.open = function (image,idOfDiv,nodesConfiguration) {
 		$scope.nodes = nodesConfiguration;
-		
+
 //		the $modal service has only one method: open(options)
 //		templateUrl - a path to a template representing modal's content
 //		a controller for a modal instance - it can initialize scope used by modal.
@@ -69,7 +69,40 @@ var angularModalCtrl = function($scope,$modal){
 			console.log("Modal:cancel has been pressed");
 		});
 	};
-
+	//Example for Ajax post for JSON
+	$scope.angularExport= function(){
+		console.log($scope.jsonData);
+		var responsePromise = $http.post("export.htm",
+				JSON.stringify({
+					name:"Test.RequestDoctype",
+					parent:"Test.ParentDoctype",
+					description:"Test.Request DocumentType",
+					label:"Test.Request DocumentType",
+					postProcessorName:"org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor",
+					superUserGroupName:"Test.Superusers",
+					blanketApprovePolicy:"NONE",
+					reportingGroupName:"Test.Reporting.Workgroup",
+					defaultExceptionGroupName:"Test.Superusers",
+					docHandler:"${workflow.url}/EDocLite",
+					active:"true",
+					routingVersion:2,
+					routeNodes:{
+						start:[{
+							activationType:"P",
+							mandatoryRoute:"false",
+							finalApproval:"false"
+						}],
+						requests:[],
+						simple:[]
+					}
+				}));
+		responsePromise.success(function(data,status,headers,config){
+			console.log(status);
+		});
+		responsePromise.error(function(data,status,headers,config){
+			console.log(status+" "+data);
+		});
+	};
 };
 
 //ModalController will be called by modal with local parameter and $modalInstance
@@ -147,7 +180,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
-	
+
 	//Checking whether the input type is email, if so return true
 	$scope.isEditable= function(property) {
 		if(property.edit =="Yes"){

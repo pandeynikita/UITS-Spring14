@@ -56,13 +56,10 @@
 				</div>
 
 				<div ng-if="isTextType(property)">
-					<label>
-						<input 	type="text" 
+								<input 	type="text" 
 								ng-model="dataStorage[property.label]" 
 								placeholder="Text" 
 								class="form-control"> 
-						{{option}} 
-					</label>
 				</div>
 				
 				<div ng-if="isEmailType(property)">

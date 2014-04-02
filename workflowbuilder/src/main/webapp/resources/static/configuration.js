@@ -42,7 +42,8 @@ var nodesConfiguration = {
 				},
 				"ruleTemplate":{
 					"label":"Rule Template",
-					"type":"text"
+					"type":"text",
+					"edit" : "Yes"
 				},
 				"finalApproval":{
 					"label": "Final Approval",
@@ -60,16 +61,19 @@ var nodesConfiguration = {
 				"from" : {
 					"label" : "From",
 					"type" : "text",
-					"defaultVal" : "jawbenne@iu.edu"
+					"defaultVal" : "jawbenne@iu.edu",
+					"edit" : "Yes"
 				},
 				"to" : {
 					"label" : "To",
 					"type" : "text",
-					"defaultVal" : "pnagaraj@indiana.edu"
+					"defaultVal" : "pacharya@indiana.edu",
+					"edit" : "Yes"
 				},
 				"testAddress" : {
 					"label" : "Test Address",
-					"type" : "text"
+					"type" : "text",
+					"edit" : "Yes"
 				}
 			}
 		},
@@ -85,7 +89,8 @@ var nodesConfiguration = {
 				},
 				"type":{
 					"label":"Type",
-					"type":"text"
+					"type":"text",
+					"edit" : "Yes"
 			}
 			}
 		},
@@ -96,7 +101,8 @@ var nodesConfiguration = {
 			"properties":{
 				"type":{
 					"label":"Qualifier Resolver Class",
-					"type":"text"
+					"type":"text",
+					"edit" : "Yes"
 				},
 				"activationType" : {
 					"label" : "Activation Type",
@@ -113,42 +119,73 @@ var nodesConfiguration = {
 				"name" : {
 					"label" : "Name",
 					"type" : "text",
-					"defaultVal" : "RoleBasedRoutingTest.Type"
+					"defaultVal" : "Test.RequestDoctype",
+					"edit" : "Yes"
+				},
+				"parent" : {
+					"label" : "Parent",
+					"type" : "text",
+					"defaultVal" : "Test.ParentDoctype",
+					"edit" : "Yes"
 				},
 				"description" : {
 					"label" : "Description",
 					"type" : "text",
-					"defaultVal" : "Role-based routing test document"
+					"defaultVal" : "Test.Request DocumentType",
+					"edit" : "Yes"
 				},
 				"label" : {
 					"label" : "Label",
 					"type" : "text",
-					"defaultVal" : "Role-based Routing Test Document"
+					"defaultVal" : "Test.Request DocumentType",
+					"edit" : "Yes"
 				},
 				"postProcessorName" : {
 					"label" : "Post Processor Name",
 					"type" : "text",
-					"defaultVal" : "org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor"
+					"defaultVal" : "org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor",
+					"edit" : "Yes"
 				},
 				"superUserGroupName" : {
 					"label" : "Super User Group Name",
 					"type" : "text",
-					"defaultVal" : "WorkflowAdmin"
+					"defaultVal" : "Test.Superusers",
+					"edit" : "Yes"
+				},
+				"blanketApprovePolicy" : {
+					"label" : "Blanket Approve Policy",
+					"type" : "text",
+					"defaultVal" : "NONE",
+					"edit" : "Yes"
+				},
+				"reportingGroupName" : {
+					"label" : "Reporting Group Name",
+					"type" : "text",
+					"defaultVal" : "Test.Reporting.Workgroup",
+					"edit" : "Yes"
+				},
+				"defaultExceptionGroupName " : {
+					"label" : "Default Exception Group Name ",
+					"type" : "text",
+					"defaultVal" : "Test.Superusers",
+					"edit" : "Yes"
 				},
 				"docHandler" : {
 					"label" : "Document Handler",
 					"type" : "text",
-					"defaultVal" : "${workflow.url}/EDocLite"
+					"defaultVal" : "${workflow.url}/EDocLite",
+					"edit" : "Yes"
 				},
 				"active" : {
 					"label" : "Active",
 					"type" : "radio",
-					"options" : [ "Yes", "No" ]
+					"options" : [ "True", "False" ]
 				},
 				"routingVersion" : {
 					"label" : "Routing Version",
 					"type" : "text",
-					"defaultVal" : "2"
+					"defaultVal" : "2",
+					"edit" : "No"
 				}
 			}
 		}

@@ -89,6 +89,11 @@
 opacity : 0.2;
 }
 
+.deleteNode
+{
+background:red;
+}
+
 .modal .modal-body {
     max-height: 420px;
     overflow-y: auto;

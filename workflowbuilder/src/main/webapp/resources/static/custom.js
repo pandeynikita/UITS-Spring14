@@ -1,6 +1,6 @@
 $(function() {
 
-		var counter = flag = fire_check = 0;
+		var counter = flag = fire_check = fire_check_click = 0;
 		var i = 0, id_circle = null,  source = [], target = [], original = false;
 		
 		//Get the angular scope for the mentioned controller
@@ -140,6 +140,25 @@ $(function() {
 													});
 
 									jsPlumb.bind("click", function(c) {		//Binding the click function of a connector to detach it
+										fire_check_click++;
+										//To control the firing of this event
+										if (fire_check_click == counter) {
+											for (var k = 0; k < source.length; k++) {
+												if (c.sourceId == source[k]) {
+													source.splice(k,1);
+													fire_check = 0;	
+													break;
+												}
+											}
+											for (var k = 0; k < target.length; k++) {
+												if (c.targetId == target[k]) {
+													target.splice(k,1);
+													fire_check = 0;
+													break;
+												}
+											}
+											fire_check_click = 0;
+										}
 										jsPlumb.detach(c);
 									});
 

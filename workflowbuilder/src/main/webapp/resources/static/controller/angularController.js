@@ -90,6 +90,26 @@ var angularModalCtrl = function($scope,$modal,$http){
 		
 		if(clientSideJsonData["configurationId"]){
 			serverSideJsonData["parent"] = clientSideJsonData["configurationId"]["Parent"];
+			serverSideJsonData["name"] = clientSideJsonData["configurationId"]["Name"];
+			serverSideJsonData["description"] = clientSideJsonData["configurationId"]["Description"];
+			serverSideJsonData["label"] = clientSideJsonData["configurationId"]["Label"];
+			serverSideJsonData["postProcessorName"] = clientSideJsonData["configurationId"]["Post Processor Name"];
+			serverSideJsonData["superUserGroupName"] = clientSideJsonData["configurationId"]["Super User Group Name"];
+			serverSideJsonData["blanketApprovePolicy"] = clientSideJsonData["configurationId"]["Blanket Approve Policy"];
+			serverSideJsonData["reportingGroupName"] = clientSideJsonData["configurationId"]["Reporting Group Name"];
+			serverSideJsonData["defaultExceptionGroupName"] = clientSideJsonData["configurationId"]["Default Exception Group Name"];
+			serverSideJsonData["docHandler"] = clientSideJsonData["configurationId"]["Document Handler"];
+			serverSideJsonData["active"] = clientSideJsonData["configurationId"]["Active"];
+			serverSideJsonData["routingVersion"] = clientSideJsonData["configurationId"]["Routing Version"];
+			serverSideJsonData["routeNodes"] = {
+					start:[{
+						activationType:"P",
+						mandatoryRoute:"false",
+						finalApproval:"false"
+					}],
+					requests:[],
+					simple:[]
+				}
 		} else {
 			console.log("ERROR:Configure need to added before pressing export");
 		}
@@ -117,7 +137,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 					simple:[]
 				}
 			};
-		return serverData;
+		return serverSideJsonData;
 	};
 };
 

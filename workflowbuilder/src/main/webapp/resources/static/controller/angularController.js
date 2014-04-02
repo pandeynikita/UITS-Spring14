@@ -107,8 +107,30 @@ var angularModalCtrl = function($scope,$modal,$http){
 						mandatoryRoute:"false",
 						finalApproval:"false"
 					}],
-					requests:[],
-					simple:[]
+					requests:[{
+						activationType:"P",
+						ruleTemplate:"Test.NetId",
+						mandatoryRoute:"false",
+						finalApproval:"false"
+					},{
+						activationType:"P",
+						ruleTemplate:"Test.Request.Supervisor",
+						mandatoryRoute:"false",
+						finalApproval:"true"
+					}],
+					simple:[{
+						from:"jawbenne@iu.edu",
+						to:"initiator",
+						testAddress:"jawbenne@iu.edu",
+						style:"Test.Supervisor.Approval.Email",
+						type:"org.kuali.rice.kew.mail.EmailNode"
+					},{
+						from:"jawbenne@iu.edu",
+						to:"initiator",
+						testAddress:"jawbenne@iu.edu",
+						style:"Test.Admin.Approval.Email",
+						type:"org.kuali.rice.kew.mail.EmailNode"
+					}]
 				}
 		} else {
 			console.log("ERROR:Configure need to added before pressing export");

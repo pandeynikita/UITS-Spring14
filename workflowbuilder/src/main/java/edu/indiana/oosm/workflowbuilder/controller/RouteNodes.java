@@ -4,6 +4,21 @@ public class RouteNodes {
 	private Start[] start;
 	private Requests[] requests;
 	private Simple[] simple;
+	private Role[] role;
+	private Email[] email;
+	
+	public Role[] getRole() {
+		return role;
+	}
+	public void setRole(Role[] role) {
+		this.role = role;
+	}
+	public Email[] getEmail() {
+		return email;
+	}
+	public void setEmail(Email[] email) {
+		this.email = email;
+	}
 	public Requests[] getRequests() {
 		return requests;
 	}

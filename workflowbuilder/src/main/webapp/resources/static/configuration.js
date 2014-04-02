@@ -99,7 +99,7 @@ var nodesConfiguration = {
 			"image": "rect",
 			"header":"Role Based Routing",
 			"properties":{
-				"type":{
+				"qualifierResolverClass":{
 					"label":"Qualifier Resolver Class",
 					"type":"text",
 					"edit" : "Yes"

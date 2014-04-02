@@ -52,7 +52,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 						"selectedNode":$scope.nodes[image],	//Current Node which we are dealling
 						"alreadyPresent":alreadyPresentFlag,//Data already present or not
 						"data":$scope.jsonData,				//Master storage- jsonData
-						"idOfDiv":idOfDiv								//Id of the current div element, which is the key for jsonData
+						"idOfDiv":idOfDiv,					//Id of the current div element, which is the key for jsonData
+						"image":image						//Used to customize the input for server
 					};
 				}
 			}
@@ -62,6 +63,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 		//perform all house keeping tasks here
 		modalInstance.result.then(function (objectNeedToBeStored) {
 			//Called when, save is pressed
+			console.log(objectNeedToBeStored);
 			$scope.jsonData[idOfDiv]= objectNeedToBeStored;
 			console.log("Modal:Save has been pressed");
 		}, function (string) {
@@ -112,11 +114,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//but, will be populated by the dynamic modal with keys as property -> label
 	//and value as the value we type.
 	//INITIALIZATION
-	$scope.dataStorage = {};
-	$scope.component = localParameter.selectedNode;
-	localJsonData = localParameter.data;
-	idOfDiv = localParameter.idOfDiv;
+	$scope.dataStorage 	= {};
+	$scope.component 	= localParameter.selectedNode;
+	localJsonData 		= localParameter.data;
+	idOfDiv 			= localParameter.idOfDiv;
+	image 				= localParameter.image; 
 	$scope.properties = $scope.component.properties;
+
 
 	//Check, whether the data is already present in the system
 	//if so, please update those values through two way binding of angular
@@ -127,6 +131,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			$scope.dataStorage[label] = localJsonData[idOfDiv][label];
 		});
 	} else {
+		$scope.dataStorage["image"] = image;
 		$.each($scope.properties, function(key, value) {
 			if($scope.properties[key].defaultVal){
 				label = $scope.properties[key].label;

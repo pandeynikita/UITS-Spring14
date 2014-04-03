@@ -136,29 +136,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 			console.log("ERROR:Configure need to added before pressing export");
 		}
 		console.log(serverSideJsonData);
-		var serverData = {
-				parent:"Test.ParentDoctype",
-				name:"Test.RequestDoctype",
-				description:"Test.Request DocumentType",
-				label:"Test.Request DocumentType",
-				postProcessorName:"org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor",
-				superUserGroupName:"Test.Superusers",
-				blanketApprovePolicy:"NONE",
-				reportingGroupName:"Test.Reporting.Workgroup",
-				defaultExceptionGroupName:"Test.Superusers",
-				docHandler:"${workflow.url}/EDocLite",
-				active:"true",
-				routingVersion:2,
-				routeNodes:{
-					start:[{
-						activationType:"P",
-						mandatoryRoute:"false",
-						finalApproval:"false"
-					}],
-					requests:[],
-					simple:[]
-				}
-			};
 		return serverSideJsonData;
 	};
 };

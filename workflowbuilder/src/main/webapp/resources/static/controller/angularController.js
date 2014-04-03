@@ -78,8 +78,11 @@ var angularModalCtrl = function($scope,$modal,$http){
 	//Example for Ajax post for JSON
 	$scope.angularExport= function(routePath){
 		console.log(routePath);
+//		Add next nodes to $scope.jsonData to process the server side object
+		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
-		var responsePromise = $http.post("export.htm",
+		var responsePromise = $http.post(
+				"export.htm",
 				JSON.stringify(
 						serverSideInputData
 				));
@@ -90,6 +93,15 @@ var angularModalCtrl = function($scope,$modal,$http){
 			console.log(status+" "+data);
 		});
 	};
+	
+	var addNextNodeToClientSideData = function(clientSideJsonData){
+		angular.forEach(clientSideJsonData, function(value, key){
+			console.log(key);
+		});
+	};
+	
+	
+	
 	
 	var customizeTheJsonDataForServerSide = function(clientSideJsonData){
 //		Defining server side pojo structure
@@ -103,16 +115,32 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		}
 		
 		var generatedServerSideJsonData = {};
-		var routeNodes = {};
+		var routeNodes 	= {};
+		var routePath 	= {};
+		var routePaths = {"routePath":routePath};
 		
-		var startArray = new Array();
-		var requestsArray = new Array();
-		var simpleArray = new Array();
+		//Nodes Array
+		var startNodes = new Array();
+		var requestsNodes = new Array();
+		var simpleNodes = new Array();
 		
-		routeNodes["start"] = startArray;
-		routeNodes["requests"] = requestsArray;
-		routeNodes["simple"] = simpleArray;
+		//Paths Array
+		var startPaths = new Array();
+		var requestsPaths = new Array();
+		var simplePaths = new Array();
+		
+		//Assigning values to routeNodes
+		routeNodes["start"] = startNodes;
+		routeNodes["requests"] = requestsNodes;
+		routeNodes["simple"] = simpleNodes;
+		
+		//Assigning values to routePaths
+		routePath["start"] = startPaths;
+		routePath["requests"] = requestsPaths;
+		routePath["simple"] = simplePaths;
+		
 		generatedServerSideJsonData["routeNodes"]= routeNodes;
+		generatedServerSideJsonData["routePaths"]= routePaths;
 		
 		//Predefined example for input values
 		var serverSideJsonData ={};
@@ -198,9 +226,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 					generatedServerSideJsonData[configureKey] = configureValue;
 				});
 			} else if (nodeType == "circle"){
-				startArray.push(generatedObject);
+				startNodes.push(generatedObject);
 			} else if (nodeType == "rectangle"){
-				requestsArray.push(generatedObject);
+				requestsNodes.push(generatedObject);
 			} 
 		});
 //		generatedObject = generateServerSideObject({"Test Test":"value", "Mandatory Route":"excape"});

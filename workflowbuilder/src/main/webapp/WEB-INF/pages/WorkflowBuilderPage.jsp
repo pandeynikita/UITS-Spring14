@@ -124,6 +124,10 @@
 								<div class="draggable w rectangleCoral r ui-corner-tr ui-widget-content">
 									<font color="white">Role</font>
 								</div>
+								<br>
+								<div class="draggable w ovalMagenta r ui-corner-tr ui-widget-content">
+									<font color="white">NoOp</font>
+								</div>
 							</div>
 						</div>
 					</div>

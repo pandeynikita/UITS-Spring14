@@ -9,7 +9,7 @@
  .drop-area {
 	float: left;
 	width: 75%;
-	height:550px;
+	height:490px;
 	padding: 5px;
 	text-align: center;
 	border: 2px solid black;
@@ -26,7 +26,7 @@
  .tool-box {
 	float: left;
 	width: 25%;
-	height:550px;
+	height:490px;
 	padding: 1%;
 	text-align: center;
 	border: 2px solid black;
@@ -84,6 +84,16 @@
 	position:relative;
 }
 
+.ovalMagenta {
+	width: 80px;
+	height: 40px;
+	background:darkmagenta;
+	border-radius: 100px / 50px;
+	border:2px solid black;
+	border-style:solid;
+	padding:4px 3px 1px 3px;
+	position:relative;
+}
 .connectorEndPoint
 {
 opacity : 0.2;

@@ -114,25 +114,8 @@ var nodesConfiguration = {
 				}
 			}
 		},
-		"ovalMagenta":{
-			"name" : "requests",
-			"image" : "ovalMagenta",
-			"header" : "NoOp",
-			"properties" : {
-				"activationType" : {
-					"label" : "Activation Type",
-					"type" : "select",
-					"options" : [ "Parallel", "serial" ]
-				},
-				"type":{
-					"label":"Type",
-					"type":"text",
-					"defaultVal": "org.kuali.rice.kew.engine.node.NoOpNode",
-					"edit" : "Yes"
-				}
-			}
-		},
-		"rect":{
+		
+		"rectangleCoral":{
 			"name" : "requests",
 			"image": "rect",
 			"header":"Role Based Routing",

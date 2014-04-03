@@ -21,7 +21,7 @@ var nodesConfiguration = {
 					"type" : "radio",
 					"options":["Yes", "No"]
 				}
-				
+
 			}
 		},
 		"rectangle" :{
@@ -29,7 +29,7 @@ var nodesConfiguration = {
 			"image" : "rectangle",
 			"header" : "Action Configuration",
 			"properties" : {
-				
+
 				"activationType" : {
 					"label" : "Activation Type",
 					"type" : "select",
@@ -50,7 +50,7 @@ var nodesConfiguration = {
 					"type" : "radio",
 					"options":["Yes", "No"]
 				}
-				
+
 			}
 		},
 		"square":{
@@ -83,15 +83,15 @@ var nodesConfiguration = {
 			"header":"Simple Node",
 			"properties":{
 				"activationType" : {
-				"label" : "Activation Type",
-				"type" : "select",
-				"options" : [ "Parallel", "serial" ]
+					"label" : "Activation Type",
+					"type" : "select",
+					"options" : [ "Parallel", "serial" ]
 				},
 				"type":{
 					"label":"Type",
 					"type":"text",
 					"edit" : "Yes"
-			}
+				}
 			}
 		},
 		"rect":{
@@ -109,7 +109,7 @@ var nodesConfiguration = {
 					"type" : "select",
 					"options" : [ "Parallel", "serial" ]
 				}
-		
+
 			}
 		},
 		"configure" : {

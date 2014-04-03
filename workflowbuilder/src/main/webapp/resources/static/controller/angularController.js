@@ -63,7 +63,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 		//perform all house keeping tasks here
 		modalInstance.result.then(function (objectNeedToBeStored) {
 			//Called when, save is pressed
-			console.log(objectNeedToBeStored);
 			$scope.jsonData[idOfDiv]= objectNeedToBeStored;
 			console.log("Modal:Save has been pressed");
 		}, function (string) {
@@ -76,7 +75,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post("export.htm",
 				JSON.stringify(serverSideInputData
-						));
+				));
 		responsePromise.success(function(data,status,headers,config){
 			console.log(status);
 		});
@@ -85,9 +84,30 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 	};
 	var customizeTheJsonDataForServerSide = function(clientSideJsonData){
-		console.log(clientSideJsonData);
-		var serverSideJsonData ={};
+//		Defining server side pojo structure
+//		{
+//			configurationDetails : values,
+//			routeNodes{
+//				start : arrayOfStartObject,
+//				request : arrayOfrequestsObject,
+//				simple : arrayOfSimpleObject
+//			}
+//		}
 		
+		var generatedServerSideJsonData = {};
+		var routeNodes = {};
+		
+		var startArray = new Array();
+		var requestsArray = new Array();
+		var simpleArray = new Array();
+		
+		routeNodes["start"] = startArray;
+		routeNodes["requests"] = requestsArray;
+		routeNodes["simple"] = simpleArray;
+		generatedServerSideJsonData["routeNodes"]= routeNodes;
+		
+		//Predefined example for input values
+		var serverSideJsonData ={};
 		if(clientSideJsonData["configurationId"]){
 			serverSideJsonData["parent"] = clientSideJsonData["configurationId"]["Parent"];
 			serverSideJsonData["name"] = clientSideJsonData["configurationId"]["Name"];
@@ -131,12 +151,69 @@ var angularModalCtrl = function($scope,$modal,$http){
 						style:"Test.Admin.Approval.Email",
 						type:"org.kuali.rice.kew.mail.EmailNode"
 					}]
-				}
+			};
 		} else {
 			console.log("ERROR:Configure need to added before pressing export");
 		}
+		angular.forEach(clientSideJsonData, function(value, key){
+			var nodeType = clientSideJsonData[key]["image"];
+			var generatedObject = generateServerSideObject(clientSideJsonData[key]);
+			if(nodeType == "configure"){
+				angular.forEach(generatedObject, function(configureValue, configureKey){
+					generatedServerSideJsonData[configureKey] = configureValue;
+				});
+			} else if (nodeType == "circle"){
+				startArray.push(generatedObject);
+			} else if (nodeType == "rectangle"){
+				requestsArray.push(generatedObject);
+			} 
+		});
+//		generatedObject = generateServerSideObject({"Test Test":"value", "Mandatory Route":"excape"});
+//		console.log(generatedObject);
+		console.log("Need to be like this");
 		console.log(serverSideJsonData);
+		console.log("Currently, like this");
+		console.log(generatedServerSideJsonData);
 		return serverSideJsonData;
+	};
+	
+//	This function generates the server required object
+//	This function takes json object as input and converts into 
+//	pojo based input
+//	input :{
+//		"Mandatory Route" 	: "true",
+//		"Final Approval"	: "true",
+//		"image"				: "circle"
+//	} and convert it into
+//	output :{
+//		"mandatoryRoute" 	: "true",
+//		"finalApproval"		: "true"
+//	}
+	var generateServerSideObject = function(jsonObject){
+		var newJsonObject = {};
+		angular.forEach(jsonObject, function(value, key){
+			if(key != "image"){
+				var newKey = generateKey(key);
+				newJsonObject[newKey] = value;
+			}
+		});
+		return newJsonObject;
+	};
+	
+//	This funciton generates key by removing spaces between them
+//	and makes the first letter of the key as small
+//	input = "Mandatory Route"
+//	output = "mandatoryRoute"
+	var generateKey = function(key){
+		var newKey ="";
+		var splitKey = key.split(" ");
+		angular.forEach(splitKey, function(word,index){
+			if(index == 0){
+				word = word.toLowerCase();
+			}
+			newKey = newKey + word;
+		});
+		return newKey;
 	};
 };
 

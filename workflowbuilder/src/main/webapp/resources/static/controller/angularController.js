@@ -80,7 +80,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 		console.log(routePath);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post("export.htm",
-				JSON.stringify(serverSideInputData
+				JSON.stringify(
+						serverSideInputData
 				));
 		responsePromise.success(function(data,status,headers,config){
 			console.log(status);
@@ -89,6 +90,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 			console.log(status+" "+data);
 		});
 	};
+	
 	var customizeTheJsonDataForServerSide = function(clientSideJsonData){
 //		Defining server side pojo structure
 //		{

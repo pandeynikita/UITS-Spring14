@@ -27,7 +27,6 @@ public class WorkflowBuilderController{
 	//Recieving input using @RequestBody
 	@RequestMapping(value="export", method = RequestMethod.POST)
 	public ModelAndView exportToXml(@RequestBody Data data) throws JAXBException{
-		System.out.println("Success");
 		System.out.println(pojo2Xml(data));
 		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
 		return model;

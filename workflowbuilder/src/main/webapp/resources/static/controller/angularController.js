@@ -127,6 +127,28 @@ var angularModalCtrl = function($scope,$modal,$http){
 			serverSideJsonData["docHandler"] = clientSideJsonData["configurationId"]["Document Handler"];
 			serverSideJsonData["active"] = clientSideJsonData["configurationId"]["Active"];
 			serverSideJsonData["routingVersion"] = clientSideJsonData["configurationId"]["Routing Version"];
+			serverSideJsonData["routePaths"] = {routePath:{
+					start:[{
+						name:"Initiated",
+						nextNode:"Test.Submission.Email"
+					}],
+					requests:[{
+						name:"Test.NetId",
+						nextNode:"Test.Supervisor.Approval.Email"
+					},{
+						name:"Test.Request.Supervisor",
+						nextNode:"Test.Admin.Approval.Email"
+					}],
+					simple:[{
+						name:"Test.Submission.Email",
+						nextNode:"Test.NetId"
+					},{
+						name:"Test.Supervisor.Approval.Email",
+						nextNode:"Test.Request.Supervisor"
+					},{
+						name:"Test.Admin.Approval.Email" 
+					}]
+			}};
 			serverSideJsonData["routeNodes"] = {
 					start:[{
 						name:"Initiated",

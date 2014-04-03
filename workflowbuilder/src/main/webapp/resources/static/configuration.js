@@ -9,7 +9,7 @@ var nodesConfiguration = {
 				"mandatoryRoute" : {
 					"label" : "Mandatory Route",
 					"type" : "radio",
-					"options" : [ "Yes", "No" ]
+					"options" : [ "True", "False" ]
 				},
 				"activationType" : {
 					"label" : "Activation Type",
@@ -19,7 +19,7 @@ var nodesConfiguration = {
 				"finalApproval":{
 					"label": "Final Approval",
 					"type" : "radio",
-					"options":["Yes", "No"]
+					"options":["True", "False"]
 				}
 
 			}
@@ -38,7 +38,7 @@ var nodesConfiguration = {
 				"mandatoryRoute" : {
 					"label" : "Mandatory Route",
 					"type" : "radio",
-					"options" : [ "Yes", "No" ]
+					"options" : [ "True", "False" ]
 				},
 				"ruleTemplate":{
 					"label":"Rule Template",
@@ -48,7 +48,7 @@ var nodesConfiguration = {
 				"finalApproval":{
 					"label": "Final Approval",
 					"type" : "radio",
-					"options":["Yes", "No"]
+					"options":["True", "False"]
 				}
 
 			}
@@ -82,14 +82,34 @@ var nodesConfiguration = {
 			"image": "oval",
 			"header":"Simple Node",
 			"properties":{
-				"activationType" : {
-					"label" : "Activation Type",
-					"type" : "select",
-					"options" : [ "Parallel", "serial" ]
+				"from" : {
+					"label" : "From",
+					"type" : "text",
+					"defaultVal" : "jawbenne@iu.edu",
+					"edit" : "Yes"
+				},
+				"to" : {
+					"label" : "From",
+					"type" : "text",
+					"defaultVal" : "npandey@indiana.edu",
+					"edit" : "Yes"
+				},
+				"testAddress" : {
+					"label" : "Test Address",
+					"type" : "text",
+					"defaultVal" : "jawbenne@iu.edu",
+					"edit" : "Yes"
+				},
+				"style" : {
+					"label" : "Sty;e",
+					"type" : "text",
+					"defaultVal" : "Test.Admin.Approval.Email",
+					"edit" : "Yes"
 				},
 				"type":{
 					"label":"Type",
 					"type":"text",
+					"defaultVal": "org.kuali.rice.kew.mail.EmailNode",
 					"edit" : "Yes"
 				}
 			}
@@ -119,61 +139,51 @@ var nodesConfiguration = {
 				"name" : {
 					"label" : "Name",
 					"type" : "text",
-					"defaultVal" : "Test.RequestDoctype",
 					"edit" : "Yes"
 				},
 				"parent" : {
 					"label" : "Parent",
 					"type" : "text",
-					"defaultVal" : "Test.ParentDoctype",
 					"edit" : "Yes"
 				},
 				"description" : {
 					"label" : "Description",
 					"type" : "text",
-					"defaultVal" : "Test.Request DocumentType",
 					"edit" : "Yes"
 				},
 				"label" : {
 					"label" : "Label",
 					"type" : "text",
-					"defaultVal" : "Test.Request DocumentType",
 					"edit" : "Yes"
 				},
 				"postProcessorName" : {
 					"label" : "Post Processor Name",
 					"type" : "text",
-					"defaultVal" : "org.kuali.rice.edl.framework.workflow.EDocLitePostProcessor",
 					"edit" : "Yes"
 				},
 				"superUserGroupName" : {
 					"label" : "Super User Group Name",
 					"type" : "text",
-					"defaultVal" : "Test.Superusers",
 					"edit" : "Yes"
 				},
 				"blanketApprovePolicy" : {
 					"label" : "Blanket Approve Policy",
 					"type" : "text",
-					"defaultVal" : "NONE",
 					"edit" : "Yes"
 				},
 				"reportingGroupName" : {
 					"label" : "Reporting Group Name",
 					"type" : "text",
-					"defaultVal" : "Test.Reporting.Workgroup",
 					"edit" : "Yes"
 				},
 				"defaultExceptionGroupName " : {
 					"label" : "Default Exception Group Name",
 					"type" : "text",
-					"defaultVal" : "Test.Superusers",
 					"edit" : "Yes"
 				},
 				"docHandler" : {
 					"label" : "Document Handler",
 					"type" : "text",
-					"defaultVal" : "${workflow.url}/EDocLite",
 					"edit" : "Yes"
 				},
 				"active" : {

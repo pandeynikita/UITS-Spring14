@@ -1,11 +1,29 @@
 package edu.indiana.oosm.workflowbuilder.controller;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 
 public class Requests {
+	private String name;
+	private String nextNode;
 	private String activationType;
 	private String ruleTemplate;
 	private String mandatoryRoute;
 	private String finalApproval;
+	@XmlAttribute
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	@XmlAttribute
+	public String getNextNode() {
+		return nextNode;
+	}
+	public void setNextNode(String nextNode) {
+		this.nextNode = nextNode;
+	}
 	public String getActivationType() {
 		return activationType;
 	}

@@ -129,32 +129,37 @@ var angularModalCtrl = function($scope,$modal,$http){
 			serverSideJsonData["routingVersion"] = clientSideJsonData["configurationId"]["Routing Version"];
 			serverSideJsonData["routeNodes"] = {
 					start:[{
+						name:"Initiated",
 						activationType:"P",
 						mandatoryRoute:"false",
 						finalApproval:"false"
 					}],
 					requests:[{
+						name:"Test.NetId",
 						activationType:"P",
 						ruleTemplate:"Test.NetId",
 						mandatoryRoute:"false",
 						finalApproval:"false"
 					},{
+						name:"Test.Request.Supervisor",
 						activationType:"P",
 						ruleTemplate:"Test.Request.Supervisor",
 						mandatoryRoute:"false",
 						finalApproval:"true"
 					}],
 					simple:[{
+						name:"Test.Submission.Email",
+						from:"jawbenne@iu.edu",
+						to:"initiator",
+						testAddress:"jawbenne@iu.edu",
+						style:"Test.Submission.Email",
+						type:"org.kuali.rice.kew.mail.EmailNode"
+					},{
+						name:"Test.Supervisor.Approval.Email",
 						from:"jawbenne@iu.edu",
 						to:"initiator",
 						testAddress:"jawbenne@iu.edu",
 						style:"Test.Supervisor.Approval.Email",
-						type:"org.kuali.rice.kew.mail.EmailNode"
-					},{
-						from:"jawbenne@iu.edu",
-						to:"initiator",
-						testAddress:"jawbenne@iu.edu",
-						style:"Test.Admin.Approval.Email",
 						type:"org.kuali.rice.kew.mail.EmailNode"
 					}]
 			};

@@ -1,5 +1,6 @@
 package edu.indiana.oosm.workflowbuilder.controller;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 //@XmlSeeAlso({Start.class,})

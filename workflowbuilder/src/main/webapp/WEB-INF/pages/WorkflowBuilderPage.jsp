@@ -147,7 +147,7 @@
   			</div>			
 			<div class="drop-area statemachine-demo ui-widget-content ui-state-default"></div>
 		</div>
-		<button class="btn btn-primary" id="exportId" ng-click="angularExport()">Export</button>
+		<button class="btn btn-primary" id="exportId">Export</button>
 	</div>
 </body>
 </html>

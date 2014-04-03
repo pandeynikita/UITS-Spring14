@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
 		"docHandler",
 		"active",
 		"routingVersion",
+		"routePaths",
 "routeNodes"})
 public class Data{
 	private String name;
@@ -34,7 +35,14 @@ public class Data{
 	private String docHandler;
 	private String active;
 	private int routingVersion;
+	private RoutePaths routePaths;
 	private RouteNodes routeNodes;
+	public RoutePaths getRoutePaths() {
+		return routePaths;
+	}
+	public void setRoutePaths(RoutePaths routePaths) {
+		this.routePaths = routePaths;
+	}
 	public String getName() {
 		return name;
 	}

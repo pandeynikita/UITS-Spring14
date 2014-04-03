@@ -22,6 +22,11 @@ var angularModalCtrl = function($scope,$modal,$http){
 
 	};
 
+	$scope.angularExportFunction = function(routePath){
+		$scope.$apply(function(){
+			$scope.angularExport(routePath);
+		});
+	};
 
 
 //	On double clicking on each components which are in drop-area
@@ -71,7 +76,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 	};
 	//Example for Ajax post for JSON
-	$scope.angularExport= function(){
+	$scope.angularExport= function(routePath){
+		console.log(routePath);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post("export.htm",
 				JSON.stringify(serverSideInputData

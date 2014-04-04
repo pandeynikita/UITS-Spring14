@@ -28,6 +28,10 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 	};
 
+	
+	$scope.deleteSavedData = function(deleteId){
+		delete $scope.jsonData[deleteId];
+	};
 
 //	On double clicking on each components which are in drop-area
 //	this function will be called

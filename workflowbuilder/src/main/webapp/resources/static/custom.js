@@ -232,7 +232,10 @@ $(function() {
 										var divType = getNodeType($(".deleteNode"));
 										if (divType == "circle")
 											flag = 0;
-
+										var deleteId = $(
+										'.deleteNode')
+										.attr(
+										'id');
 										$('.deleteNode')
 										.each(
 												function() {
@@ -242,10 +245,7 @@ $(function() {
 															currentElement)
 															.attr(
 																	"id");
-													var deleteId = $(
-													'.deleteNode')
-													.attr(
-													'id');
+													
 													for (var x = 0; x <= source.length; x++) {
 
 														if (deleteId == source[x]) {
@@ -262,6 +262,7 @@ $(function() {
 												});
 										$(".deleteNode")
 										.remove();
+										_scope.deleteSavedData(deleteId);
 
 									} else {
 										$("div").removeClass(

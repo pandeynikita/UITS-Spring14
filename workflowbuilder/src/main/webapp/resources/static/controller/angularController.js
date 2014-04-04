@@ -48,13 +48,15 @@ var angularModalCtrl = function($scope,$modal,$http){
 			}
 			if(found == false)
 			bootbox.alert("one or more nodes are not connected");
-			
+			else if (found == true)
+			{
 			if($scope.checkSavedNodeData(droppedArray)){
 				$scope.angularExport(routePath);
 			}
 			else
 			{
 				bootbox.alert("Export cannot be done. Configuration of some node is missing");
+			}
 			}
 		
 			

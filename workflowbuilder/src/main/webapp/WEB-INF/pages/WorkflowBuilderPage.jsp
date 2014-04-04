@@ -21,6 +21,7 @@
 <script type="text/javascript" src="./resources/static/demo-list.js"></script>
 <script type="text/javascript" src="./resources/static/bootstrap.js"></script>
 <script type="text/javascript" src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<script type="text/javascript" src="./resources/static/bootbox.js"></script>
 <script type="text/javascript" src="./resources/static/custom.js"></script>
 <link rel="stylesheet" type="text/css" href="./resources/css/demo.css">
 <link rel="stylesheet" type="text/css" href="./resources/css/bootstrap.css">

@@ -32,7 +32,7 @@ $(function() {
 		var nodeType = getNodeType($(this));
 		// Check whether the configuration is available, else report an error
 		if (nodeType == -1) {
-			alert(nodeConfigurationNotAddedError);
+			bootbox.alert(nodeConfigurationNotAddedError);
 		} else {
 			var divId = $(this).attr("id");
 			// Call the angular function from jquery event handler
@@ -43,7 +43,7 @@ $(function() {
 	$('.draggable').mousedown(function() {
 		id_circle = getNodeType($(this));
 		if ((flag == 1) && (id_circle == "circle")) {
-			alert("Only one Start per Workflow is allowed");
+			bootbox.alert("Only one Start per Workflow is allowed");
 			exit;
 		}
 		original = true;
@@ -124,7 +124,7 @@ $(function() {
 								// to a component.
 
 								onMaxConnections : function(info, e) {
-									alert("Maximum connections ("
+									bootbox.alert("Maximum connections ("
 											+ info.maxConnections
 											+ ") reached");
 								}
@@ -158,14 +158,14 @@ $(function() {
 									if (fire_check == counter) {
 										for (var k = 0; k < source.length; k++) {
 											if (c.sourceId == source[k]) {
-												alert("Only one outgoing connection per node is allowed");
+												bootbox.alert("Only one outgoing connection per node is allowed");
 												fire_check = 0;
 												return false;
 											}
 										}
 										for (var k = 0; k < source.length; k++) {
 											if (c.targetId == target[k]) {
-												alert("Only one incoming connection per node is allowed");
+												bootbox.alert("Only one incoming connection per node is allowed");
 												fire_check = 0;
 												return false;
 											}
@@ -292,7 +292,7 @@ $(function() {
 								function() {
 									var nodeType = getNodeType($(this));
 									if (nodeType == -1) {
-										alert(nodeConfigurationNotAddedError);
+										bootbox.alert(nodeConfigurationNotAddedError);
 									} else {
 										var divId = $(this)
 										.attr("id");

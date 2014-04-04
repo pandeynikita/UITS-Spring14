@@ -2,123 +2,56 @@ package edu.indiana.oosm.workflowbuilder.controller;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
 
 @XmlRootElement(name="data")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(propOrder={
-		"name",
-		"parent",
-		"description",
-		"label",
-		"postProcessorName",
-		"superUserGroupName",
-		"blanketApprovePolicy",
-		"reportingGroupName",
-		"defaultExceptionGroupName",
-		"docHandler",
-		"active",
-		"routingVersion",
-		"routePaths",
-"routeNodes"})
+		"xmlns",
+		"xsi",
+		"schemaLocation",
+		"documentTypes"})
 public class Data{
-	private String name;
-	private String parent;
-	private String description;
-	private String label;
-	private String postProcessorName;
-	private String superUserGroupName;
-	private String blanketApprovePolicy;
-	private String reportingGroupName;
-	private String defaultExceptionGroupName;
-	private String docHandler;
-	private String active;
-	private String routingVersion;
-	private RoutePaths routePaths;
-	private RouteNodes routeNodes;
-	public RoutePaths getRoutePaths() {
-		return routePaths;
+	private DocumentTypes documentTypes;
+	private String xmlns = "ns:workflow";
+	private String xsi = "http://www.w3.org/2001/XMLSchema-instance";
+	private String schemaLocation = "ns:workflow resource:WorkflowData";
+	
+	@XmlAttribute
+	public String getXmlns() {
+		return xmlns;
 	}
-	public void setRoutePaths(RoutePaths routePaths) {
-		this.routePaths = routePaths;
+	
+	public void setXmlns(String xmlns) {
+		this.xmlns = xmlns ;
 	}
-	public String getName() {
-		return name;
+
+	public DocumentTypes getDocumentTypes() {
+		return documentTypes;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setDocumentTypes(DocumentTypes documentTypes) {
+		this.documentTypes = documentTypes;
 	}
-	public String getParent() {
-		return parent;
+	
+	@XmlAttribute(name="xmlns:xsi")
+	public String getXsi() {
+		return xsi;
 	}
-	public void setParent(String parent) {
-		this.parent = parent;
+
+	public void setXsi(String xsi) {
+		this.xsi = xsi;
 	}
-	public String getDescription() {
-		return description;
+	
+	@XmlAttribute(name="xsi:schemaLocation")
+	public String getSchemaLocation() {
+		return schemaLocation;
 	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	public String getPostProcessorName() {
-		return postProcessorName;
-	}
-	public void setPostProcessorName(String postProcessorName) {
-		this.postProcessorName = postProcessorName;
-	}
-	public String getSuperUserGroupName() {
-		return superUserGroupName;
-	}
-	public void setSuperUserGroupName(String superUserGroupName) {
-		this.superUserGroupName = superUserGroupName;
-	}
-	public String getBlanketApprovePolicy() {
-		return blanketApprovePolicy;
-	}
-	public void setBlanketApprovePolicy(String blanketApprovePolicy) {
-		this.blanketApprovePolicy = blanketApprovePolicy;
-	}
-	public String getReportingGroupName() {
-		return reportingGroupName;
-	}
-	public void setReportingGroupName(String reportingGroupName) {
-		this.reportingGroupName = reportingGroupName;
-	}
-	public String getDefaultExceptionGroupName() {
-		return defaultExceptionGroupName;
-	}
-	public void setDefaultExceptionGroupName(String defaultExceptionGroupName) {
-		this.defaultExceptionGroupName = defaultExceptionGroupName;
-	}
-	public String getDocHandler() {
-		return docHandler;
-	}
-	public void setDocHandler(String docHandler) {
-		this.docHandler = docHandler;
-	}
-	public String getActive() {
-		return active;
-	}
-	public void setActive(String active) {
-		this.active = active;
-	}
-	public String getRoutingVersion() {
-		return routingVersion;
-	}
-	public void setRoutingVersion(String routingVersion) {
-		this.routingVersion = routingVersion;
-	}
-	public RouteNodes getRouteNodes() {
-		return routeNodes;
-	}
-	public void setRouteNodes(RouteNodes routeNodes) {
-		this.routeNodes = routeNodes;
+
+	public void setSchemaLocation(String schemaLocation) {
+		this.schemaLocation = schemaLocation;
 	}
 }

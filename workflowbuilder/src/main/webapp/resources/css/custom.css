@@ -108,3 +108,15 @@ background:red;
     max-height: 420px;
     overflow-y: auto;
 }
+
+.panel-heading {
+    cursor: pointer;
+}
+
+#row > div {
+    display: inline-block;
+}
+
+#row > div + div {
+    margin-left: 10px
+}

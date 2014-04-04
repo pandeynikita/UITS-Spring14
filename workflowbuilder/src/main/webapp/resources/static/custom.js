@@ -9,6 +9,9 @@ $(function() {
 	//To save all the connected elements.
 	var routePath={}; 
 
+	//To save all the dropped elements.
+	var droppedArray= [];
+	
 	// Retrieve nodes type for the selected div element through
 	// recursively looping through allNodesType which is mentioned in
 	// configuration
@@ -24,7 +27,7 @@ $(function() {
 	// on click event handler for export button
 	$('#exportId').click(function() {
 		// Call the angular function from jquery event handler
-		_scope.angularExportFunction(routePath);
+		_scope.angularExportFunction(routePath, droppedArray);
 	});
 
 	// on click event handler for configuration node
@@ -85,6 +88,7 @@ $(function() {
 						counter++;
 						$(newDiv).attr("id", "dragged" + counter);
 						var divID = "dragged" + counter;
+						droppedArray[counter]=divID;
 						$(this).append(newDiv);
 						$(newDiv).removeClass("ui-draggable"); // removing
 						// jQuery draggable for the jsPlumb draggable to work }
@@ -262,6 +266,15 @@ $(function() {
 												});
 										$(".deleteNode")
 										.remove();
+										for(var j=1; j < droppedArray.length; j++){
+											if (deleteId == droppedArray[j]) {
+												droppedArray.splice(
+														j, 1);
+												break;
+											}
+											
+										}
+										console.log(droppedArray);
 										_scope.deleteSavedData(deleteId);
 
 									} else {

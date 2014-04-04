@@ -8,11 +8,10 @@ var angularModalCtrl = function($scope,$modal,$http){
 	 * 			"divId1": object,
 	 * 			"divId2": object};
 	 */
-
+	
 //	Need to be stored in a seperate file and assign it to this variable
 	$scope.nodes = null;
 	var configureKey = "configure";
-
 	//This function is called 
 	//by jquery event handler on click of any components
 	//$apply is to access angular funciton from other functions
@@ -22,17 +21,55 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 
 	};
-
-	//This function is called 
-	//by jquery event handler on click of export button 
-	//$apply is to access angular funciton from other functions
-	$scope.angularExportFunction = function(routePath){
+	
+ 	$scope.angularExportFunction = function(routePath,droppedArray){
+ 		
 		$scope.$apply(function(){
-			$scope.angularExport(routePath);
+			
+			var tempArray = new Array();
+			var i = 0;
+			$.each(routePath, function(key, value)
+			{
+				
+				tempArray[i] = key;
+				i++;
+				tempArray[i] = value;
+				i++;
+				
+			});
+
+			var found = false;
+			for (var i = 1; i < droppedArray.length; i++) {
+			    if (tempArray.indexOf(droppedArray[i]) > -1) 
+			        found = true;
+			        else found = false;
+			    
+			    
+			}
+			if(found == false)
+			bootbox.alert("one or more nodes are not connected");
+			
+			if($scope.checkSavedNodeData(droppedArray)){
+				$scope.angularExport(routePath);
+			}
+			else
+			{
+				bootbox.alert("Export cannot be done. Configuration of some node is missing");
+			}
+		
+			
 		});
 	};
-
-
+	
+	$scope.checkSavedNodeData = function(droppedArray) {
+		for(var i=1; i <= droppedArray.length-1 ; i++){
+			if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
+				return false;
+			}
+		}
+		return true;
+	};
+	
 	$scope.deleteSavedData = function(deleteId){
 		delete $scope.jsonData[deleteId];
 	};

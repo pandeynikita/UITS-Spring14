@@ -24,6 +24,13 @@ $(function() {
 		return -1;
 	};
 	
+	//To toggle between the up and down arrow on the accordion 
+	$('.collapse').on('hidden.bs.collapse', function(){
+		$(this).parent().find(".glyphicon-chevron-down").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
+		}).on('shown.bs.collapse', function(){
+		$(this).parent().find(".glyphicon-chevron-up").removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
+		});
+	
 	// on click event handler for export button
 	$('#exportId').click(function() {
 		// Call the angular function from jquery event handler

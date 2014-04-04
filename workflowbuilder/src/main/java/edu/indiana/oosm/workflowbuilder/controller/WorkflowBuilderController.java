@@ -33,7 +33,7 @@ public class WorkflowBuilderController{
 	}
 	//Recieving input using @RequestBody
 	@RequestMapping(value="export", method = RequestMethod.POST)
-	public ModelAndView exportToXml(@RequestBody Data dataObject) throws JAXBException, IOException{
+	public ModelAndView exportToXml(@RequestBody Data dataObject){
 		convertPojoToXml(dataObject);
 		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
 		return model;

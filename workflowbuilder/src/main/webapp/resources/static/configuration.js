@@ -234,7 +234,7 @@ var nodesConfiguration = {
 					"edit" : "Yes"
 				},
 				"docHandler" : {
-					"label" : "Document Handler",
+					"label" : "Doc Handler",
 					"type" : "text",
 					"edit" : "Yes"
 				},

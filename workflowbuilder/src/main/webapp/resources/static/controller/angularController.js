@@ -11,9 +11,10 @@ var angularModalCtrl = function($scope,$modal,$http){
 
 //	Need to be stored in a seperate file and assign it to this variable
 	$scope.nodes = null;
+	var configureKey = "configure";
 
-	//Testing to check how apply can be used in our project, Test will be called 
-	//by jquery event handler.
+	//This function is called 
+	//by jquery event handler on click of any components
 	//$apply is to access angular funciton from other functions
 	$scope.angularOpenFunction = function(image,idOfDiv,nodesConfiguration){
 		$scope.$apply(function(){
@@ -22,6 +23,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 
 	};
 
+	//This function is called 
+	//by jquery event handler on click of export button 
+	//$apply is to access angular funciton from other functions
 	$scope.angularExportFunction = function(routePath){
 		$scope.$apply(function(){
 			$scope.angularExport(routePath);
@@ -31,7 +35,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 
 //	On double clicking on each components which are in drop-area
 //	this function will be called
-//	IMPORTANT UPDATE ORIGINAL condition to avoid tool box accessing
 	$scope.open = function (image,idOfDiv,nodesConfiguration) {
 		$scope.nodes = nodesConfiguration;
 
@@ -75,9 +78,11 @@ var angularModalCtrl = function($scope,$modal,$http){
 			console.log("Modal:cancel has been pressed");
 		});
 	};
-	//Example for Ajax post for JSON
+	
+
 	$scope.angularExport= function(routePath){
-		console.log(routePath);
+//		Write a validation function to check all the component in div area has some saved data
+//		Write a validation function to check all the components in div area are connected. Using JsonData and routePath
 //		Add next nodes to $scope.jsonData to process the server side object
 		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
@@ -91,12 +96,31 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 		responsePromise.error(function(data,status,headers,config){
 			console.log(status+" "+data);
+			//Alert need to be added
 		});
 	};
 	
-	var addNextNodeToClientSideData = function(clientSideJsonData){
+//	Adding next node to each object if there is any and update 
+//	the client side json object
+	var addNextNodeToClientSideData = function(clientSideJsonData, routePath){
+		var nameField 	= "Name";
+		var nextNode 	= "Next Node"; 
+//		1. Traversing through each node object except configure as configure doesn't 
+//		have next node.
+//		2. Find key of each node object and use the same key onto routePath to find 
+//		its next node.
+//		3. if the next node is not empty, it has come next node, so proceed for those only
+//		4. find the next nodes name from the client side json object
+//		5. Create a new field called "Next Node" for each satisfying object and add it
+
 		angular.forEach(clientSideJsonData, function(value, key){
-			console.log(key);
+			if(key != configureKey){
+				next = routePath[key];
+				if(next){
+					nameOfNextNode = clientSideJsonData[next][nameField];
+					$scope.jsonData[key][nextNode] = nameOfNextNode;
+				}
+			}
 		});
 	};
 	
@@ -113,151 +137,214 @@ var angularModalCtrl = function($scope,$modal,$http){
 //				simple : arrayOfSimpleObject
 //			}
 //		}
+		//
+		var CIRCLE 			= "circle";
+		var RECTANGLE 		= "rectangle";
+		var OVAL 			= "oval";
+		var SQUARE 			= "square";
+		var RECTANGLECORAL  = "rectangleCoral";
+		var OVALMAGENTA		= "ovalMagenta";
 		
+		
+		var routePathKey 	= "routePath";
+		var routeNodeKey 	= "routeNode";
+		var routeNodes 		= {};
+		var routePath 		= {};
+		var routePaths 		= {"routePath":routePath};
 		var generatedServerSideJsonData = {};
-		var routeNodes 	= {};
-		var routePath 	= {};
-		var routePaths = {"routePath":routePath};
 		
 		//Nodes Array
-		var startNodes = new Array();
-		var requestsNodes = new Array();
-		var simpleNodes = new Array();
+		var startNodes 		= new Array();
+		var requestsNodes 	= new Array();
+		var simpleNodes 	= new Array();
+		var emailNodes		= new Array();
+		var roleNodes		= new Array();
 		
 		//Paths Array
-		var startPaths = new Array();
-		var requestsPaths = new Array();
-		var simplePaths = new Array();
+		var startPaths 		= new Array();
+		var requestsPaths 	= new Array();
+		var simplePaths 	= new Array();
+		var emailPaths		= new Array();
+		var rolePaths		= new Array();
 		
 		//Assigning values to routeNodes
-		routeNodes["start"] = startNodes;
-		routeNodes["requests"] = requestsNodes;
-		routeNodes["simple"] = simpleNodes;
+		routeNodes["start"] 	= startNodes;
+		routeNodes["requests"] 	= requestsNodes;
+		routeNodes["simple"] 	= simpleNodes;
+		routeNodes["email"] 	= emailNodes;
+		routeNodes["role"] 		= roleNodes;
 		
 		//Assigning values to routePaths
-		routePath["start"] = startPaths;
-		routePath["requests"] = requestsPaths;
-		routePath["simple"] = simplePaths;
+		routePath["start"] 		= startPaths;
+		routePath["requests"] 	= requestsPaths;
+		routePath["simple"] 	= simplePaths;
+		routePath["email"] 		= emailPaths;
+		routePath["role"] 		= rolePaths;
 		
 		generatedServerSideJsonData["routeNodes"]= routeNodes;
 		generatedServerSideJsonData["routePaths"]= routePaths;
 		
-		//Predefined example for input values
-		var serverSideJsonData ={};
-		if(clientSideJsonData["configurationId"]){
-			serverSideJsonData["parent"] = clientSideJsonData["configurationId"]["Parent"];
-			serverSideJsonData["name"] = clientSideJsonData["configurationId"]["Name"];
-			serverSideJsonData["description"] = clientSideJsonData["configurationId"]["Description"];
-			serverSideJsonData["label"] = clientSideJsonData["configurationId"]["Label"];
-			serverSideJsonData["postProcessorName"] = clientSideJsonData["configurationId"]["Post Processor Name"];
-			serverSideJsonData["superUserGroupName"] = clientSideJsonData["configurationId"]["Super User Group Name"];
-			serverSideJsonData["blanketApprovePolicy"] = clientSideJsonData["configurationId"]["Blanket Approve Policy"];
-			serverSideJsonData["reportingGroupName"] = clientSideJsonData["configurationId"]["Reporting Group Name"];
-			serverSideJsonData["defaultExceptionGroupName"] = clientSideJsonData["configurationId"]["Default Exception Group Name"];
-			serverSideJsonData["docHandler"] = clientSideJsonData["configurationId"]["Document Handler"];
-			serverSideJsonData["active"] = clientSideJsonData["configurationId"]["Active"];
-			serverSideJsonData["routingVersion"] = clientSideJsonData["configurationId"]["Routing Version"];
-			serverSideJsonData["routePaths"] = {routePath:{
-					start:[{
-						name:"Initiated",
-						nextNode:"Test.Submission.Email"
-					}],
-					requests:[{
-						name:"Test.NetId",
-						nextNode:"Test.Supervisor.Approval.Email"
-					},{
-						name:"Test.Request.Supervisor",
-						nextNode:"Test.Admin.Approval.Email"
-					}],
-					simple:[{
-						name:"Test.Submission.Email",
-						nextNode:"Test.NetId"
-					},{
-						name:"Test.Supervisor.Approval.Email",
-						nextNode:"Test.Request.Supervisor"
-					},{
-						name:"Test.Admin.Approval.Email" 
-					}]
-			}};
-			serverSideJsonData["routeNodes"] = {
-					start:[{
-						name:"Initiated",
-						activationType:"P",
-						mandatoryRoute:"false",
-						finalApproval:"false"
-					}],
-					requests:[{
-						name:"Test.NetId",
-						activationType:"P",
-						ruleTemplate:"Test.NetId",
-						mandatoryRoute:"false",
-						finalApproval:"false"
-					},{
-						name:"Test.Request.Supervisor",
-						activationType:"P",
-						ruleTemplate:"Test.Request.Supervisor",
-						mandatoryRoute:"false",
-						finalApproval:"true"
-					}],
-					simple:[{
-						name:"Test.Submission.Email",
-						from:"jawbenne@iu.edu",
-						to:"initiator",
-						testAddress:"jawbenne@iu.edu",
-						style:"Test.Submission.Email",
-						type:"org.kuali.rice.kew.mail.EmailNode"
-					},{
-						name:"Test.Supervisor.Approval.Email",
-						from:"jawbenne@iu.edu",
-						to:"initiator",
-						testAddress:"jawbenne@iu.edu",
-						style:"Test.Supervisor.Approval.Email",
-						type:"org.kuali.rice.kew.mail.EmailNode"
-					}]
-			};
-		} else {
-			console.log("ERROR:Configure need to added before pressing export");
-		}
+//		Predefined example for input values
+//		var serverSideJsonData ={};
+//		if(clientSideJsonData["configurationId"]){
+//			serverSideJsonData["parent"] = clientSideJsonData["configurationId"]["Parent"];
+//			serverSideJsonData["name"] = clientSideJsonData["configurationId"]["Name"];
+//			serverSideJsonData["description"] = clientSideJsonData["configurationId"]["Description"];
+//			serverSideJsonData["label"] = clientSideJsonData["configurationId"]["Label"];
+//			serverSideJsonData["postProcessorName"] = clientSideJsonData["configurationId"]["Post Processor Name"];
+//			serverSideJsonData["superUserGroupName"] = clientSideJsonData["configurationId"]["Super User Group Name"];
+//			serverSideJsonData["blanketApprovePolicy"] = clientSideJsonData["configurationId"]["Blanket Approve Policy"];
+//			serverSideJsonData["reportingGroupName"] = clientSideJsonData["configurationId"]["Reporting Group Name"];
+//			serverSideJsonData["defaultExceptionGroupName"] = clientSideJsonData["configurationId"]["Default Exception Group Name"];
+//			serverSideJsonData["docHandler"] = clientSideJsonData["configurationId"]["Document Handler"];
+//			serverSideJsonData["active"] = clientSideJsonData["configurationId"]["Active"];
+//			serverSideJsonData["routingVersion"] = clientSideJsonData["configurationId"]["Routing Version"];
+//			serverSideJsonData["routePaths"] = {routePath:{
+//					start:[{
+//						name:"Initiated",
+//						nextNode:"Test.Submission.Email"
+//					}],
+//					requests:[{
+//						name:"Test.NetId",
+//						nextNode:"Test.Supervisor.Approval.Email"
+//					},{
+//						name:"Test.Request.Supervisor",
+//						nextNode:"Test.Admin.Approval.Email"
+//					}],
+//					simple:[{
+//						name:"Test.Submission.Email",
+//						nextNode:"Test.NetId"
+//					},{
+//						name:"Test.Supervisor.Approval.Email",
+//						nextNode:"Test.Request.Supervisor"
+//					},{
+//						name:"Test.Admin.Approval.Email" 
+//					}]
+//			}};
+//			serverSideJsonData["routeNodes"] = {
+//					start:[{
+//						name:"Initiated",
+//						activationType:"P",
+//						mandatoryRoute:"false",
+//						finalApproval:"false"
+//					}],
+//					requests:[{
+//						name:"Test.NetId",
+//						activationType:"P",
+//						ruleTemplate:"Test.NetId",
+//						mandatoryRoute:"false",
+//						finalApproval:"false"
+//					},{
+//						name:"Test.Request.Supervisor",
+//						activationType:"P",
+//						ruleTemplate:"Test.Request.Supervisor",
+//						mandatoryRoute:"false",
+//						finalApproval:"true"
+//					}],
+//					simple:[{
+//						name:"Test.Submission.Email",
+//						from:"jawbenne@iu.edu",
+//						to:"initiator",
+//						testAddress:"jawbenne@iu.edu",
+//						style:"Test.Submission.Email",
+//						type:"org.kuali.rice.kew.mail.EmailNode"
+//					},{
+//						name:"Test.Supervisor.Approval.Email",
+//						from:"jawbenne@iu.edu",
+//						to:"initiator",
+//						testAddress:"jawbenne@iu.edu",
+//						style:"Test.Supervisor.Approval.Email",
+//						type:"org.kuali.rice.kew.mail.EmailNode"
+//					}]
+//			};
+//		} else {
+//			console.log("ERROR:Configure need to added before pressing export");
+//		}
+		var imageKey = "image";
 		angular.forEach(clientSideJsonData, function(value, key){
-			var nodeType = clientSideJsonData[key]["image"];
-			var generatedObject = generateServerSideObject(clientSideJsonData[key]);
-			if(nodeType == "configure"){
-				angular.forEach(generatedObject, function(configureValue, configureKey){
+			var nodeType = clientSideJsonData[key][imageKey];
+			var generatedObject = generateRouteNodesAndRoutePath(clientSideJsonData[key]);
+			if(nodeType == configureKey){
+				angular.forEach(generatedObject[routeNodeKey], function(configureValue, configureKey){
 					generatedServerSideJsonData[configureKey] = configureValue;
 				});
-			} else if (nodeType == "circle"){
-				startNodes.push(generatedObject);
-			} else if (nodeType == "rectangle"){
-				requestsNodes.push(generatedObject);
+			} else if (nodeType == CIRCLE){
+				startNodes.push(generatedObject[routeNodeKey]);
+				startPaths.push(generatedObject[routePathKey]);
+			} else if (nodeType == RECTANGLE){
+				requestsNodes.push(generatedObject[routeNodeKey]);
+				requestsPaths.push(generatedObject[routePathKey]);
+			} else if (nodeType == OVAL || nodeType == OVALMAGENTA){
+				simpleNodes.push(generatedObject[routeNodeKey]);
+				simplePaths.push(generatedObject[routePathKey]);
+			} else if (nodeType == SQUARE){
+				emailNodes.push(generatedObject[routeNodeKey]);
+				emailPaths.push(generatedObject[routePathKey]);
+			} else if (nodeType == RECTANGLECORAL){
+				roleNodes.push(generatedObject[routeNodeKey]);
+				rolePaths.push(generatedObject[routePathKey]);
 			} 
 		});
-//		generatedObject = generateServerSideObject({"Test Test":"value", "Mandatory Route":"excape"});
-//		console.log(generatedObject);
-		console.log("Need to be like this");
-		console.log(serverSideJsonData);
+
 		console.log("Currently, like this");
 		console.log(generatedServerSideJsonData);
-		return serverSideJsonData;
+		return generatedServerSideJsonData;
 	};
 	
-//	This function generates the server required object
-//	This function takes json object as input and converts into 
-//	pojo based input
-//	input :{
+//	This function generates the server required routeNodes and route Path
+//	It takes json object as input and converts into 
+//	server based pojo kind output
+//	input :
+//	{
+//		"Name"				: "initial",
 //		"Mandatory Route" 	: "true",
 //		"Final Approval"	: "true",
 //		"image"				: "circle"
-//	} and convert it into
-//	output :{
-//		"mandatoryRoute" 	: "true",
-//		"finalApproval"		: "true"
+//		"Next Node"			: "email node"
+//	} 
+//		and convert it into
+//	output :
+//	{
+//		routeNode:{
+//			"name"				: initial,
+//			"mandatoryRoute" 	: "true",
+//			"finalApproval"		: "true"
+//		}
+//		routePath:{
+//			"name"				: "inital",
+//			"nextNode"			: "email node"
+//		}
 //	}
-	var generateServerSideObject = function(jsonObject){
-		var newJsonObject = {};
+//	Initialize routeNode and routePath object and assign it to new Json Object which we will returning
+//	1. Traverse through each object
+//	2. Except "image" process for all other key
+//		a. 	Generate new key for all the input key by removing spaces and
+//			making first letter small(Done by generateKey function)
+//			i.	check whether the key is next node if so add it to routePath object
+//			ii. check whether the key is name if so add it to both routePath and routeNode object
+//			iii. For all other key, add it to routeNode Object itself
+//	3. return the new Json Object
+	var generateRouteNodesAndRoutePath = function(jsonObject){
+		var routeNode 		= {};
+		var routePath 		= {};
+		var newJsonObject 	= {
+				"routeNode" : routeNode,
+				"routePath"	: routePath
+		};
+		var imageKey 		= "image";
+		var nextNodeKey 	= "nextNode";
+		var name			= "name";
 		angular.forEach(jsonObject, function(value, key){
-			if(key != "image"){
-				var newKey = generateKey(key);
-				newJsonObject[newKey] = value;
+			if(key != imageKey){
+				var newKey 	= generateKey(key);
+				if(newKey == nextNodeKey){
+					routePath[newKey] = value;
+				} else if(newKey == name){
+					routePath[newKey] = value;
+					routeNode[newKey] = value;
+				} else {
+					routeNode[newKey] = value;
+				}
 			}
 		});
 		return newJsonObject;
@@ -267,11 +354,17 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	and makes the first letter of the key as small
 //	input = "Mandatory Route"
 //	output = "mandatoryRoute"
+//	1. Split the key using space delimiter
+//	2. Parse through each splitted key and make the first index 
+//	alone lower case 
+//	3. join all the splitted keys to make a new key
+	
 	var generateKey = function(key){
 		var newKey ="";
+		var firstIndex = 0;
 		var splitKey = key.split(" ");
 		angular.forEach(splitKey, function(word,index){
-			if(index == 0){
+			if(index == firstIndex){
 				word = word.toLowerCase();
 			}
 			newKey = newKey + word;
@@ -279,6 +372,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 		return newKey;
 	};
 };
+
 
 //ModalController will be called by modal with local parameter and $modalInstance
 //$scope will be applicable only for this controller
@@ -368,5 +462,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 		}
 	};
 };
+
 
 

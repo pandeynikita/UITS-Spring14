@@ -34,7 +34,7 @@ public class Data{
 	private String defaultExceptionGroupName;
 	private String docHandler;
 	private String active;
-	private int routingVersion;
+	private String routingVersion;
 	private RoutePaths routePaths;
 	private RouteNodes routeNodes;
 	public RoutePaths getRoutePaths() {
@@ -109,10 +109,10 @@ public class Data{
 	public void setActive(String active) {
 		this.active = active;
 	}
-	public int getRoutingVersion() {
+	public String getRoutingVersion() {
 		return routingVersion;
 	}
-	public void setRoutingVersion(int routingVersion) {
+	public void setRoutingVersion(String routingVersion) {
 		this.routingVersion = routingVersion;
 	}
 	public RouteNodes getRouteNodes() {

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -31,42 +32,33 @@ public class WorkflowBuilderController{
 		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
 		return model;
 	}
-	//Recieving input using @RequestBody
+	//Receiving input using @RequestBody
 	@RequestMapping(value="export", method = RequestMethod.POST)
+//	@RequestMapping(value="export", method = RequestMethod.POST, produces="application/xml")
+//	public String exportToXml(@RequestBody Data dataObject){
 	public ModelAndView exportToXml(@RequestBody Data dataObject){
-		convertPojoToXml(dataObject);
+		String xml = convertPojoToXml(dataObject);
 		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
+		System.out.println(xml);
 		return model;
+//		return xml;
 	}
 	//Function converts the Pojo to Xml using the root class
-	public void convertPojoToXml(Data dataObject){
+	public String convertPojoToXml(Data dataObject){
 		JAXBContext jc;
+		String xmlStringData = null;
 		try {
 			jc = JAXBContext.newInstance(Data.class);
 			Marshaller marshaller = jc.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			writeIntoFile(marshaller,dataObject);
+			StringWriter writer = new StringWriter();
+			marshaller.marshal(dataObject, writer);
+			xmlStringData = writer.toString();
 		} catch (JAXBException exception) {
 			String message = "[ERROR]:Jaxb context failed to marshal. Exception:"+exception;
 			log.error(message);
 		}
-		
-	}
-	//Write the marshalled Xml to an external file
-	public void writeIntoFile(Marshaller marshaller, Data dataObject) throws JAXBException{
-		File file = new File(getFileName());
-		OutputStream outputStream;
-		try {
-			outputStream = new FileOutputStream(file);
-			marshaller.marshal(dataObject, outputStream);
-			outputStream.close();
-		} catch (FileNotFoundException exception) {
-			String message = "[ERROR]:File not Found at "+file+". Exception:"+exception;
-			log.error(message);
-		} catch (IOException exception) {
-			String message = "[ERROR]:Input/Output operation failed while marshalling onto file. Exception:"+exception;
-			log.error(message);
-		}
+		return xmlStringData;
 	}
 	
 	public String getFileName() {

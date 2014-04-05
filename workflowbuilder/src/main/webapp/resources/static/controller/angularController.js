@@ -8,10 +8,14 @@ var angularModalCtrl = function($scope,$modal,$http){
 	 * 			"divId1": object,
 	 * 			"divId2": object};
 	 */
-	
+
 //	Need to be stored in a seperate file and assign it to this variable
 	$scope.nodes = null;
 	var configureKey = "configure";
+	
+//	Error messages:
+	var configurationMissingError = "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
+	var nodesConnectivityMissingError ="ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
 	//This function is called 
 	//by jquery event handler on click of any components
 	//$apply is to access angular funciton from other functions
@@ -21,48 +25,38 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 
 	};
-	
- 	$scope.angularExportFunction = function(routePath,droppedArray){
- 		
+
+	$scope.angularExportFunction = function(routePath,droppedArray){
+
 		$scope.$apply(function(){
-			
+
 			var tempArray = new Array();
 			var i = 0;
-			$.each(routePath, function(key, value)
-			{
-				
-				tempArray[i] = key;
-				i++;
-				tempArray[i] = value;
-				i++;
-				
+			$.each(routePath, function(key, value){
+				tempArray[i++] = key;
+				tempArray[i++] = value;		
 			});
 
 			var found = false;
 			for (var i = 1; i < droppedArray.length; i++) {
-			    if (tempArray.indexOf(droppedArray[i]) > -1) 
-			        found = true;
-			        else found = false;
-			    
-			    
+				if (tempArray.indexOf(droppedArray[i]) > -1){
+					found = true;
+				} else {
+					found = false;
+				}
 			}
-			if(found == false)
-			bootbox.alert("one or more nodes are not connected");
-			else if (found == true)
-			{
-			if($scope.checkSavedNodeData(droppedArray)){
-				$scope.angularExport(routePath);
+			if(found == false){
+				bootbox.alert(nodesConnectivityMissingError);
+			} else {
+				if($scope.checkSavedNodeData(droppedArray)){
+					$scope.angularExport(routePath);
+				} else {
+					bootbox.alert(configurationMissingError);
+				}
 			}
-			else
-			{
-				bootbox.alert("Export cannot be done. Configuration of some node is missing");
-			}
-			}
-		
-			
 		});
 	};
-	
+
 	$scope.checkSavedNodeData = function(droppedArray) {
 		for(var i=1; i <= droppedArray.length-1 ; i++){
 			if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
@@ -71,7 +65,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 		}
 		return true;
 	};
-	
+
 	$scope.deleteSavedData = function(deleteId){
 		delete $scope.jsonData[deleteId];
 	};
@@ -132,10 +126,10 @@ var angularModalCtrl = function($scope,$modal,$http){
 		var responsePromise = $http.post(
 				"export.htm",
 				JSON.stringify(
-						serverSideInputData
+					serverSideInputData
 				));
 		responsePromise.success(function(data,status,headers,config){
-			console.log(status);
+			console.log(status+" "+data);
 		});
 		responsePromise.error(function(data,status,headers,config){
 			console.log(status+" "+data);
@@ -443,62 +437,62 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 //serverSideJsonData["active"] = clientSideJsonData["configurationId"]["Active"];
 //serverSideJsonData["routingVersion"] = clientSideJsonData["configurationId"]["Routing Version"];
 //serverSideJsonData["routePaths"] = {routePath:{
-//	start:[{
-//		name:"Initiated",
-//		nextNode:"Test.Submission.Email"
-//	}],
-//	requests:[{
-//		name:"Test.NetId",
-//		nextNode:"Test.Supervisor.Approval.Email"
-//	},{
-//		name:"Test.Request.Supervisor",
-//		nextNode:"Test.Admin.Approval.Email"
-//	}],
-//	simple:[{
-//		name:"Test.Submission.Email",
-//		nextNode:"Test.NetId"
-//	},{
-//		name:"Test.Supervisor.Approval.Email",
-//		nextNode:"Test.Request.Supervisor"
-//	},{
-//		name:"Test.Admin.Approval.Email" 
-//	}]
+//start:[{
+//name:"Initiated",
+//nextNode:"Test.Submission.Email"
+//}],
+//requests:[{
+//name:"Test.NetId",
+//nextNode:"Test.Supervisor.Approval.Email"
+//},{
+//name:"Test.Request.Supervisor",
+//nextNode:"Test.Admin.Approval.Email"
+//}],
+//simple:[{
+//name:"Test.Submission.Email",
+//nextNode:"Test.NetId"
+//},{
+//name:"Test.Supervisor.Approval.Email",
+//nextNode:"Test.Request.Supervisor"
+//},{
+//name:"Test.Admin.Approval.Email" 
+//}]
 //}};
 //serverSideJsonData["routeNodes"] = {
-//		start:[{
-//			name:"Initiated",
-//			activationType:"P",
-//			mandatoryRoute:"false",
-//			finalApproval:"false"
-//		}],
-//		requests:[{
-//			name:"Test.NetId",
-//			activationType:"P",
-//			ruleTemplate:"Test.NetId",
-//			mandatoryRoute:"false",
-//			finalApproval:"false"
-//		},{
-//			name:"Test.Request.Supervisor",
-//			activationType:"P",
-//			ruleTemplate:"Test.Request.Supervisor",
-//			mandatoryRoute:"false",
-//			finalApproval:"true"
-//		}],
-//		simple:[{
-//			name:"Test.Submission.Email",
-//			from:"jawbenne@iu.edu",
-//			to:"initiator",
-//			testAddress:"jawbenne@iu.edu",
-//			style:"Test.Submission.Email",
-//			type:"org.kuali.rice.kew.mail.EmailNode"
-//		},{
-//			name:"Test.Supervisor.Approval.Email",
-//			from:"jawbenne@iu.edu",
-//			to:"initiator",
-//			testAddress:"jawbenne@iu.edu",
-//			style:"Test.Supervisor.Approval.Email",
-//			type:"org.kuali.rice.kew.mail.EmailNode"
-//		}]
+//start:[{
+//name:"Initiated",
+//activationType:"P",
+//mandatoryRoute:"false",
+//finalApproval:"false"
+//}],
+//requests:[{
+//name:"Test.NetId",
+//activationType:"P",
+//ruleTemplate:"Test.NetId",
+//mandatoryRoute:"false",
+//finalApproval:"false"
+//},{
+//name:"Test.Request.Supervisor",
+//activationType:"P",
+//ruleTemplate:"Test.Request.Supervisor",
+//mandatoryRoute:"false",
+//finalApproval:"true"
+//}],
+//simple:[{
+//name:"Test.Submission.Email",
+//from:"jawbenne@iu.edu",
+//to:"initiator",
+//testAddress:"jawbenne@iu.edu",
+//style:"Test.Submission.Email",
+//type:"org.kuali.rice.kew.mail.EmailNode"
+//},{
+//name:"Test.Supervisor.Approval.Email",
+//from:"jawbenne@iu.edu",
+//to:"initiator",
+//testAddress:"jawbenne@iu.edu",
+//style:"Test.Supervisor.Approval.Email",
+//type:"org.kuali.rice.kew.mail.EmailNode"
+//}]
 //};
 
 

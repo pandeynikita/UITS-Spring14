@@ -101,7 +101,7 @@ var nodesConfiguration = {
 					"label" : "Type",
 					"type" : "text",
 					"defaultVal" : "org.kuali.rice.kew.mail.EmailNode",
-					"edit" : "Yes"
+					"edit" : "No"
 				}
 			}
 		},
@@ -182,35 +182,11 @@ var nodesConfiguration = {
 					"type" : "text",
 					"edit" : "Yes"
 				},
-				"from" : {
-					"label" : "From",
-					"type" : "text",
-					"defaultVal" : "jawbenne@iu.edu",
-					"edit" : "Yes"
-				},
-				"to" : {
-					"label" : "To",
-					"type" : "text",
-					"defaultVal" : "npandey@indiana.edu",
-					"edit" : "Yes"
-				},
-				"testAddress" : {
-					"label" : "Test Address",
-					"type" : "text",
-					"defaultVal" : "jawbenne@iu.edu",
-					"edit" : "Yes"
-				},
-				"style" : {
-					"label" : "Style",
-					"type" : "text",
-					"defaultVal" : "Test.Admin.Approval.Email",
-					"edit" : "Yes"
-				},
 				"type" : {
 					"label" : "Type",
 					"type" : "text",
-					"defaultVal" : "org.kuali.rice.kew.mail.EmailNode",
-					"edit" : "Yes"
+					"defaultVal" : "org.kuali.rice.kew.engine.node.NoOpNode",
+					"edit" : "No"
 				}
 			}
 		},

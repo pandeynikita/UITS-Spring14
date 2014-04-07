@@ -214,13 +214,13 @@ var nodesConfiguration = {
 					"type" : "text",
 					"edit" : "Yes"
 				},
-				"postProcessorName" : {
-					"label" : "Post Processor Name",
+				"postProcessor" : {
+					"label" : "Post Processor",
 					"type" : "text",
 					"edit" : "Yes"
 				},
-				"superUserGroupName" : {
-					"label" : "Super User Group Name",
+				"superUserGroup" : {
+					"label" : "Super User Group",
 					"type" : "text",
 					"edit" : "Yes"
 				},
@@ -229,13 +229,13 @@ var nodesConfiguration = {
 					"type" : "text",
 					"edit" : "Yes"
 				},
-				"reportingGroupName" : {
-					"label" : "Reporting Group Name",
+				"reportingGroup" : {
+					"label" : "Reporting Group",
 					"type" : "text",
 					"edit" : "Yes"
 				},
-				"defaultExceptionGroupName " : {
-					"label" : "Default Exception Group Name",
+				"defaultExceptionGroup " : {
+					"label" : "Default Exception Group",
 					"type" : "text",
 					"edit" : "Yes"
 				},
@@ -254,6 +254,11 @@ var nodesConfiguration = {
 					"type" : "text",
 					"defaultVal" : "2",
 					"edit" : "No"
+				},
+				"nameSpace" :{
+					"label"	:	"Name Space",
+					"type"	:	"select",
+					"options" : ["KAULI"]
 				}
 			}
 		}

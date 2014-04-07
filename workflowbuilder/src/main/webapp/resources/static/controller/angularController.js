@@ -12,10 +12,11 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	Need to be stored in a seperate file and assign it to this variable
 	$scope.nodes = null;
 	var configureKey = "configure";
-	
+
 //	Error messages:
-	var configurationMissingError = "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
-	var nodesConnectivityMissingError ="ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
+	var configurationMissingError		= "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
+	var nodesConnectivityMissingError 	= "ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
+	var nameSpaceNotFountError			= "ERROR: Please provide namespace in configure, if you are providing value for 'Default Exception Group' or 'Super User Group' or 'Repeating Group'";
 	//This function is called 
 	//by jquery event handler on click of any components
 	//$apply is to access angular funciton from other functions
@@ -121,15 +122,19 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		Write a validation function to check all the component in div area has some saved data
 //		Write a validation function to check all the components in div area are connected. Using JsonData and routePath
 //		Add next nodes to $scope.jsonData to process the server side object
+//		We will receive a json object of attributes = error and data
+//		if there was any error while processing client data, then error flag will be true and data will have error message
+//		if there is no error flag set to false then the data will have serverSide data
 		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
+
 		var responsePromise = $http.post(
 				"export.htm",
 				JSON.stringify(
-					serverSideInputData
+						serverSideInputData
 				));
 		responsePromise.success(function(data,status,headers,config){
-			console.log(status+" "+data);
+			console.log(status);
 		});
 		responsePromise.error(function(data,status,headers,config){
 			console.log(status+" "+data);
@@ -218,17 +223,28 @@ var angularModalCtrl = function($scope,$modal,$http){
 		routePath["email"] 		= emailPaths;
 		routePath["role"] 		= rolePaths;
 
-		generatedServerSideJsonData["routeNodes"]= routeNodes;
-		generatedServerSideJsonData["routePaths"]= routePaths;
+		generatedServerSideJsonData["routeNodes"]	= routeNodes;
+		generatedServerSideJsonData["routePaths"]	= routePaths; 
 
 		var imageKey = "image";
 		angular.forEach(clientSideJsonData, function(value, key){
 			var nodeType = clientSideJsonData[key][imageKey];
 			var generatedObject = generateRouteNodesAndRoutePath(clientSideJsonData[key]);
 			if(nodeType == configureKey){
+				//Retrieve name space from the configuration and use it whenever required
+				var nameSpaceKey = "nameSpace";
 				angular.forEach(generatedObject[routeNodeKey], function(configureValue, configureKey){
-					generatedServerSideJsonData[configureKey] = configureValue;
+					if(configureKey == "superUserGroup" || configureKey == "reportingGroup" || configureKey == "defaultExceptionGroup"){
+						var nameSpace = generatedObject[routeNodeKey][nameSpaceKey];
+						var newJsonObject = {};
+						newJsonObject[nameSpaceKey]=nameSpace;
+						newJsonObject["value"]=configureValue;
+						generatedServerSideJsonData[configureKey] = newJsonObject;
+					} else if(configureKey != nameSpaceKey){
+						generatedServerSideJsonData[configureKey] = configureValue;
+					}
 				});
+				console.log(generatedServerSideJsonData);
 			} else if (nodeType == CIRCLE){
 				startNodes.push(generatedObject[routeNodeKey]);
 				startPaths.push(generatedObject[routePathKey]);
@@ -245,6 +261,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 				roleNodes.push(generatedObject[routeNodeKey]);
 				rolePaths.push(generatedObject[routePathKey]);
 			} 
+
 		});
 		return serverSideData;
 	};

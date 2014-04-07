@@ -1,5 +1,6 @@
 package edu.indiana.oosm.workflowbuilder.controller;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType(propOrder={
@@ -7,11 +8,11 @@ import javax.xml.bind.annotation.XmlType;
 		"parent",
 		"description",
 		"label",
-		"postProcessorName",
-		"superUserGroupName",
+		"postProcessor",
+		"superUserGroup",
 		"blanketApprovePolicy",
-		"reportingGroupName",
-		"defaultExceptionGroupName",
+		"reportingGroup",
+		"defaultExceptionGroup",
 		"docHandler",
 		"active",
 		"routingVersion",
@@ -22,16 +23,17 @@ public class DocumentType{
 	private String parent;
 	private String description;
 	private String label;
-	private String postProcessorName;
-	private String superUserGroupName;
+	private String postProcessor;
+	private SuperUserGroup superUserGroup;
 	private String blanketApprovePolicy;
-	private String reportingGroupName;
-	private String defaultExceptionGroupName;
+	private ReportingGroup reportingGroup;
+	private DefaultExceptionGroup defaultExceptionGroup;
 	private String docHandler;
 	private String active;
 	private String routingVersion;
 	private RoutePaths routePaths;
 	private RouteNodes routeNodes;
+	
 	public RoutePaths getRoutePaths() {
 		return routePaths;
 	}
@@ -62,36 +64,15 @@ public class DocumentType{
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	public String getPostProcessorName() {
-		return postProcessorName;
-	}
-	public void setPostProcessorName(String postProcessorName) {
-		this.postProcessorName = postProcessorName;
-	}
-	public String getSuperUserGroupName() {
-		return superUserGroupName;
-	}
-	public void setSuperUserGroupName(String superUserGroupName) {
-		this.superUserGroupName = superUserGroupName;
-	}
+	
+	
 	public String getBlanketApprovePolicy() {
 		return blanketApprovePolicy;
 	}
 	public void setBlanketApprovePolicy(String blanketApprovePolicy) {
 		this.blanketApprovePolicy = blanketApprovePolicy;
 	}
-	public String getReportingGroupName() {
-		return reportingGroupName;
-	}
-	public void setReportingGroupName(String reportingGroupName) {
-		this.reportingGroupName = reportingGroupName;
-	}
-	public String getDefaultExceptionGroupName() {
-		return defaultExceptionGroupName;
-	}
-	public void setDefaultExceptionGroupName(String defaultExceptionGroupName) {
-		this.defaultExceptionGroupName = defaultExceptionGroupName;
-	}
+	
 	public String getDocHandler() {
 		return docHandler;
 	}
@@ -116,4 +97,33 @@ public class DocumentType{
 	public void setRouteNodes(RouteNodes routeNodes) {
 		this.routeNodes = routeNodes;
 	}
+	@XmlElement(name="postProcessorName")
+	public String getPostProcessor() {
+		return postProcessor;
+	}
+	public void setPostProcessor(String postProcessor) {
+		this.postProcessor = postProcessor;
+	}
+	@XmlElement(name="superUserGroupName")
+	public SuperUserGroup getSuperUserGroup() {
+		return superUserGroup;
+	}
+	public void setSuperUserGroup(SuperUserGroup superUserGroup) {
+		this.superUserGroup = superUserGroup;
+	}
+	@XmlElement(name="repeatingGroupName")
+	public ReportingGroup getReportingGroup() {
+		return reportingGroup;
+	}
+	public void setReportingGroup(ReportingGroup reportingGroup) {
+		this.reportingGroup = reportingGroup;
+	}
+	@XmlElement(name="defaultExceptionGroupName")
+	public DefaultExceptionGroup getDefaultExceptionGroup() {
+		return defaultExceptionGroup;
+	}
+	public void setDefaultExceptionGroup(DefaultExceptionGroup defaultExceptionGroup) {
+		this.defaultExceptionGroup = defaultExceptionGroup;
+	}
+
 }

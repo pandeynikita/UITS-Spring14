@@ -34,14 +34,11 @@ public class WorkflowBuilderController{
 	}
 	//Receiving input using @RequestBody
 	@RequestMapping(value="export", method = RequestMethod.POST)
-//	@RequestMapping(value="export", method = RequestMethod.POST, produces="application/xml")
-//	public String exportToXml(@RequestBody Data dataObject){
 	public ModelAndView exportToXml(@RequestBody Data dataObject){
 		String xml = convertPojoToXml(dataObject);
 		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
 		System.out.println(xml);
 		return model;
-//		return xml;
 	}
 	//Function converts the Pojo to Xml using the root class
 	public String convertPojoToXml(Data dataObject){

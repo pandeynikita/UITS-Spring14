@@ -1,9 +1,13 @@
 package edu.indiana.oosm.workflowbuilder.controller;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 
-//@XmlSeeAlso({Start.class,})
+@XmlType(propOrder={
+		"start",
+		"requests",
+		"simple",
+		"role",
+		"email"})
 public class RouteNodes {
 	private Start[] start;
 	private Requests[] requests;

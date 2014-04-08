@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
 		"active",
 		"routingVersion",
 		"routePaths",
-"routeNodes"})
+		"routeNodes"})
 public class DocumentType{
 	private String name;
 	private String parent;

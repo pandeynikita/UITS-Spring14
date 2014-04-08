@@ -42,16 +42,23 @@
 					<label>{{property.label}}</label> 
 
 					<div ng-if="isRadioType(property)">
-							<label ng-repeat="option in property.options" for="{{option}}">
+							<label ng-repeat="option in property.options">
 								<input 	type="radio"	 
 								name={{property.label}}
 								ng-model="dataStorage[property.label]" 
-								ng-value="option"> 
+								ng-value="option" > 
 								{{option}}
 							</label>
 					</div>
 
-					<div ng-if="isSelectType(property)">
+					<div ng-if="isSelectType(property) && isMandatory(property)" >
+						<select ng-model="dataStorage[property.label]" class="form-control" name="selectType"  
+								ng-options="option as option for option in property.options" required>
+						</select>
+						<p  class="error" ng-show="form.selectType.$error.required">{{property.message}}</p>
+					</div>
+
+					<div ng-if="isSelectType(property) && !isMandatory(property)">
 						<select ng-model="dataStorage[property.label]" class="form-control"
 								ng-options="option as option for option in property.options">
 						</select>
@@ -92,6 +99,7 @@
         	</div>
 		</form>
         	<div class="modal-footer">
+				<div style="float: left">* Fill in Mandatory fields</div>
            		<button class="btn btn-primary" ng-click="save()" ng-disabled="form.$invalid">Save</button>
             	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         	</div>

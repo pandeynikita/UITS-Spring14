@@ -337,7 +337,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 	var generateKey = function(key){
 		var newKey ="";
 		var firstIndex = 0;
-		var splitKey = key.split(" ");
+		var newkey = key.replace("*",""); //Replacing * in mandatory fields with blank.
+		var splitKey = newkey.split(" ");
 		angular.forEach(splitKey, function(word,index){
 			if(index == firstIndex){
 				word = word.toLowerCase();

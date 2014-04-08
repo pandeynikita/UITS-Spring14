@@ -7,9 +7,11 @@ var nodesConfiguration = {
 			"header" : "Action Configuration",
 			"properties" : {
 				"name" : {
-					"label" : "Name",
+					"label" : "Name*",
 					"type" : "text",
-					"edit" : "Yes"
+					"edit" : "Yes",
+					"required" : "Yes",
+					"message" : "Name is required."
 				},
 				"mandatoryRoute" : {
 					"label" : "Mandatory Route",
@@ -35,9 +37,11 @@ var nodesConfiguration = {
 			"header" : "Action Configuration",
 			"properties" : {
 				"name" : {
-					"label" : "Name",
+					"label" : "Name*",
 					"type" : "text",
-					"edit" : "Yes"
+					"edit" : "Yes",
+					"required" : "Yes",
+					"message" : "Name is required."
 				},
 
 				"activationType" : {
@@ -69,9 +73,11 @@ var nodesConfiguration = {
 			"header" : "Test.Submission.Email",
 			"properties" : {
 				"name" : {
-					"label" : "Name",
+					"label" : "Name*",
 					"type" : "text",
-					"edit" : "Yes"
+					"edit" : "Yes",
+					"required" : "Yes",
+					"message" : "Name is required."
 				},
 				"from" : {
 					"label" : "From",
@@ -112,9 +118,11 @@ var nodesConfiguration = {
 			"header" : "Simple Node",
 			"properties" : {
 				"name":{
-					"label": "Name",
+					"label": "Name*",
 					"type":"text",
-					"edit" : "Yes"
+					"edit" : "Yes",
+					"required" : "Yes",
+					"message" : "Name is required."
 				},
 				"from" : {
 					"label" : "From",
@@ -155,9 +163,11 @@ var nodesConfiguration = {
 			"header" : "Role Based Routing",
 			"properties" : {
 				"name":{
-					"label": "Name",
+					"label": "Name*",
 					"type":"text",
-					"edit" : "Yes"
+					"edit" : "Yes",
+					"required" : "Yes",
+					"message" : "Name is required."
 				},
 				"qualifierResolverClass" : {
 					"label" : "Qualifier Resolver Class",
@@ -178,9 +188,11 @@ var nodesConfiguration = {
 			"header" : "NoOp",
 			"properties" : {
 				"name" : {
-					"label" : "Name",
+					"label" : "Name*",
 					"type" : "text",
-					"edit" : "Yes"
+					"edit" : "Yes",
+					"required" : "Yes",
+					"message" : "Name is required."
 				},
 				"type" : {
 					"label" : "Type",
@@ -258,9 +270,11 @@ var nodesConfiguration = {
 					"edit" : "No"
 				},
 				"nameSpace" :{
-					"label"	:	"Name Space",
+					"label"	:	"Name Space*",
 					"type"	:	"select",
-					"options" : ["KAULI"]
+					"options" : ["KUALI"],
+					"required" : "Yes",
+					"message" : "Name Space is required."
 				}
 			}
 		}

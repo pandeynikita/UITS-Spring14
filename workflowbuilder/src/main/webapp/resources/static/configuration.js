@@ -197,7 +197,9 @@ var nodesConfiguration = {
 				"name" : {
 					"label" : "Name",
 					"type" : "text",
-					"edit" : "Yes"
+					"edit" : "Yes",
+					"required" : "Yes",
+					"message" : "Name is required."
 				},
 				"parent" : {
 					"label" : "Parent",

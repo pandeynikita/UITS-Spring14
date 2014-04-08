@@ -37,54 +37,66 @@
             <label>{{component.header}}</label> 
         </div>
         <div class="modal-body">
-			<div ng-repeat="property in properties">
-				<label>{{property.label}}</label> 
+			<form name="form" novalidate>
+				<div ng-repeat="property in properties">
+					<label>{{property.label}}</label> 
 
-				<div ng-if="isRadioType(property)">
-					<form>
-						<label ng-repeat="option in property.options" for="{{option}}">
-							<input 	type="radio"	 
+					<div ng-if="isRadioType(property)">
+						<form>
+							<label ng-repeat="option in property.options" for="{{option}}">
+								<input 	type="radio"	 
 								name="route"
 								ng-model="dataStorage[property.label]" 
 								ng-value="option"> 
-							{{option}}
-						</label>
-					</form>
-				</div>
+								{{option}}
+							</label>
+						</form>
+					</div>
 
-				<div ng-if="isSelectType(property)">
-					<select ng-model="dataStorage[property.label]" class="form-control"
-							ng-options="option as option for option in property.options">
-					</select>
-				</div>
+					<div ng-if="isSelectType(property)">
+						<select ng-model="dataStorage[property.label]" class="form-control"
+								ng-options="option as option for option in property.options">
+						</select>
+					</div>
 
-				<div ng-if="isTextType(property) && isEditable(property)">
-								<input 	type="text" 
-								ng-model="dataStorage[property.label]" 
-								placeholder="Text" 
-								class="form-control"> 
-				</div>
+					<div ng-if="isTextType(property) && isEditable(property) && isMandatory(property)" ng-class="{ 'has-error' : form.mtext.$invalid && !form.mtext.$pristine }" >
+									<input 	type="text" 
+									name="mtext"
+									ng-model="dataStorage[property.label]" 
+									placeholder="Text" 
+									class="form-control" required /> 
+ 									<p ng-show="form.mtext.$invalid && !form.mtext.$pristine" class="help-block">{{property.message}}</p>
+					</div>
 
-				<div ng-if="isTextType(property) && !isEditable(property)">
-								<input 	type="text" 
-								ng-model="dataStorage[property.label]" 
-								placeholder="Text" 
-								class="form-control" readonly> 
-				</div>
+					<div ng-if="isTextType(property) && isEditable(property) && !isMandatory(property)" >
+									<input 	type="text" 
+									name="itext"
+									ng-model="dataStorage[property.label]" 
+									placeholder="Text" 
+									class="form-control" /> 
+					</div>
+
+					<div ng-if="isTextType(property) && !isEditable(property)">
+									<input 	type="text" 
+									ng-model="dataStorage[property.label]" 
+									placeholder="Text" 
+									class="form-control" readonly> 
+					</div>
 				
-				<div ng-if="isEmailType(property)">
-					<form name="myForm">
-						<label><input name="input" type="email" ng-model="dataStorage[property.label]" placeholder="example@domain.com"> {{option}} </label>
-						<span class="error" ng-show="myForm.input.$error.email">Not valid email!</span>
-					</form>
-				</div>				
-			</div>
+					<div ng-if="isEmailType(property)">
+						<form name="myForm">
+							<label><input name="input" type="email" ng-model="dataStorage[property.label]" placeholder="example@domain.com"> {{option}} </label>
+							<span class="error" ng-show="myForm.input.$error.email">Not valid email!</span>
+						</form>
+					</div>				
+				</div>
 			
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="save()">Save</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
+        	</div>
+		</form>
+        	<div class="modal-footer">
+           		<button class="btn btn-primary" ng-click="save()" ng-disabled="form.$invalid">Save</button>
+            	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        	</div>
     	</script>
 		<div class="outer">
 			<button class="btn btn-primary configure" style="float: left"

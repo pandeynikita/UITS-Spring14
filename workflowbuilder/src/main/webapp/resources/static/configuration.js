@@ -195,7 +195,7 @@ var nodesConfiguration = {
 			"header" : "Workflow Configuration",
 			"properties" : {
 				"name" : {
-					"label" : "Name",
+					"label" : "Name*",
 					"type" : "text",
 					"edit" : "Yes",
 					"required" : "Yes",

@@ -42,15 +42,13 @@
 					<label>{{property.label}}</label> 
 
 					<div ng-if="isRadioType(property)">
-						<form>
 							<label ng-repeat="option in property.options" for="{{option}}">
 								<input 	type="radio"	 
-								name="route"
+								name={{property.label}}
 								ng-model="dataStorage[property.label]" 
 								ng-value="option"> 
 								{{option}}
 							</label>
-						</form>
 					</div>
 
 					<div ng-if="isSelectType(property)">

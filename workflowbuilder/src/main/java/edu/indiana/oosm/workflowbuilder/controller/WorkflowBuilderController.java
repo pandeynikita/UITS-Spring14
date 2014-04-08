@@ -1,11 +1,6 @@
 package edu.indiana.oosm.workflowbuilder.controller;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
@@ -35,13 +30,15 @@ public class WorkflowBuilderController{
 	//Receiving input using @RequestBody
 	@RequestMapping(value="export", method = RequestMethod.POST)
 	public ModelAndView exportToXml(@RequestBody Data dataObject){
-		String xml = convertPojoToXml(dataObject);
-		ModelAndView model = new ModelAndView("WorkflowBuilderPage");
-		System.out.println(xml);
+		
+		String convertedXml = convertPojoToXml(dataObject);
+		String orderedXml 	= orderRoutePath(convertedXml);
+		ModelAndView model	= new ModelAndView("WorkflowBuilderPage");
+		System.out.println(orderedXml);
 		return model;
 	}
 	//Function converts the Pojo to Xml using the root class
-	public String convertPojoToXml(Data dataObject){
+	private String convertPojoToXml(Data dataObject){
 		JAXBContext jc;
 		String xmlStringData = null;
 		try {
@@ -63,5 +60,51 @@ public class WorkflowBuilderController{
 	}
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+//	Function to order the routePath
+	private String orderRoutePath(String xml){
+		String finalXml = null;
+		String[] items  = xml.split("\\n");
+		int routePathEnd = 0;
+		int routePathStart = 0;
+		
+		for(int k=0;k<items.length;k++) {
+			if(items[k].contains("</routePath>")){
+				routePathEnd = k;
+				break;
+			} else if(items[k].contains("<routePath>")){
+				routePathStart = k;
+			}
+		}
+		for(int i=(routePathStart+1);i<routePathEnd;i++) {
+			if(items[i].contains("nextNode")) {
+				String[] words = items[i].split("\\s");
+				for(String word : words) {
+					if(word.startsWith("nextNode")) {
+						String node = word.substring(word.indexOf('=')+2, word.indexOf("/")-1);
+						for(int j=i+1;j<routePathEnd;j++) {
+							String nextNode = "name=\""+node+"\"";
+							if(items[j].contains(nextNode)) {
+								swap(items,i+1,j);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		for(int i=0;i<items.length;i++){
+			finalXml += items[i];
+		}
+		return finalXml;
+	}
+	//Function to Swap the given lines
+	private void swap(String[] items, int i, int j) {
+		if(i==j)
+			return;
+		String temp = items[i];
+		items[i] = items[j];
+		items[j] = temp;
 	}
 }

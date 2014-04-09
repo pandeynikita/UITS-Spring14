@@ -267,8 +267,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 			} 
 
 		});
-
-		//
 		return serverSideData;
 	};
 

@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 		"label",
 		"postProcessor",
 		"superUserGroup",
+		"policies",
 		"blanketApprovePolicy",
 		"reportingGroup",
 		"defaultExceptionGroup",
@@ -24,12 +25,13 @@ public class DocumentType{
 	private String description;
 	private String label;
 	private String postProcessor;
-	private SuperUserGroup superUserGroup;
+	private Group superUserGroup;
 	private String blanketApprovePolicy;
-	private ReportingGroup reportingGroup;
-	private DefaultExceptionGroup defaultExceptionGroup;
+	private Group reportingGroup;
+	private Group defaultExceptionGroup;
 	private String docHandler;
 	private String active;
+	private Policies policies;
 	private String routingVersion;
 	private RoutePaths routePaths;
 	private RouteNodes routeNodes;
@@ -105,25 +107,31 @@ public class DocumentType{
 		this.postProcessor = postProcessor;
 	}
 	@XmlElement(name="superUserGroupName")
-	public SuperUserGroup getSuperUserGroup() {
+	public Group getSuperUserGroup() {
 		return superUserGroup;
 	}
-	public void setSuperUserGroup(SuperUserGroup superUserGroup) {
+	public void setSuperUserGroup(Group superUserGroup) {
 		this.superUserGroup = superUserGroup;
 	}
 	@XmlElement(name="repeatingGroupName")
-	public ReportingGroup getReportingGroup() {
+	public Group getReportingGroup() {
 		return reportingGroup;
 	}
-	public void setReportingGroup(ReportingGroup reportingGroup) {
+	public void setReportingGroup(Group reportingGroup) {
 		this.reportingGroup = reportingGroup;
 	}
 	@XmlElement(name="defaultExceptionGroupName")
-	public DefaultExceptionGroup getDefaultExceptionGroup() {
+	public Group getDefaultExceptionGroup() {
 		return defaultExceptionGroup;
 	}
-	public void setDefaultExceptionGroup(DefaultExceptionGroup defaultExceptionGroup) {
+	public void setDefaultExceptionGroup(Group defaultExceptionGroup) {
 		this.defaultExceptionGroup = defaultExceptionGroup;
+	}
+	public Policies getPolicies() {
+		return policies;
+	}
+	public void setPolicies(Policies policies) {
+		this.policies = policies;
 	}
 
 }

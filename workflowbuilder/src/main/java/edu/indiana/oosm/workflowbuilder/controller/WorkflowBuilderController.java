@@ -96,6 +96,7 @@ public class WorkflowBuilderController{
 		}
 		for(int i=0;i<items.length;i++){
 			finalXml += items[i];
+			finalXml += "\n";
 		}
 		return finalXml;
 	}

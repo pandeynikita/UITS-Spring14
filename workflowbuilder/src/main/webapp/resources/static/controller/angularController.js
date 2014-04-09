@@ -145,7 +145,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	Adding next node to each object if there is any and update 
 //	the client side json object
 	var addNextNodeToClientSideData = function(clientSideJsonData, routePath){
-		var nameField 	= "Name";
+		var nameField 	= "Name*";
 		var nextNode 	= "Next Node"; 
 //		1. Traversing through each node object except configure as configure doesn't 
 //		have next node.
@@ -244,7 +244,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 						generatedServerSideJsonData[configureKey] = configureValue;
 					}
 				});
-				console.log(generatedServerSideJsonData);
 			} else if (nodeType == CIRCLE){
 				startNodes.push(generatedObject[routeNodeKey]);
 				startPaths.push(generatedObject[routePathKey]);

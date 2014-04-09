@@ -16,7 +16,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	Error messages:
 	var configurationMissingError		= "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
 	var nodesConnectivityMissingError 	= "ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
-	var nameSpaceNotFountError			= "ERROR: Please provide namespace in configure, if you are providing value for 'Default Exception Group' or 'Super User Group' or 'Repeating Group'";
 	//This function is called 
 	//by jquery event handler on click of any components
 	//$apply is to access angular funciton from other functions
@@ -232,7 +231,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 			var generatedObject = generateRouteNodesAndRoutePath(clientSideJsonData[key]);
 			if(nodeType == configureKey){
 				//Retrieve name space from the configuration and use it whenever required
-				var nameSpaceKey = "nameSpace";
+				var nameSpaceKey 	= "nameSpace";
+				var policyKey 		= "policy";
 				angular.forEach(generatedObject[routeNodeKey], function(configureValue, configureKey){
 					if(configureKey == "superUserGroup" || configureKey == "reportingGroup" || configureKey == "defaultExceptionGroup"){
 						var nameSpace = generatedObject[routeNodeKey][nameSpaceKey];
@@ -241,7 +241,12 @@ var angularModalCtrl = function($scope,$modal,$http){
 						newJsonObject["value"]=configureValue;
 						generatedServerSideJsonData[configureKey] = newJsonObject;
 					} else if(configureKey != nameSpaceKey){
-						generatedServerSideJsonData[configureKey] = configureValue;
+						if(configureKey == policyKey){
+							var generatedPolicyObject = generatePolicy(configureValue);
+							generatedServerSideJsonData["policies"] = generatedPolicyObject;
+						} else {
+							generatedServerSideJsonData[configureKey] = configureValue;
+						}
 					}
 				});
 			} else if (nodeType == CIRCLE){
@@ -262,6 +267,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 			} 
 
 		});
+
+		//
 		return serverSideData;
 	};
 
@@ -345,6 +352,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 			newKey = newKey + word;
 		});
 		return newKey;
+	};
+	var generatePolicy = function(policyArray){
+		return {"policy":[{"name":"policyOne","value":"false"}]};
 	};
 };
 
@@ -471,6 +481,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 //serverSideJsonData["defaultExceptionGroupName"] = clientSideJsonData["configurationId"]["Default Exception Group Name"];
 //serverSideJsonData["docHandler"] = clientSideJsonData["configurationId"]["Document Handler"];
 //serverSideJsonData["active"] = clientSideJsonData["configurationId"]["Active"];
+//serverSideJsonData["policies"]={"policy":[{"name":"policyOne","value":"false"}]};
 //serverSideJsonData["routingVersion"] = clientSideJsonData["configurationId"]["Routing Version"];
 //serverSideJsonData["routePaths"] = {routePath:{
 //start:[{

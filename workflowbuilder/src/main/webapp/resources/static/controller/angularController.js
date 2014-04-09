@@ -351,8 +351,20 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 		return newKey;
 	};
-	var generatePolicy = function(policyArray){
-		return {"policy":[{"name":"policyOne","value":"false"}]};
+	
+//	This function is to generate policy object for the given policy array
+//	So, we are traversing through the given array and create object with the properties of name and value
+//	and push it to an array of object and assign it to policyObject and return the same as out.
+//	input: ['policy1', 'policy2']
+//	output: {policy:[{'name':'policy1','value':'false'},{'name':'policy2','value':'false'}]}
+	var generatePolicy = function(policies){
+		var policyObject = {};
+		var policyArray = [];
+		policyObject["policy"] = policyArray;
+		angular.forEach(policies, function(policy,index){
+			policyArray.push({"name":policy,"value":"false"});
+		});
+		return policyObject;
 	};
 };
 

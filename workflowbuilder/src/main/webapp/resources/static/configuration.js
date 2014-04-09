@@ -263,6 +263,11 @@ var nodesConfiguration = {
 					"type" : "radio",
 					"options" : [ "True", "False" ]
 				},
+				"policy" : {
+					"label" : "Policy",
+					"type" : "multiSelect",
+					"options" : [ "Default_Approve", "Default_Request" ]
+				},
 				"routingVersion" : {
 					"label" : "Routing Version",
 					"type" : "text",

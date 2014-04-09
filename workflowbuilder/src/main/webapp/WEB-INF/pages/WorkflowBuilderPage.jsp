@@ -64,6 +64,12 @@
 						</select>
 					</div>
 
+					<div ng-if="isMultiSelectType(property)">
+						<select multiple="true" ng-model="dataStorage[property.label]"  class="form-control"
+								ng-options="option as option for option in property.options">
+						</select>
+					</div>
+
 					<div ng-if="isTextType(property) && isEditable(property) && isMandatory(property)" ng-class="{ 'has-error' : form.mtext.$invalid && !form.mtext.$pristine }" >
 									<input 	type="text" 
 									name="mtext"

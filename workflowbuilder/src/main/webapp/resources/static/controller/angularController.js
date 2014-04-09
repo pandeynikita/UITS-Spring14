@@ -419,6 +419,16 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
+
+	//Checking whether the input type is Multi select, if so return true
+	$scope.isMultiSelectType= function(property) {
+		if(property.type =="multiSelect"){
+			return true;
+		} else {
+			return false;
+		}
+	};
+	
 	//Checking whether the input type is email, if so return true
 	$scope.isEmailType= function(property) {
 		if(property.type =="email"){

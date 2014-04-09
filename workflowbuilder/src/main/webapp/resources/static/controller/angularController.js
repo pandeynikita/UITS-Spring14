@@ -262,6 +262,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 			} 
 
 		});
+		generatedServerSideJsonData["policies"]={"policy":[{"name":"policyOne","value":"false"}]};
 		return serverSideData;
 	};
 

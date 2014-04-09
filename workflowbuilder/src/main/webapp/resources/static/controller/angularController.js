@@ -125,6 +125,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		We will receive a json object of attributes = error and data
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
+		console.log($scope.jsonData);
 		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
 
@@ -420,6 +421,16 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
+	
+	//Checking whether the input type is Multi select, if so return true
+	$scope.isMultiSelectType= function(property) {
+		if(property.type =="multiSelect"){
+			return true;
+		} else {
+			return false;
+		}
+	};
+	
 	//Checking whether the input type is email, if so return true
 	$scope.isEmailType= function(property) {
 		if(property.type =="email"){

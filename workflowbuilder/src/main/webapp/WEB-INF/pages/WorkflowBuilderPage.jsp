@@ -59,7 +59,13 @@
 					</div>
 
 					<div ng-if="isSelectType(property) && !isMandatory(property)">
-						<select ng-model="dataStorage[property.label]" class="form-control"
+						<select ng-model="dataStorage[property.label]"  class="form-control"
+								ng-options="option as option for option in property.options">
+						</select>
+					</div>
+
+					<div ng-if="isMultiSelectType(property)">
+						<select multiple="true" ng-model="dataStorage[property.label]"  class="form-control"
 								ng-options="option as option for option in property.options">
 						</select>
 					</div>

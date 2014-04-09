@@ -33,8 +33,8 @@
 }
 
 .circle {
-	width: 80px;
-	height: 80px;
+	width: 70px;
+	height: 70px;
 	background:orange;
 	border-radius: 40px;
 	border:2px solid black;
@@ -44,8 +44,8 @@
 }
 
 .square {
-	width: 80px;
-	height: 80px;
+	width: 70px;
+	height: 70px;
 	background: blue;
 	border:2px solid black;
 	border-style:solid;
@@ -54,8 +54,8 @@
 }
 
 .rectangle {
-	width: 80px;
-	height: 40px;
+	width: 70px;
+	height: 35px;
 	background:maroon;
 	border:2px solid black;
 	border-style:solid;
@@ -64,8 +64,8 @@
 }
 
 .rectangleCoral {
-	width: 80px;
-	height: 40px;
+	width: 70px;
+	height: 35px;
 	background:coral;
 	border:2px solid black;
 	border-style:solid;
@@ -94,6 +94,37 @@
 	padding:4px 3px 1px 3px;
 	position:relative;
 }
+
+.helpButton {
+	display:inline-block;
+	margin-left:2px;
+	margin-top:0px;
+	width:24px;
+    height:24px;
+    border-radius: 50%;
+    text-align:center;
+    background: white;
+	text-align:center;
+    position:absolute;
+    padding:0px 0px 0px 0px;
+    cursor:help;
+}
+
+.helpFormButton {
+	display:inline-block;
+	margin-left: 0px;
+	margin-top:0px;
+	width:20px;
+	border-radius: 50%;
+	display:inline-block;
+    height:20px;
+	background: white;
+	text-align:center;
+    position:relative;
+    padding:0px 0px 0px 0px;
+    cursor:help;
+}
+
 .connectorEndPoint
 {
 opacity : 0.2;
@@ -112,11 +143,13 @@ background:red;
 .panel-heading {
     cursor: pointer;
 }
-
+ 
 #row > div {
     display: inline-block;
 }
 
 #row > div + div {
-    margin-left: 10px
+	display: inline-block;
+    margin-left: 50px
 }
+

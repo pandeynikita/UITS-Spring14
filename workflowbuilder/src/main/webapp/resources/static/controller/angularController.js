@@ -394,9 +394,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//if so, please update those values through two way binding of angular
 	//else check if it has any default values display those else leave those field blank
 	if(localParameter.alreadyPresent){
-		$.each($scope.properties, function(key, value) {
-			label = $scope.properties[key].label;
-			$scope.dataStorage[label] = localJsonData[idOfDiv][label];
+		$.each(localJsonData[idOfDiv], function(key, value) {
+			$scope.dataStorage[key] = value;
 		});
 	} else {
 		$scope.dataStorage["image"] = image;
@@ -411,6 +410,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//On click of save, this function will called and it returns with 
 	//updated/new dataStorage field
 	$scope.save = function () {
+		console.log($scope.dataStorage);
 		$modalInstance.close($scope.dataStorage);
 	};
 

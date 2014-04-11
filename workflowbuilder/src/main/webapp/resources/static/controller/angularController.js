@@ -133,14 +133,20 @@ var angularModalCtrl = function($scope,$modal,$http){
 						serverSideInputData
 				));
 		responsePromise.success(function(data,status,headers,config){
-			console.log(status);
+			onExport(data);
 		});
 		responsePromise.error(function(data,status,headers,config){
 			console.log(status+" "+data);
 			//Alert need to be added
 		});
 	};
-
+	
+	//Open a new window and add the export data and pop up
+	var onExport = function(data){	
+		window.open('data:application/xml,'+ 
+				encodeURIComponent(data),"_blank","toolbar=yes, scrollbars=yes, resizable=yes, top=200, left=200, width=800, height=800");
+	};
+	
 //	Adding next node to each object if there is any and update 
 //	the client side json object
 	var addNextNodeToClientSideData = function(clientSideJsonData, routePath){

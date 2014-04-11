@@ -59,8 +59,15 @@ var angularModalCtrl = function($scope,$modal,$http){
 
 	$scope.checkSavedNodeData = function(droppedArray) {
 		for(var i=1; i <= droppedArray.length-1 ; i++){
+			if(droppedArray[i] === undefined )
+			{
+			continue;
+			}
+		else
+			{
 			if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
 				return false;
+			}
 			}
 		}
 		return true;

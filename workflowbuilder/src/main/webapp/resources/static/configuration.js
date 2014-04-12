@@ -299,7 +299,14 @@ var nodesConfiguration = {
 				"edit" : "Yes",
 				"helpText" : "Define the doc Handler for the workspace"
 			},
-						
+			"policies" : {
+				"label" : "Policies",
+				"label_policy":"List Of Policy",
+				"label_value":"Policy Flag",
+				"type" : "selectRadio",
+				"selectOptions" : [ "DEFAULT_APPROVE", "DEFAULT_REQUEST" ],
+				"radioOptions" : [ "True", "False" ]				
+			},
 			"routingVersion" : {
 				"label" : "Routing Version",
 				"type" : "text",

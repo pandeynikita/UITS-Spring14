@@ -108,12 +108,42 @@
 						</form>
 					</div>
 
+					<div ng-if="isSelectRadioType(property)" >
+						<form class="form-horizontal" role="form"  >
+								<div class="form-group" style="float:left">
+									<div class="col-sm-4" style="float:left">		
+									<select ng-model="dataStorage[property.label_policy]" class="form-control"
+									ng-options="option as option for option in property.selectOptions">
+									</select>
+									</div>
+									
+									<div class="col-sm-4" >			
+										<label ng-repeat="option in property.radioOptions">
+											<input 	type="radio"	 
+												name={{property.label}}
+											ng-model="dataStorage[property.label_value]" 
+											ng-value="option" > 
+											{{option}}
+									</label>
+									</div>
+
+									<div class="col-sm-4">
+										<a class="addSign" style="float: right; display:inline">
+											<i class=" glyphicon glyphicon-plus-sign pull-left"
+											style="font-size: 20px"> </i>
+										</a>
+								    </div>
+									
+							</div>
+						</form>
+					</div>
+
 					<div ng-if="isMultiSelectType(property)">
 						<select multiple="true" ng-model="dataStorage[property.label]"  class="form-control"
 								ng-options="option as option for option in property.options">
 						</select>
 					</div>
-
+			
 					<div ng-if="isTextType(property) && isEditable(property) && isMandatory(property)" ng-class="{ 'has-error' : form.mtext.$invalid && !form.mtext.$pristine }" >
 									<input 	type="text" 
 									name="mtext"

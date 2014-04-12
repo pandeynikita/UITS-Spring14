@@ -461,6 +461,15 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 		}
 	};
 	
+	//Checking whether the input type is select and radio, if so return true
+	$scope.isSelectRadioType= function(property) {
+		if(property.type == "selectRadio"){
+			return true;
+		} else {
+			return false;
+		}
+	};
+	
 	//Checking whether the input type is email, if so return true
 	$scope.isEmailType= function(property) {
 		if(property.type =="email"){

@@ -230,88 +230,7 @@ var nodesConfiguration = {
 		}
 
 		},
-		"configure" : {
-			"image" : "configure",
-			"header" : "Workflow Configuration",
-			"properties" : {
-				"name" : {
-					"label" : "Name*",
-					"type" : "text",
-					"edit" : "Yes",
-					"required" : "Yes",
-					"message" : "Name is required."
-				},
-				"parent" : {
-					"label" : "Parent",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"description" : {
-					"label" : "Description",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"label" : {
-					"label" : "Label",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"postProcessor" : {
-					"label" : "Post Processor",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"superUserGroup" : {
-					"label" : "Super User Group",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"blanketApprovePolicy" : {
-					"label" : "Blanket Approve Policy",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"reportingGroup" : {
-					"label" : "Reporting Group",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"defaultExceptionGroup " : {
-					"label" : "Default Exception Group",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"docHandler" : {
-					"label" : "Doc Handler",
-					"type" : "text",
-					"edit" : "Yes"
-				},
-				"active" : {
-					"label" : "Active",
-					"type" : "radio",
-					"options" : [ "True", "False" ]
-				},
-				"policy" : {
-					"label" : "Policy",
-					"type" : "multiSelect",
-					"options" : [ "Default_Approve", "Default_Request" ]
-				},
-				"routingVersion" : {
-					"label" : "Routing Version",
-					"type" : "text",
-					"defaultVal" : "2",
-					"edit" : "No"
-				},
-				"nameSpace" :{
-					"label"	:	"Name Space*",
-					"type"	:	"select",
-					"options" : ["KUALI"],
-					"required" : "Yes",
-					"message" : "Name Space is required."
-				}
-
-			}
-	},
+	
 	"configure" : {
 		"image" : "configure",
 		"header" : "Workflow Configuration",
@@ -348,29 +267,35 @@ var nodesConfiguration = {
 				"edit" : "Yes",
 				"helpText" : "Define the post Processor for the workspace"
 			},
-			"superUserGroup" : {
-				"label" : "Super User Group",
-				"type" : "text",
-				"edit" : "Yes",
-				"helpText" : "Define the super User Group for the workspace"
-			},
 			"blanketApprovePolicy" : {
 				"label" : "Blanket Approve Policy",
 				"type" : "text",
 				"edit" : "Yes",
 				"helpText" : "blanket Approve Policy needs to be given"
 			},
-			"reportingGroup" : {
-				"label" : "Reporting Group",
-				"type" : "text",
-				"edit" : "Yes",
-				"helpText" : "Reporting Group for the workspace"
-			},
 			"defaultExceptionGroup " : {
 				"label" : "Default Exception Group",
-				"type" : "text",
-				"edit" : "Yes",
+				"label_group":"Default Exception Group",
+				"label_nameSpace":"Default Exception Group Name Space",
+				"type" : "textSelect",
+				"options" : [ "KUALI" ],
 				"helpText" : "States the default Exception Group for the workspace"
+			},
+			"reportingGroup " : {
+				"label" : "Reporting Group",
+				"label_group":"Reporting Group",
+				"label_nameSpace":"Reporting Group Name Space",
+				"type" : "textSelect",
+				"options" : [ "KUALI" ],
+				"helpText" : "States the Reporting Group for the workspace"
+			},
+			"superUserGroup " : {
+				"label" : "Super User Group",
+				"label_group":"Super User Group",
+				"label_nameSpace":"Super User Group Name Space",
+				"type" : "textSelect",
+				"options" : [ "KUALI" ],
+				"helpText" : "States the Super User Group for the workspace"
 			},
 			"docHandler" : {
 				"label" : "Doc Handler",
@@ -378,30 +303,16 @@ var nodesConfiguration = {
 				"edit" : "Yes",
 				"helpText" : "Define the doc Handler for the workspace"
 			},
-			"active" : {
-				"label" : "Active",
-				"type" : "radio",
-				"options" : [ "True", "False" ],
-				"helpText" : "Choose the  the workspace to be active or not"
-			},
+						
 			"routingVersion" : {
 				"label" : "Routing Version",
 				"type" : "text",
 				"defaultVal" : "2",
 				"edit" : "No",
 				"helpText" : "This is a non editable field"
-			},
-			"nameSpace" : {
-				"label" : "Name Space*",
-				"type" : "select",
-				"options" : [ "KUALI" ],
-				"required" : "Yes",
-				"message" : "Name Space is required.",
-				"helpText" : "Define the namespace for the workspace"
-
 			}
 		}
 	}
-	
+
 
 };

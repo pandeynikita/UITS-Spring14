@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -29,13 +30,11 @@ public class WorkflowBuilderController{
 	}
 	//Receiving input using @RequestBody
 	@RequestMapping(value="export", method = RequestMethod.POST)
-	public ModelAndView exportToXml(@RequestBody Data dataObject){
-		
+	@ResponseBody
+	public String exportToXml(@RequestBody Data dataObject){
 		String convertedXml = convertPojoToXml(dataObject);
 		String orderedXml 	= orderRoutePath(convertedXml);
-		ModelAndView model	= new ModelAndView("WorkflowBuilderPage");
-		System.out.println(orderedXml);
-		return model;
+		return orderedXml;
 	}
 	//Function converts the Pojo to Xml using the root class
 	private String convertPojoToXml(Data dataObject){
@@ -64,7 +63,7 @@ public class WorkflowBuilderController{
 
 //	Function to order the routePath
 	private String orderRoutePath(String xml){
-		String finalXml = null;
+		String finalXml = "";
 		String[] items  = xml.split("\\n");
 		int routePathEnd = 0;
 		int routePathStart = 0;

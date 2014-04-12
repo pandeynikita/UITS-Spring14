@@ -132,8 +132,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
 		addNextNodeToClientSideData($scope.jsonData,routePath);
+		console.log($scope.jsonData);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
-
+		console.log(serverSideInputData);
 		var responsePromise = $http.post(
 				"export.htm",
 				JSON.stringify(
@@ -245,15 +246,17 @@ var angularModalCtrl = function($scope,$modal,$http){
 			if(nodeType == configureKey){
 				//Retrieve name space from the configuration and use it whenever required
 				var nameSpaceKey 	= "nameSpace";
+				var nameSpaces =['superUserGroupNameSpace','defaultExceptionGroupNameSpace','reportingGroupNameSpace'];
 				var policyKey 		= "policy";
+				console.log(nameSpaces);
 				angular.forEach(generatedObject[routeNodeKey], function(configureValue, configureKey){
 					if(configureKey == "superUserGroup" || configureKey == "reportingGroup" || configureKey == "defaultExceptionGroup"){
-						var nameSpace = generatedObject[routeNodeKey][nameSpaceKey];
+						var groupNameSpace = configureKey+"NameSpace";
 						var newJsonObject = {};
-						newJsonObject[nameSpaceKey]=nameSpace;
+						newJsonObject[nameSpaceKey]=generatedObject[routeNodeKey][groupNameSpace];
 						newJsonObject["value"]=configureValue;
 						generatedServerSideJsonData[configureKey] = newJsonObject;
-					} else if(configureKey != nameSpaceKey){
+					} else if(configureKey != "superUserGroupNameSpace" && configureKey != "reportingGroupNameSpace" && configureKey != "defaultExceptionGroupNameSpace"){
 						if(configureKey == policyKey){
 							var generatedPolicyObject = generatePolicy(configureValue);
 							generatedServerSideJsonData["policies"] = generatedPolicyObject;

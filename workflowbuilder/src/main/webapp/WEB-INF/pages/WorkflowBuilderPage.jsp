@@ -90,21 +90,20 @@
 						<form class="form-horizontal" role="form">
 							
 							<div class="form-group">
-							<div class="col-sm-6">
-							<label>Name</label>
-							<input type="text" 
-							ng-model="dataStorage[property.label_group]"
-							placeholder="Text" class="form-control" />
+								<div class="col-sm-6">
+									<label>Name</label>
+									<input type="text" 
+										ng-model="dataStorage[property.label_group]"
+										placeholder="Text" class="form-control" />
+								</div>					
 							
-							</div>					
-							
-							<div class="col-sm-6 ">	
-							<label>NameSpace</label>				
-							<select ng-model="dataStorage[property.label_namespace]" class="form-control"
-								ng-options="option as option for option in property.options">
-								</select>
-							</div>
-						</div>	
+								<div class="col-sm-6 ">	
+									<label>NameSpace</label>				
+									<select ng-model="dataStorage[property.label_nameSpace]" class="form-control"
+										ng-options="option as option for option in property.options">
+									</select>
+								</div>
+							</div>	
 						</form>
 					</div>
 

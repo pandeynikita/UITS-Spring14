@@ -267,31 +267,35 @@ var nodesConfiguration = {
 				"edit" : "Yes",
 				"helpText" : "Define the post Processor for the workspace"
 			},
-			"superUserGroup" : {
-				"label" : "Super User Group",
-				"type" : "text",
-				"edit" : "Yes",
-				"helpText" : "Define the super User Group for the workspace"
-			},
 			"blanketApprovePolicy" : {
 				"label" : "Blanket Approve Policy",
 				"type" : "text",
 				"edit" : "Yes",
 				"helpText" : "blanket Approve Policy needs to be given"
 			},
-			"reportingGroup" : {
-				"label" : "Reporting Group",
-				"type" : "text",
-				"edit" : "Yes",
-				"helpText" : "Reporting Group for the workspace"
-			},
 			"defaultExceptionGroup " : {
 				"label" : "Default Exception Group",
 				"label_group":"Default Exception Group",
-				"label_namespace":"Default Exception Group Namespace",
+				"label_nameSpace":"Default Exception Group Name Space",
 				"type" : "textSelect",
 				"options" : [ "KUALI" ],
 				"helpText" : "States the default Exception Group for the workspace"
+			},
+			"reportingGroup " : {
+				"label" : "Reporting Group",
+				"label_group":"Reporting Group",
+				"label_nameSpace":"Reporting Group Name Space",
+				"type" : "textSelect",
+				"options" : [ "KUALI" ],
+				"helpText" : "States the Reporting Group for the workspace"
+			},
+			"superUserGroup " : {
+				"label" : "Super User Group",
+				"label_group":"Super User Group",
+				"label_nameSpace":"Super User Group Name Space",
+				"type" : "textSelect",
+				"options" : [ "KUALI" ],
+				"helpText" : "States the Super User Group for the workspace"
 			},
 			"docHandler" : {
 				"label" : "Doc Handler",
@@ -306,15 +310,6 @@ var nodesConfiguration = {
 				"defaultVal" : "2",
 				"edit" : "No",
 				"helpText" : "This is a non editable field"
-			},
-			"nameSpace" : {
-				"label" : "Name Space*",
-				"type" : "select",
-				"options" : [ "KUALI" ],
-				"required" : "Yes",
-				"message" : "Name Space is required.",
-				"helpText" : "Define the namespace for the workspace"
-
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 $(function() {
 
-	var counter = flag = fire_check = fire_check_click = 0;
+	var counter = flag = fire_check = fire_check_click = save_flag = 0;
 	var i = 0, id_circle = null, source = [], target = [], original = false;
 
 	// Get the angular scope for the mentioned controller
@@ -33,7 +33,7 @@ $(function() {
 	
 	// on click event handler for export button
 	$('#exportId').click(function() {
-		// Call the angular function from jquery event handler
+		// Call the angular function from jQuery event handler
 		_scope.angularExportFunction(routePath, droppedArray);
 	});
 
@@ -45,7 +45,7 @@ $(function() {
 			bootbox.alert(nodeConfigurationNotAddedError);
 		} else {
 			var divId = $(this).attr("id");
-			// Call the angular function from jquery event handler
+			// Call the angular function from jQuery event handler
 			_scope.angularOpenFunction(nodeType, divId, nodesConfiguration);
 		}
 	});
@@ -100,6 +100,8 @@ $(function() {
 						$(newDiv).removeClass("ui-draggable"); // removing
 						// jQuery draggable for the jsPlumb draggable to work }
 						jsPlumb.draggable("dragged" + counter);
+						//Changing the CSS to indicate the configuration is not filled
+						$(newDiv).css("background","orange");
 						var endpointOptions = { // setting the
 								// parameters for the
 								// connectors.
@@ -318,18 +320,18 @@ $(function() {
 										var divId = $(this)
 										.attr("id");
 										// Call the angular
-										// function from jquery
+										// function from jQuery
 										// event handler
 										_scope
 										.angularOpenFunction(
 												nodeType,
 												divId,
-												nodesConfiguration);
-									}
+												nodesConfiguration
+												);
+										}
 								});
 						if (id_circle == "circle")
-							flag = 1;
-
+							flag = 1;	
 					}
 				}
 			});

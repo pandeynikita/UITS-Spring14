@@ -1,6 +1,6 @@
 angular.module('workFlowBuilder',['ui.bootstrap']);
 var angularModalCtrl = function($scope,$modal,$http){
-//	Master json storage, which will have unique div 
+//	Master JSON storage, which will have unique div 
 //	idOfDiv as key and its properties values
 	//INITIALIZATION
 	$scope.jsonData = {};
@@ -9,7 +9,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 	 * 			"divId2": object};
 	 */
 
-//	Need to be stored in a seperate file and assign it to this variable
+//	Need to be stored in a separate file and assign it to this variable
 	$scope.nodes = null;
 	var configureKey = "configure";
 
@@ -17,8 +17,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 	var configurationMissingError		= "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
 	var nodesConnectivityMissingError 	= "ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
 	//This function is called 
-	//by jquery event handler on click of any components
-	//$apply is to access angular funciton from other functions
+	//by jQuery event handler on click of any components
+	//$apply is to access angular function from other functions
 	$scope.angularOpenFunction = function(image,idOfDiv,nodesConfiguration){
 		$scope.$apply(function(){
 			$scope.open(image,idOfDiv,nodesConfiguration);
@@ -38,24 +38,26 @@ var angularModalCtrl = function($scope,$modal,$http){
 			});
 
 			var found = false;
-			for (var i = 1; i < droppedArray.length; i++) {
-				if (tempArray.indexOf(droppedArray[i]) > -1){
-					found = true;
-				} else {
-					found = false;
+			if(droppedArray.length > 0){
+				for (var i = 1; i < droppedArray.length; i++) {
+					if (tempArray.indexOf(droppedArray[i]) > -1){
+						found = true;
+					} else {
+						found = false;
+					}
 				}
-			}
-			if(found == false){
-				bootbox.alert(nodesConnectivityMissingError);
-			} else {
-				if($scope.checkSavedNodeData(droppedArray)){
-					$scope.angularExport(routePath);
-				} else {
+				if((found == false)&&(droppedArray.length > 2)){
+					bootbox.alert(nodesConnectivityMissingError);
+				}else {
+					if($scope.checkSavedNodeData(droppedArray)){
+						$scope.angularExport(routePath);
+					}else {
 					bootbox.alert(configurationMissingError);
-				}
+					}
+			    }				
 			}
 		});
-	};
+	};	
 
 	$scope.checkSavedNodeData = function(droppedArray) {
 		for(var i=1; i <= droppedArray.length-1 ; i++){
@@ -74,7 +76,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	this function will be called
 	$scope.open = function (image,idOfDiv,nodesConfiguration) {
 		$scope.nodes = nodesConfiguration;
-
 //		the $modal service has only one method: open(options)
 //		templateUrl - a path to a template representing modal's content
 //		a controller for a modal instance - it can initialize scope used by modal.
@@ -93,8 +94,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 						alreadyPresentFlag = false;
 					}
 					return {
-						//Pass this four values as json to modal controller
-						"selectedNode":$scope.nodes[image],	//Current Node which we are dealling
+						//Pass this four values as JSON to modal controller
+						"selectedNode":$scope.nodes[image],	//Current Node which we are dealing
 						"alreadyPresent":alreadyPresentFlag,//Data already present or not
 						"data":$scope.jsonData,				//Master storage- jsonData
 						"idOfDiv":idOfDiv,					//Id of the current div element, which is the key for jsonData
@@ -103,16 +104,18 @@ var angularModalCtrl = function($scope,$modal,$http){
 				}
 			}
 		});
-
 		//On click of save or close button, result will be called
 		//perform all house keeping tasks here
 		modalInstance.result.then(function (objectNeedToBeStored) {
 			//Called when, save is pressed
 			$scope.jsonData[idOfDiv]= objectNeedToBeStored;
+			//To change the CSS of the dropped nodes after configuration is filled
+			if(idOfDiv != "configurationId")
+				$(document.getElementById(idOfDiv)).css("background","green");
 			console.log("Modal:Save has been pressed");
 		}, function (string) {
 			//Called when, cancel is pressed
-			console.log("Modal:cancel has been pressed");
+			console.log("Modal:Cancel has been pressed");
 		});
 	};
 
@@ -142,7 +145,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 	};
 
 //	Adding next node to each object if there is any and update 
-//	the client side json object
+//	the client side JSON object
 	var addNextNodeToClientSideData = function(clientSideJsonData, routePath){
 		var nameField 	= "Name*";
 		var nextNode 	= "Next Node"; 
@@ -153,7 +156,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		3. if the next node is not empty, it has come next node, so proceed for those only
 //		4. find the next nodes name from the client side json object
 //		5. Create a new field called "Next Node" for each satisfying object and add it
-
+        console.log(clientSideJsonData);
 		angular.forEach(clientSideJsonData, function(value, key){
 			if(key != configureKey){
 				next = routePath[key];
@@ -168,7 +171,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 
 
 	var customizeTheJsonDataForServerSide = function(clientSideJsonData){
-//		Defining server side pojo structure
+//		Defining server side POJO structure
 //		{
 //		configurationDetails : values,
 //		routeNodes{

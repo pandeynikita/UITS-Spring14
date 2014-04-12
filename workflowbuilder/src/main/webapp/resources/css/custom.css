@@ -35,7 +35,7 @@
 .circle {
 	width: 70px;
 	height: 70px;
-	background:orange;
+	background:green;
 	border-radius: 40px;
 	border:2px solid black;
 	border-style:solid;
@@ -46,7 +46,7 @@
 .square {
 	width: 70px;
 	height: 70px;
-	background: blue;
+	background: green;
 	border:2px solid black;
 	border-style:solid;
 	padding:4px 3px 1px 3px;
@@ -56,7 +56,7 @@
 .rectangle {
 	width: 70px;
 	height: 35px;
-	background:maroon;
+	background:green;
 	border:2px solid black;
 	border-style:solid;
 	padding:4px 3px 1px 3px;
@@ -66,7 +66,7 @@
 .rectangleCoral {
 	width: 70px;
 	height: 35px;
-	background:coral;
+	background:green;
 	border:2px solid black;
 	border-style:solid;
 	padding:4px 3px 1px 3px;
@@ -87,7 +87,7 @@
 .ovalMagenta {
 	width: 80px;
 	height: 40px;
-	background:darkmagenta;
+	background:green;
 	border-radius: 100px / 50px;
 	border:2px solid black;
 	border-style:solid;
@@ -153,3 +153,7 @@ background:red;
     margin-left: 50px
 }
 
+.btn-primary:disabled {
+	background-color:lightgrey;
+	color:white;
+}

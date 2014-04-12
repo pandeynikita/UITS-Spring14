@@ -56,13 +56,12 @@
 					<div id=try style="position:relative;float:left">{{property.label}}
 				<button class="helpFormButton" 
 					id="propertyHelpId" popover= {{property.helpText}}
-					popover-trigger="click" popover-placement="bottom" >
+					popover-trigger="focus" popover-placement="bottom" >
 					<i class=" glyphicon glyphicon-question-sign"
 					style="font-size:15px;"> </i>
 					</button>
 				</div>
-				
-			
+							
 					<div ng-if="isRadioType(property)">
 							<label ng-repeat="option in property.options">
 								<input 	type="radio"	 
@@ -71,6 +70,7 @@
 								ng-value="option" > 
 								{{option}}
 							</label>
+
 					</div>
 
 					<div ng-if="isSelectType(property) && isMandatory(property)" >
@@ -84,6 +84,28 @@
 						<select ng-model="dataStorage[property.label]" class="form-control"
 								ng-options="option as option for option in property.options">
 						</select>
+					</div>
+					<br>
+					<div ng-if="isTextSelectType(property)" >
+						<form class="form-horizontal" role="form">
+							
+							<div class="form-group">
+							<div class="col-sm-6">
+							<label>Name</label>
+							<input type="text" 
+							ng-model="dataStorage[property.label_group]"
+							placeholder="Text" class="form-control" />
+							
+							</div>					
+							
+							<div class="col-sm-6 ">	
+							<label>NameSpace</label>				
+							<select ng-model="dataStorage[property.label_namespace]" class="form-control"
+								ng-options="option as option for option in property.options">
+								</select>
+							</div>
+						</div>	
+						</form>
 					</div>
 
 					<div ng-if="isMultiSelectType(property)">

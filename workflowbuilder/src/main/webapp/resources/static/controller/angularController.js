@@ -417,7 +417,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//On click of save, this function will called and it returns with 
 	//updated/new dataStorage field
 	$scope.save = function () {
-		console.log($scope.dataStorage);
 		$modalInstance.close($scope.dataStorage);
 	};
 
@@ -476,6 +475,14 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 		if(property.edit == "Yes"){
 			return true;
 		} else {
+			return false;
+		}
+	};
+	
+	$scope.isTextSelectType= function(property){
+		if(property.type =="textSelect"){
+				return true;
+		}else{
 			return false;
 		}
 	};

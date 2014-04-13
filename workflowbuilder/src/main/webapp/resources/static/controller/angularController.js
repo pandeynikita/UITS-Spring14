@@ -408,7 +408,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//if so, please update those values through two way binding of angular
 	//else check if it has any default values display those else leave those field blank
 	if(localParameter.alreadyPresent){
-		console.log($scope.dataStorage);
 		/*$scope.policies=$scope.dataStorage["policies"];*/
 		$.each(localJsonData[idOfDiv], function(key, value) {
 			$scope.dataStorage[key] = value;

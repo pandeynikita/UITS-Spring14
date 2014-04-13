@@ -21,6 +21,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 	//$apply is to access angular funciton from other functions
 	$scope.angularOpenFunction = function(image,idOfDiv,nodesConfiguration){
 		$scope.$apply(function(){
+			console.log("angular open");
 			$scope.open(image,idOfDiv,nodesConfiguration);
 		});
 
@@ -81,6 +82,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	this function will be called
 	$scope.open = function (image,idOfDiv,nodesConfiguration) {
 		$scope.nodes = nodesConfiguration;
+		console.log("test1");
 
 //		the $modal service has only one method: open(options)
 //		templateUrl - a path to a template representing modal's content
@@ -92,6 +94,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 			controller: ModalInstanceCtrl,
 			resolve: {
 				localParameter: function(){
+					
+					
 					//Checking whether current div element has stored data or not
 					//If the id has some value then set the flag to true, else false
 					if($scope.jsonData.hasOwnProperty(idOfDiv)){
@@ -395,12 +399,17 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	idOfDiv 			= localParameter.idOfDiv;
 	image 				= localParameter.image; 
 	$scope.properties = $scope.component.properties;
+	
+	$scope.policies = [];
 
+	
 
 	//Check, whether the data is already present in the system
 	//if so, please update those values through two way binding of angular
 	//else check if it has any default values display those else leave those field blank
 	if(localParameter.alreadyPresent){
+		console.log($scope.dataStorage);
+		/*$scope.policies=$scope.dataStorage["policies"];*/
 		$.each(localJsonData[idOfDiv], function(key, value) {
 			$scope.dataStorage[key] = value;
 		});
@@ -413,12 +422,36 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			}
 		});
 	}
+	
 
 	//On click of save, this function will called and it returns with 
 	//updated/new dataStorage field
 	$scope.save = function () {
+		$scope.dataStorage["policies"]=$scope.policies;
+		console.log($scope.dataStorage);
 		$modalInstance.close($scope.dataStorage);
 	};
+	
+	//Add the selected item and its radio value.
+	$scope.add = function () {
+		
+		var alreadyPresentFlag=false;
+		var selectedValue=$scope.dataStorage["List Of Policy"];
+		var radioValue=$scope.dataStorage["Policy Flag"];
+		var policyAndValue=selectedValue+":"+radioValue;
+		angular.forEach($scope.policies,function(entry,index){
+			var splitKey =  entry.split(":");
+			if(splitKey[0]==selectedValue){
+				$scope.policies[index]=policyAndValue;
+				alreadyPresentFlag=true;
+			}
+		});
+		if(!alreadyPresentFlag){
+			$scope.policies.push(policyAndValue);
+		}
+		console.log($scope.policies);
+	};
+	
 
 	//On click of cancel, this function will called
 	$scope.cancel = function () {
@@ -504,6 +537,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
+	
 };
 
 

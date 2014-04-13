@@ -128,7 +128,7 @@
 									</div>
 
 									<div class="col-sm-4">
-										<a class="addSign" style="float: right; display:inline">
+										<a href ng-click="add()" class="addSign" style="float: right; display:inline" >
 											<i class=" glyphicon glyphicon-plus-sign pull-left"
 											style="font-size: 20px"> </i>
 										</a>
@@ -136,6 +136,10 @@
 									
 							</div>
 						</form>
+    					<div ng-repeat="policy in policies">
+      							<span>{{policy}}&nbsp&nbsp[<a href ng-click="policies.splice($index, 1)">X</a>]</span>
+    					</div>
+    
 					</div>
 
 					<div ng-if="isMultiSelectType(property)">

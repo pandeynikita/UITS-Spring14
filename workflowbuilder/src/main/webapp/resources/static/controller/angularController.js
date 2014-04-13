@@ -595,21 +595,23 @@ var angularModalCtrl = function($scope,$modal,$http){
 			});
 
 			var found = false;
-			for (var i = 1; i < droppedArray.length; i++) {
-				if (tempArray.indexOf(droppedArray[i]) > -1){
-					found = true;
-				} else {
-					found = false;
+			if(droppedArray.length > 0){
+				for (var i = 1; i < droppedArray.length; i++) {
+					if (tempArray.indexOf(droppedArray[i]) > -1){
+						found = true;
+					} else {
+						found = false;
+					}
 				}
-			}
-			if(found == false){
-				bootbox.alert(nodesConnectivityMissingError);
-			} else {
-				if($scope.checkSavedNodeData(droppedArray)){
-					$scope.angularExport(routePath);
-				} else {
+				if((found == false)&&(droppedArray.length > 2)){
+					bootbox.alert(nodesConnectivityMissingError);
+				}else {
+					if($scope.checkSavedNodeData(droppedArray)){
+						$scope.angularExport(routePath);
+					}else {
 					bootbox.alert(configurationMissingError);
-				}
+					}
+			    }				
 			}
 		});
 	};
@@ -673,6 +675,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 		modalInstance.result.then(function (objectNeedToBeStored) {
 			//Called when, save is pressed
 			$scope.jsonData[idOfDiv]= objectNeedToBeStored;
+			//To change the CSS of the dropped nodes after configuration is filled
+			if(idOfDiv != "configurationId")
+				$(document.getElementById(idOfDiv)).css("background","green");
 			console.log("Modal:Save has been pressed");
 		}, function (string) {
 			//Called when, cancel is pressed

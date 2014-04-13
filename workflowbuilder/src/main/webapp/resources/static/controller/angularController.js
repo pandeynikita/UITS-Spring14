@@ -52,9 +52,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 					if($scope.checkSavedNodeData(droppedArray)){
 						$scope.angularExport(routePath);
 					}else {
-					bootbox.alert(configurationMissingError);
+						bootbox.alert(configurationMissingError);
 					}
-			    }				
+				}				
 			}
 		});
 	};	
@@ -127,6 +127,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		We will receive a json object of attributes = error and data
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
+		needToBeHandled();
 		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
 
@@ -143,6 +144,10 @@ var angularModalCtrl = function($scope,$modal,$http){
 			//Alert need to be added
 		});
 	};
+	var needToBeHandled = function(){
+		delete $scope.jsonData["configurationId"]["List Of Policy"];
+		delete $scope.jsonData["configurationId"]["Policy Flag"];
+	};
 
 //	Adding next node to each object if there is any and update 
 //	the client side JSON object
@@ -156,7 +161,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		3. if the next node is not empty, it has come next node, so proceed for those only
 //		4. find the next nodes name from the client side json object
 //		5. Create a new field called "Next Node" for each satisfying object and add it
-        console.log(clientSideJsonData);
+		console.log(clientSideJsonData);
 		angular.forEach(clientSideJsonData, function(value, key){
 			if(key != configureKey){
 				next = routePath[key];
@@ -354,7 +359,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 		return newKey;
 	};
-	
+
 //	This function is to generate policy object for the given policy array
 //	So, we are traversing through the given array and create object with the properties of name and value
 //	and push it to an array of object and assign it to policyObject and return the same as out.
@@ -451,10 +456,18 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
-	
+
 	//Checking whether the input type is email, if so return true
 	$scope.isEmailType= function(property) {
 		if(property.type =="email"){
+			return true;
+		} else {
+			return false;
+		}
+	};
+	//Checking whether the input type is select and radio, if so return true
+	$scope.isSelectRadioType= function(property) {
+		if(property.type == "selectRadio"){
 			return true;
 		} else {
 			return false;
@@ -469,7 +482,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
-	
+
 	//Checking whether the input type is Mandatory, if so return true
 	$scope.isMandatory= function(property) {
 		if(property.required == "Yes"){
@@ -609,9 +622,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 					if($scope.checkSavedNodeData(droppedArray)){
 						$scope.angularExport(routePath);
 					}else {
-					bootbox.alert(configurationMissingError);
+						bootbox.alert(configurationMissingError);
 					}
-			    }				
+				}				
 			}
 		});
 	};
@@ -620,13 +633,13 @@ var angularModalCtrl = function($scope,$modal,$http){
 		for(var i=1; i <= droppedArray.length-1 ; i++){
 			if(droppedArray[i] === undefined )
 			{
-			continue;
+				continue;
 			}
-		else
+			else
 			{
-			if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
-				return false;
-			}
+				if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
+					return false;
+				}
 			}
 		}
 		return true;
@@ -710,13 +723,13 @@ var angularModalCtrl = function($scope,$modal,$http){
 			//Alert need to be added
 		});
 	};
-	
+
 	//Open a new window and add the export data and pop up
 	var onExport = function(data){	
 		window.open('data:application/xml,'+ 
 				encodeURIComponent(data),"_blank","toolbar=yes, scrollbars=yes, resizable=yes, top=200, left=200, width=800, height=800");
 	};
-	
+
 //	Adding next node to each object if there is any and update 
 //	the client side json object
 	var addNextNodeToClientSideData = function(clientSideJsonData, routePath){
@@ -808,9 +821,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 			if(nodeType == configureKey){
 				//Retrieve name space from the configuration and use it whenever required
 				var nameSpaceKey 	= "nameSpace";
-				var nameSpaces =['superUserGroupNameSpace','defaultExceptionGroupNameSpace','reportingGroupNameSpace'];
-				var policyKey 		= "policy";
-				console.log(nameSpaces);
+				var policyKey 		= "policies";
 				angular.forEach(generatedObject[routeNodeKey], function(configureValue, configureKey){
 					if(configureKey == "superUserGroup" || configureKey == "reportingGroup" || configureKey == "defaultExceptionGroup"){
 						var groupNameSpace = configureKey+"NameSpace";
@@ -929,7 +940,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 		return newKey;
 	};
-	
+
+
 //	This function is to generate policy object for the given policy array
 //	So, we are traversing through the given array and create object with the properties of name and value
 //	and push it to an array of object and assign it to policyObject and return the same as out.
@@ -940,7 +952,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 		var policyArray = [];
 		policyObject["policy"] = policyArray;
 		angular.forEach(policies, function(policy,index){
-			policyArray.push({"name":policy,"value":"false"});
+			var splitKey = policy.split(":");
+			policyArray.push({"name":splitKey[0],"value":splitKey[1]});
 		});
 		return policyObject;
 	};
@@ -960,12 +973,15 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	idOfDiv 			= localParameter.idOfDiv;
 	image 				= localParameter.image; 
 	$scope.properties = $scope.component.properties;
+	var configureKey = "configure";
+	$scope.policies = [];
+
 
 
 	//Check, whether the data is already present in the system
 	//if so, please update those values through two way binding of angular
 	//else check if it has any default values display those else leave those field blank
-	if(localParameter.alreadyPresent){
+	if(localParameter.alreadyPresent){	
 		$.each(localJsonData[idOfDiv], function(key, value) {
 			$scope.dataStorage[key] = value;
 		});
@@ -979,9 +995,34 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 		});
 	}
 
+
+
+
+	//Add the selected item and its radio value.
+	$scope.add = function () {
+
+		var alreadyPresentFlag=false;
+		var selectedValue=$scope.dataStorage["List Of Policy"];
+		var radioValue=$scope.dataStorage["Policy Flag"];
+		var policyAndValue=selectedValue+":"+radioValue;
+		angular.forEach($scope.policies,function(entry,index){
+			var splitKey =  entry.split(":");
+			if(splitKey[0]==selectedValue){
+				$scope.policies[index]=policyAndValue;
+				alreadyPresentFlag=true;
+			}
+		});
+		if(!alreadyPresentFlag){
+			$scope.policies.push(policyAndValue);
+		}
+	};
+
 	//On click of save, this function will called and it returns with 
 	//updated/new dataStorage field
 	$scope.save = function () {
+		if(image == configureKey){
+			$scope.dataStorage["policies"]=$scope.policies;
+		}
 		$modalInstance.close($scope.dataStorage);
 	};
 
@@ -1025,7 +1066,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
-	
+
 	//Checking whether the input type is email, if so return true
 	$scope.isEmailType= function(property) {
 		if(property.type =="email"){
@@ -1043,15 +1084,16 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 			return false;
 		}
 	};
-	
+
 	$scope.isTextSelectType= function(property){
 		if(property.type =="textSelect"){
-				return true;
+			return true;
 		}else{
 			return false;
 		}
 	};
-	
+
+
 	//Checking whether the input type is Mandatory, if so return true
 	$scope.isMandatory= function(property) {
 		if(property.required == "Yes"){
@@ -1136,4 +1178,3 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 //type:"org.kuali.rice.kew.mail.EmailNode"
 //}]
 //};
-

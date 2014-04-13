@@ -21,7 +21,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 	//$apply is to access angular funciton from other functions
 	$scope.angularOpenFunction = function(image,idOfDiv,nodesConfiguration){
 		$scope.$apply(function(){
-			console.log("angular open");
 			$scope.open(image,idOfDiv,nodesConfiguration);
 		});
 
@@ -82,7 +81,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	this function will be called
 	$scope.open = function (image,idOfDiv,nodesConfiguration) {
 		$scope.nodes = nodesConfiguration;
-		console.log("test1");
 
 //		the $modal service has only one method: open(options)
 //		templateUrl - a path to a template representing modal's content
@@ -126,7 +124,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 			console.log("Modal:cancel has been pressed");
 		});
 	};
-
+	
 
 	$scope.angularExport= function(routePath){
 //		Write a validation function to check all the component in div area has some saved data
@@ -135,9 +133,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		We will receive a json object of attributes = error and data
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
+		needToBeHandled();
 		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
-
 		var responsePromise = $http.post(
 				"export.htm",
 				JSON.stringify(
@@ -150,6 +148,11 @@ var angularModalCtrl = function($scope,$modal,$http){
 			console.log(status+" "+data);
 			//Alert need to be added
 		});
+	};
+	
+	var needToBeHandled = function(){
+		delete $scope.jsonData["configurationId"]["List Of Policy"];
+		delete $scope.jsonData["configurationId"]["Policy Flag"];
 	};
 	
 	//Open a new window and add the export data and pop up
@@ -249,7 +252,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 			if(nodeType == configureKey){
 				//Retrieve name space from the configuration and use it whenever required
 				var nameSpaceKey 	= "nameSpace";
-				var policyKey 		= "policy";
+				var policyKey 		= "policies";
 				angular.forEach(generatedObject[routeNodeKey], function(configureValue, configureKey){
 					if(configureKey == "superUserGroup" || configureKey == "reportingGroup" || configureKey == "defaultExceptionGroup"){
 						var nameSpace = generatedObject[routeNodeKey][nameSpaceKey];
@@ -379,7 +382,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 		var policyArray = [];
 		policyObject["policy"] = policyArray;
 		angular.forEach(policies, function(policy,index){
-			policyArray.push({"name":policy,"value":"false"});
+			var splitKey = policy.split(":");
+			policyArray.push({"name":splitKey[0],"value":splitKey[1]});
 		});
 		return policyObject;
 	};
@@ -399,7 +403,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	idOfDiv 			= localParameter.idOfDiv;
 	image 				= localParameter.image; 
 	$scope.properties = $scope.component.properties;
-	
+	var configureKey = "configure";
 	$scope.policies = [];
 
 	
@@ -407,8 +411,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//Check, whether the data is already present in the system
 	//if so, please update those values through two way binding of angular
 	//else check if it has any default values display those else leave those field blank
-	if(localParameter.alreadyPresent){
-		/*$scope.policies=$scope.dataStorage["policies"];*/
+	if(localParameter.alreadyPresent){	
+//			$scope.policies = $scope.dataStorage["policies"];
 		$.each(localJsonData[idOfDiv], function(key, value) {
 			$scope.dataStorage[key] = value;
 		});
@@ -426,8 +430,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//On click of save, this function will called and it returns with 
 	//updated/new dataStorage field
 	$scope.save = function () {
-		$scope.dataStorage["policies"]=$scope.policies;
-		console.log($scope.dataStorage);
+		if(image == configureKey){
+			$scope.dataStorage["policies"]=$scope.policies;
+		}
 		$modalInstance.close($scope.dataStorage);
 	};
 	
@@ -448,7 +453,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 		if(!alreadyPresentFlag){
 			$scope.policies.push(policyAndValue);
 		}
-		console.log($scope.policies);
 	};
 	
 

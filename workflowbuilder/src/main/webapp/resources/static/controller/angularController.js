@@ -438,6 +438,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 		$.each(localJsonData[idOfDiv], function(key, value) {
 			$scope.dataStorage[key] = value;
 		});
+		$scope.policies=$scope.dataStorage["policies"];
+		
 	} else {
 		$scope.dataStorage["image"] = image;
 		$.each($scope.properties, function(key, value) {

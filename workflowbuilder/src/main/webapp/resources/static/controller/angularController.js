@@ -1,6 +1,6 @@
 angular.module('workFlowBuilder',['ui.bootstrap']);
 var angularModalCtrl = function($scope,$modal,$http){
-//	Master json storage, which will have unique div 
+//	Master JSON storage, which will have unique div 
 //	idOfDiv as key and its properties values
 	//INITIALIZATION
 	$scope.jsonData = {};
@@ -16,9 +16,10 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	Error messages:
 	var configurationMissingError		= "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
 	var nodesConnectivityMissingError 	= "ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
+	var workflowConfigMissingError		= "ERROR: We cant export workflow as the configuration for the entire workflow is not set. Please add the configuration and try again"
 	//This function is called 
-	//by jquery event handler on click of any components
-	//$apply is to access angular funciton from other functions
+	//by jQuery event handler on click of any components
+	//$apply is to access angular function from other functions
 	$scope.angularOpenFunction = function(image,idOfDiv,nodesConfiguration){
 		$scope.$apply(function(){
 			$scope.open(image,idOfDiv,nodesConfiguration);
@@ -38,26 +39,35 @@ var angularModalCtrl = function($scope,$modal,$http){
 			});
 
 			var found = false;
-			if(droppedArray.length > 0){
- 				for (var i = 1; i < droppedArray.length; i++) {
- 					if (tempArray.indexOf(droppedArray[i]) > -1){
- 						found = true;
- 					} else {
- 						found = false;
- 					}
-  				}
-				if((found == false)&&(droppedArray.length > 2)){
- 					bootbox.alert(nodesConnectivityMissingError);
- 				}else {
- 					if($scope.checkSavedNodeData(droppedArray)){
- 						$scope.angularExport(routePath);
- 					}else {
-  					bootbox.alert(configurationMissingError);
+			//To check the entire Workflow configuration is set
+			if($scope.jsonData.hasOwnProperty("configurationId")){
+				//To check if the individual nodes are connected and their configuration is set
+				if(droppedArray.length > 0){
+					for (var i = 1; i < droppedArray.length; i++) {
+						if (tempArray.indexOf(droppedArray[i]) > -1){
+							found = true;
+						} else {
+							found = false;
+						}
 					}
- 			    }				
-  			}
-  		});
-  	};
+					if((found == false)&&(droppedArray.length > 2)){
+						bootbox.alert(nodesConnectivityMissingError);
+					}else {
+						if($scope.checkSavedNodeData(droppedArray)){
+							$scope.angularExport(routePath);
+						}else {
+							bootbox.alert(configurationMissingError);
+						}
+					}				
+				}
+				//To allow empty Workflow to export
+				else
+					$scope.angularExport(routePath);
+			}
+			else
+				bootbox.alert(workflowConfigMissingError);
+		});
+	};
 
 	$scope.checkSavedNodeData = function(droppedArray) {
 		for(var i=1; i <= droppedArray.length-1 ; i++){
@@ -103,7 +113,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 					}
 					return {
 						//Pass this four values as json to modal controller
-						"selectedNode":$scope.nodes[image],	//Current Node which we are dealling
+						"selectedNode":$scope.nodes[image],	//Current Node which we are dealing
 						"alreadyPresent":alreadyPresentFlag,//Data already present or not
 						"data":$scope.jsonData,				//Master storage- jsonData
 						"idOfDiv":idOfDiv,					//Id of the current div element, which is the key for jsonData
@@ -133,7 +143,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		Write a validation function to check all the component in div area has some saved data
 //		Write a validation function to check all the components in div area are connected. Using JsonData and routePath
 //		Add next nodes to $scope.jsonData to process the server side object
-//		We will receive a json object of attributes = error and data
+//		We will receive a JSON object of attributes = error and data
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
 		needToBeHandled();
@@ -165,7 +175,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 	};
 
 //	Adding next node to each object if there is any and update 
-//	the client side json object
+//	the client side JSON object
 	var addNextNodeToClientSideData = function(clientSideJsonData, routePath){
 		var nameField 	= "Name*";
 		var nextNode 	= "Next Node"; 
@@ -174,7 +184,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		2. Find key of each node object and use the same key onto routePath to find 
 //		its next node.
 //		3. if the next node is not empty, it has come next node, so proceed for those only
-//		4. find the next nodes name from the client side json object
+//		4. find the next nodes name from the client side JSON object
 //		5. Create a new field called "Next Node" for each satisfying object and add it
 
 		angular.forEach(clientSideJsonData, function(value, key){
@@ -191,7 +201,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 
 
 	var customizeTheJsonDataForServerSide = function(clientSideJsonData){
-//		Defining server side pojo structure
+//		Defining server side POJO structure
 //		{
 //		configurationDetails : values,
 //		routeNodes{
@@ -294,8 +304,8 @@ var angularModalCtrl = function($scope,$modal,$http){
 	};
 
 //	This function generates the server required routeNodes and route Path
-//	It takes json object as input and converts into 
-//	server based pojo kind output
+//	It takes JSON object as input and converts into 
+//	server based POJO kind output
 //	input :
 //	{
 //	"Name"				: "initial",
@@ -313,11 +323,11 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	"finalApproval"		: "true"
 //	}
 //	routePath:{
-//	"name"				: "inital",
+//	"name"				: "initial",
 //	"nextNode"			: "email node"
 //	}
 //	}
-//	Initialize routeNode and routePath object and assign it to new Json Object which we will returning
+//	Initialize routeNode and routePath object and assign it to new JSON Object which we will returning
 //	1. Traverse through each object
 //	2. Except "image" process for all other key
 //	a. 	Generate new key for all the input key by removing spaces and
@@ -325,7 +335,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	i.	check whether the key is next node if so add it to routePath object
 //	ii. check whether the key is name if so add it to both routePath and routeNode object
 //	iii. For all other key, add it to routeNode Object itself
-//	3. return the new Json Object
+//	3. return the new JSON Object
 	var generateRouteNodesAndRoutePath = function(jsonObject){
 		var routeNode 		= {};
 		var routePath 		= {};
@@ -352,7 +362,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 		return newJsonObject;
 	};
 
-//	This funciton generates key by removing spaces between them
+//	This function generates key by removing spaces between them
 //	and makes the first letter of the key as small
 //	input = "Mandatory Route"
 //	output = "mandatoryRoute"

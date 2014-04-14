@@ -268,12 +268,15 @@ var angularModalCtrl = function($scope,$modal,$http){
 				var policyKey 		= "policies";
 				angular.forEach(generatedObject[routeNodeKey], function(configureValue, configureKey){
 					if(configureKey == "superUserGroup" || configureKey == "reportingGroup" || configureKey == "defaultExceptionGroup"){
-						var nameSpace = generatedObject[routeNodeKey][nameSpaceKey];
+//						var nameSpace = generatedObject[routeNodeKey][nameSpaceKey];
+						var groupNameSpace = configureKey+"NameSpace";
 						var newJsonObject = {};
-						newJsonObject[nameSpaceKey]=nameSpace;
+//						newJsonObject[nameSpaceKey]=nameSpace;
+						newJsonObject[nameSpaceKey]=generatedObject[routeNodeKey][groupNameSpace];
 						newJsonObject["value"]=configureValue;
 						generatedServerSideJsonData[configureKey] = newJsonObject;
-					} else if(configureKey != nameSpaceKey){
+//					} else if(configureKey != nameSpaceKey){
+					} else if(configureKey != "superUserGroupNameSpace" && configureKey != "reportingGroupNameSpace" && configureKey != "defaultExceptionGroupNameSpace"){
 						if(configureKey == policyKey){
 							var generatedPolicyObject = generatePolicy(configureValue);
 							generatedServerSideJsonData["policies"] = generatedPolicyObject;

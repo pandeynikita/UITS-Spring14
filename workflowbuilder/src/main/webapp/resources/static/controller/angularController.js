@@ -148,7 +148,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		if there is no error flag set to false then the data will have serverSide data
 		needToBeHandled();
 		addNextNodeToClientSideData($scope.jsonData,routePath);
-		var serverSideInputData = customizeTheJsonDataForServerSide($scope.jsonData);
+		var serverSideInputData 	= customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post(
 				"export.htm",
 				JSON.stringify(
@@ -223,6 +223,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 		var routeNodeKey 	= "routeNode";
 		var routeNodes 		= {};
 		var routePath 		= {};
+		var policies 		= {};
 		var routePaths 		= {"routePath":routePath};
 		var generatedServerSideJsonData = {};
 		var serverSideData = {"documentTypes":{"documentType":generatedServerSideJsonData}};
@@ -240,6 +241,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 		var simplePaths 	= new Array();
 		var emailPaths		= new Array();
 		var rolePaths		= new Array();
+		
+		//Policy Array
+		var policy			= new Array();
 
 		//Assigning values to routeNodes
 		routeNodes["start"] 	= startNodes;
@@ -254,9 +258,13 @@ var angularModalCtrl = function($scope,$modal,$http){
 		routePath["simple"] 	= simplePaths;
 		routePath["email"] 		= emailPaths;
 		routePath["role"] 		= rolePaths;
+		
+		////Assigning values to policies
+		policies["policy"] = policy;
 
 		generatedServerSideJsonData["routeNodes"]	= routeNodes;
 		generatedServerSideJsonData["routePaths"]	= routePaths; 
+		generatedServerSideJsonData["policies"] 	= policies;
 
 		var imageKey = "image";
 		angular.forEach(clientSideJsonData, function(value, key){
@@ -278,8 +286,10 @@ var angularModalCtrl = function($scope,$modal,$http){
 //					} else if(configureKey != nameSpaceKey){
 					} else if(configureKey != "superUserGroupNameSpace" && configureKey != "reportingGroupNameSpace" && configureKey != "defaultExceptionGroupNameSpace"){
 						if(configureKey == policyKey){
-							var generatedPolicyObject = generatePolicy(configureValue);
-							generatedServerSideJsonData["policies"] = generatedPolicyObject;
+							var generatedPolicyArray = generatePolicy(configureValue);
+							angular.forEach(generatedPolicyArray, function(value, index){
+								policy.push(value);
+							});
 						} else {
 							generatedServerSideJsonData[configureKey] = configureValue;
 						}
@@ -393,15 +403,13 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	and push it to an array of object and assign it to policyObject and return the same as out.
 //	input: ['policy1', 'policy2']
 //	output: {policy:[{'name':'policy1','value':'false'},{'name':'policy2','value':'false'}]}
-	var generatePolicy = function(policies){
-		var policyObject = {};
-		var policyArray = [];
-		policyObject["policy"] = policyArray;
-		angular.forEach(policies, function(policy,index){
-			var splitKey = policy.split(":");
-			policyArray.push({"name":splitKey[0],"value":splitKey[1]});
+	var generatePolicy = function(object){
+		var policy = new Array();
+		angular.forEach(object, function(value,index){
+			var splitKey = value.split(":");
+			policy.push({"name":splitKey[0],"value":splitKey[1]});
 		});
-		return policyObject;
+		return policy;
 	};
 };
 

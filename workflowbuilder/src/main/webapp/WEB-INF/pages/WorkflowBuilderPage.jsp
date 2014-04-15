@@ -56,7 +56,7 @@
 					<div id=try style="position:relative;float:left;padding-right:150px">{{property.label}}
 				<button class="helpFormButton" 
 					id="propertyHelpId" popover= {{property.helpText}}
-					popover-trigger="focus" popover-placement="bottom" >
+					popover-trigger="focus" popover-placement="right" >
 					<i class=" glyphicon glyphicon-question-sign"
 					style="font-size:15px;"> </i>
 					</button>
@@ -90,7 +90,7 @@
 						<form class="form-horizontal" role="form">
 							
 							<div class="form-group">
-								<div class="col-sm-6 ">	
+								<div class="col-sm-6" >	
 									<label>NameSpace</label>				
 									<select ng-model="dataStorage[property.label_nameSpace]" class="form-control"
 										ng-options="option as option for option in property.options">
@@ -111,7 +111,7 @@
 					<div ng-if="isSelectRadioType(property)" >
 						<form class="form-horizontal" role="form"  >
 								<div class="form-group" style="float:left">
-									<div class="col-sm-4" style="float:left">		
+									<div class="col-sm-6" style="float:left">		
 									<select ng-model="dataStorage[property.label_policy]" class="form-control" 
 									ng-options="option as option for option in property.selectOptions">
 									</select>
@@ -119,7 +119,7 @@
 									
 									<div class="col-sm-4" >			
 										<label ng-repeat="option in property.radioOptions">
-											<input 	type="radio"	 
+											<input type="radio"	 
 												name={{property.label}}
 											ng-model="dataStorage[property.label_value]" 
 											ng-value="option" > 
@@ -127,7 +127,7 @@
 									</label>
 									</div>
 
-									<div class="col-sm-4">
+									<div class="col-sm-2">
 										<a href ng-click="add()" class="addSign" style="float: right; display:inline" >
 											<i class=" glyphicon glyphicon-plus-sign pull-left"
 											style="font-size: 20px"> </i>

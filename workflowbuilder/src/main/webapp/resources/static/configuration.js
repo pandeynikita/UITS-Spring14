@@ -23,7 +23,7 @@ var nodesConfiguration = {
 			"activationType" : {
 				"label" : "Activation Type",
 				"type" : "select",
-				"options" : [ "Parallel", "serial" ],
+				"options" : [ "Parallel", "Serial" ],
 				"helpText" : "Define the activation Type"
 			},
 			"finalApproval" : {
@@ -52,7 +52,7 @@ var nodesConfiguration = {
 			"activationType" : {
 				"label" : "Activation Type",
 				"type" : "select",
-				"options" : [ "Parallel", "serial" ],
+				"options" : [ "Parallel", "Serial" ],
 				"helpText" : "Define the activation Type"
 			},
 			"mandatoryRoute" : {
@@ -200,7 +200,7 @@ var nodesConfiguration = {
 			"activationType" : {
 				"label" : "Activation Type",
 				"type" : "select",
-				"options" : [ "Parallel", "serial" ],
+				"options" : [ "Parallel", "Serial" ],
 				"helpText" : "Define the activation type"
 				
 			}

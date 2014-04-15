@@ -349,6 +349,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 	var generateRouteNodesAndRoutePath = function(jsonObject){
 		var routeNode 		= {};
 		var routePath 		= {};
+		var activationTypeKey = "activationType";
 		var newJsonObject 	= {
 				"routeNode" : routeNode,
 				"routePath"	: routePath
@@ -359,6 +360,13 @@ var angularModalCtrl = function($scope,$modal,$http){
 		angular.forEach(jsonObject, function(value, key){
 			if(key != imageKey){
 				var newKey 	= generateKey(key);
+				if(newKey == activationTypeKey){
+					if(value == "Parallel"){
+						value = "p";
+					} else {
+						value = "s";
+					}
+				}
 				if(newKey == nextNodeKey){
 					routePath[newKey] = value;
 				} else if(newKey == name){

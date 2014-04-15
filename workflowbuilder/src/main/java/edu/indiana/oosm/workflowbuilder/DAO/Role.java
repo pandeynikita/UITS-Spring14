@@ -1,13 +1,12 @@
-package edu.indiana.oosm.workflowbuilder.controller;
+package edu.indiana.oosm.workflowbuilder.DAO;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-public class Start {
+public class Role {
 	private String name;
 	private String nextNode;
+	private String qualifierResolverClass;
 	private String activationType;
-	private String mandatoryRoute;
-	private String finalApproval;
 	@XmlAttribute
 	public String getName() {
 		return name;
@@ -22,23 +21,17 @@ public class Start {
 	public void setNextNode(String nextNode) {
 		this.nextNode = nextNode;
 	}
+	public String getQualifierResolverClass() {
+		return qualifierResolverClass;
+	}
+	public void setQualifierResolverClass(String qualifierResolverClass) {
+		this.qualifierResolverClass = qualifierResolverClass;
+	}
 	public String getActivationType() {
 		return activationType;
 	}
 	public void setActivationType(String activationType) {
 		this.activationType = activationType;
-	}
-	public String getMandatoryRoute() {
-		return mandatoryRoute;
-	}
-	public void setMandatoryRoute(String mandatoryRoute) {
-		this.mandatoryRoute = mandatoryRoute;
-	}
-	public String getFinalApproval() {
-		return finalApproval;
-	}
-	public void setFinalApproval(String finalApproval) {
-		this.finalApproval = finalApproval;
 	}
 
 }

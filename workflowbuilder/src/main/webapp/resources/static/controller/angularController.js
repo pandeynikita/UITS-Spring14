@@ -16,7 +16,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	Error messages:
 	var configurationMissingError		= "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
 	var nodesConnectivityMissingError 	= "ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
-	var workflowConfigMissingError		= "ERROR: We cant export workflow as the configuration for the entire workflow is not set. Please add the configuration and try again"
+	var workflowConfigMissingError		= "ERROR: We cant export workflow as the configuration for the entire workflow is not set. Please add the configuration and try again";
 	//This function is called 
 	//by jQuery event handler on click of any components
 	//$apply is to access angular function from other functions
@@ -147,7 +147,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
 		addNextNodeToClientSideData($scope.jsonData,routePath);
-		var serverSideInputData 	= customizeTheJsonDataForServerSide($scope.jsonData);
+		var serverSideInputData 	= 	customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post(
 				"export.htm",
 				JSON.stringify(
@@ -304,9 +304,26 @@ var angularModalCtrl = function($scope,$modal,$http){
 			} 
 
 		});
+		generatedServerSideJsonData = removeUnusedArray(generatedServerSideJsonData);
 		return serverSideData;
 	};
 
+	var removeUnusedArray = function(generatedServerSideJsonData){
+
+		if(generatedServerSideJsonData.policies.policy.length==0){
+			delete generatedServerSideJsonData.policies;
+		}
+		if(generatedServerSideJsonData.routeNodes.role.length == 0 &&
+				generatedServerSideJsonData.routeNodes.email.length == 0 &&
+				generatedServerSideJsonData.routeNodes.start.length == 0 &&
+				generatedServerSideJsonData.routeNodes.requests.length == 0 &&
+				generatedServerSideJsonData.routeNodes.simple.length == 0){
+			delete generatedServerSideJsonData.routeNodes;
+			delete generatedServerSideJsonData.routePaths;
+		}
+		return generatedServerSideJsonData;
+	};
+	
 //	This function generates the server required routeNodes and route Path
 //	It takes JSON object as input and converts into 
 //	server based POJO kind output

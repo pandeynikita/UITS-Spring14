@@ -1,8 +1,8 @@
-package edu.indiana.oosm.workflowbuilder.controller;
+package edu.indiana.oosm.workflowbuilder.DAO;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-public class Email {
+public class Simple {
 	private String name;
 	private String nextNode;
 	private String from;
@@ -24,18 +24,6 @@ public class Email {
 	public void setNextNode(String nextNode) {
 		this.nextNode = nextNode;
 	}
-	public String getStyle() {
-		return style;
-	}
-	public void setStyle(String style) {
-		this.style = style;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
 	public String getFrom() {
 		return from;
 	}
@@ -53,5 +41,17 @@ public class Email {
 	}
 	public void setTestAddress(String testAddress) {
 		this.testAddress = testAddress;
+	}
+	public String getStyle() {
+		return style;
+	}
+	public void setStyle(String style) {
+		this.style = style;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

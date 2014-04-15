@@ -1,4 +1,4 @@
-package edu.indiana.oosm.workflowbuilder.controller;
+package edu.indiana.oosm.workflowbuilder.DAO;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;

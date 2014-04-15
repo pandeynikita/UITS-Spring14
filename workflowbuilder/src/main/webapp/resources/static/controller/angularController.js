@@ -472,21 +472,27 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	
 	//Add the selected item and its radio value.
 	$scope.add = function () {
-		
+		var ERRORMESSAGEFORPOLICIES="Please fill in both the fields and try adding";
 		var alreadyPresentFlag=false;
 		var selectedValue=$scope.dataStorage["List Of Policy"];
 		var radioValue=$scope.dataStorage["Policy Flag"];
-		var policyAndValue=selectedValue+":"+radioValue;
-		angular.forEach($scope.policies,function(entry,index){
-			var splitKey =  entry.split(":");
-			if(splitKey[0]==selectedValue){
-				$scope.policies[index]=policyAndValue;
-				alreadyPresentFlag=true;
+		if(selectedValue && radioValue ){
+			var policyAndValue=selectedValue+":"+radioValue;
+			angular.forEach($scope.policies,function(entry,index){
+				var splitKey =  entry.split(":");
+				if(splitKey[0]==selectedValue){
+					$scope.policies[index]=policyAndValue;
+					alreadyPresentFlag=true;
+				}
+			});
+			if(!alreadyPresentFlag){
+				$scope.policies.push(policyAndValue);
 			}
-		});
-		if(!alreadyPresentFlag){
-			$scope.policies.push(policyAndValue);
 		}
+		else
+			bootbox.alert(ERRORMESSAGEFORPOLICIES);
+		
+		
 	};
 
 

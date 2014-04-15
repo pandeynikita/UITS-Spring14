@@ -132,7 +132,7 @@ opacity : 0.2;
 
 .deleteNode
 {
-background:red;
+background:red !important;
 }
 
 .modal .modal-body {

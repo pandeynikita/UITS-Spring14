@@ -1,9 +1,9 @@
-package edu.indiana.oosm.workflowbuilder.controller;
+package edu.indiana.oosm.workflowbuilder.DAO;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
-public class DefaultExceptionGroup {
+public class Group {
 	private String nameSpace;
 	private String value;
 	@XmlAttribute
@@ -20,5 +20,4 @@ public class DefaultExceptionGroup {
 	public void setValue(String value) {
 		this.value = value;
 	}
-
 }

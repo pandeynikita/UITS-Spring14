@@ -1,4 +1,4 @@
-package edu.indiana.oosm.workflowbuilder.controller;
+package edu.indiana.oosm.workflowbuilder.DAO;
 
 public class RoutePaths {
 	private RouteNodes routePath;

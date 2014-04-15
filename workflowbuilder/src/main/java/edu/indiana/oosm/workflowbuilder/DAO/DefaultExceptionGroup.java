@@ -1,9 +1,9 @@
-package edu.indiana.oosm.workflowbuilder.controller;
+package edu.indiana.oosm.workflowbuilder.DAO;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
-public class ReportingGroup {
+public class DefaultExceptionGroup {
 	private String nameSpace;
 	private String value;
 	@XmlAttribute

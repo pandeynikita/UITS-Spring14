@@ -1,9 +1,9 @@
-package edu.indiana.oosm.workflowbuilder.controller;
+package edu.indiana.oosm.workflowbuilder.DAO;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
-public class Group {
+public class ReportingGroup {
 	private String nameSpace;
 	private String value;
 	@XmlAttribute
@@ -20,4 +20,5 @@ public class Group {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
 }

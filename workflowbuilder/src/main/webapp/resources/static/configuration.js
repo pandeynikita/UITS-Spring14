@@ -309,7 +309,16 @@ var nodesConfiguration = {
 				"label_value":"Policy Flag",
 				"type" : "selectRadio",
 				"selectOptions" : [ "DEFAULT_APPROVE", "DEFAULT_REQUEST" ],
-				"radioOptions" : [ "True", "False" ]				
+				"radioOptions" : [ "True", "False" ],
+				"helpText" : "Select the policies and its flag for the workspace"
+			},
+			"active" : {
+
+					"label" : "Active",
+					"type" : "radio",
+					"options" : [ "True", "False" ],
+					"helpText" : "Define the active field for the workspace"
+
 			},
 			"routingVersion" : {
 				"label" : "Routing Version",

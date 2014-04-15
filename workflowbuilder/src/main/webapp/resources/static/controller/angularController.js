@@ -362,9 +362,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 				var newKey 	= generateKey(key);
 				if(newKey == activationTypeKey){
 					if(value == "Parallel"){
-						value = "p";
+						value = "P";
 					} else {
-						value = "s";
+						value = "S";
 					}
 				}
 				if(newKey == nextNodeKey){

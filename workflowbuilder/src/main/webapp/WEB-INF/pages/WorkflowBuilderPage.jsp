@@ -50,10 +50,10 @@
 			<button class="close" ng-click="cancel()">x</button>
             <label>{{component.header}}</label> 
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="margin-left:0px;padding-left:10px">
 			<form name="form" novalidate>
 				<div ng-repeat="property in properties">
-					<div id=try style="position:relative;float:left">{{property.label}}
+					<div id=try style="position:relative;float:left;padding-right:150px">{{property.label}}
 				<button class="helpFormButton" 
 					id="propertyHelpId" popover= {{property.helpText}}
 					popover-trigger="focus" popover-placement="bottom" >
@@ -90,19 +90,20 @@
 						<form class="form-horizontal" role="form">
 							
 							<div class="form-group">
-								<div class="col-sm-6">
-									<label>Name</label>
-									<input type="text" 
-										ng-model="dataStorage[property.label_group]"
-										placeholder="Text" class="form-control" />
-								</div>					
-							
 								<div class="col-sm-6 ">	
 									<label>NameSpace</label>				
 									<select ng-model="dataStorage[property.label_nameSpace]" class="form-control"
 										ng-options="option as option for option in property.options">
 									</select>
 								</div>
+								<div class="col-sm-6">
+									<label>Name</label>
+									<input type="text" 
+										ng-model="dataStorage[property.label_group]"
+										placeholder="Text" class="form-control" />
+								</div>					
+			
+							
 							</div>	
 						</form>
 					</div>
@@ -111,7 +112,7 @@
 						<form class="form-horizontal" role="form"  >
 								<div class="form-group" style="float:left">
 									<div class="col-sm-4" style="float:left">		
-									<select ng-model="dataStorage[property.label_policy]" class="form-control"
+									<select ng-model="dataStorage[property.label_policy]" class="form-control" 
 									ng-options="option as option for option in property.selectOptions">
 									</select>
 									</div>
@@ -142,13 +143,13 @@
 					</div>
 
 					<div ng-if="isMultiSelectType(property)">
-						<select multiple="true" ng-model="dataStorage[property.label]"  class="form-control"
+						<select multiple="true" ng-model="dataStorage[property.label]"  class="form-control" 
 								ng-options="option as option for option in property.options">
 						</select>
 					</div>
 			
 					<div ng-if="isTextType(property) && isEditable(property) && isMandatory(property)" ng-class="{ 'has-error' : form.mtext.$invalid && !form.mtext.$pristine }" >
-									<input 	type="text" 
+									<input 	type="text" style="float:left"
 									name="mtext"
 									ng-model="dataStorage[property.label]" 
 									placeholder="Text" 
@@ -157,7 +158,7 @@
 					</div>
 
 					<div ng-if="isTextType(property) && isEditable(property) && !isMandatory(property)" >
-									<input 	type="text" 
+									<input 	type="text" style="float:left"
 									name="itext"
 									ng-model="dataStorage[property.label]" 
 									placeholder="Text" 
@@ -165,7 +166,7 @@
 					</div>
 
 					<div ng-if="isTextType(property) && !isEditable(property)">
-									<input 	type="text" 
+									<input 	type="text" style="float:left"
 									ng-model="dataStorage[property.label]" 
 									placeholder="Text" 
 									class="form-control" readonly> 
@@ -173,7 +174,7 @@
 				
 					<div ng-if="isEmailType(property)">
 						<form name="myForm">
-							<label><input name="input" type="email" ng-model="dataStorage[property.label]" placeholder="example@domain.com"> {{option}} </label>
+							<label><input name="input" style="float:left" type="email" ng-model="dataStorage[property.label]" placeholder="example@domain.com"> {{option}} </label>
 							<span class="error" ng-show="myForm.input.$error.email">Not valid email!</span>
 						</form>
 					</div>				

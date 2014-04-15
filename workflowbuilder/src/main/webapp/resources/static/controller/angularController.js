@@ -276,14 +276,11 @@ var angularModalCtrl = function($scope,$modal,$http){
 				var policyKey 		= "policies";
 				angular.forEach(generatedObject[routeNodeKey], function(configureValue, configureKey){
 					if(configureKey == "superUserGroup" || configureKey == "reportingGroup" || configureKey == "defaultExceptionGroup"){
-//						var nameSpace = generatedObject[routeNodeKey][nameSpaceKey];
 						var groupNameSpace = configureKey+"NameSpace";
 						var newJsonObject = {};
-//						newJsonObject[nameSpaceKey]=nameSpace;
 						newJsonObject[nameSpaceKey]=generatedObject[routeNodeKey][groupNameSpace];
 						newJsonObject["value"]=configureValue;
 						generatedServerSideJsonData[configureKey] = newJsonObject;
-//					} else if(configureKey != nameSpaceKey){
 					} else if(configureKey != "superUserGroupNameSpace" && configureKey != "reportingGroupNameSpace" && configureKey != "defaultExceptionGroupNameSpace"){
 						if(configureKey == policyKey){
 							var generatedPolicyArray = generatePolicy(configureValue);
@@ -438,8 +435,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 		$.each(localJsonData[idOfDiv], function(key, value) {
 			$scope.dataStorage[key] = value;
 		});
-		$scope.policies=$scope.dataStorage["policies"];
-		
+		if(image == configureKey){
+			$scope.policies=$scope.dataStorage["policies"];
+		}
 	} else {
 		$scope.dataStorage["image"] = image;
 		$.each($scope.properties, function(key, value) {

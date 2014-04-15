@@ -146,7 +146,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		We will receive a JSON object of attributes = error and data
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
-		needToBeHandled();
 		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData 	= customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post(
@@ -163,11 +162,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 		});
 	};
 	
-	var needToBeHandled = function(){
-		delete $scope.jsonData["configurationId"]["List Of Policy"];
-		delete $scope.jsonData["configurationId"]["Policy Flag"];
-	};
-
 	//Open a new window and add the export data and pop up
 	var onExport = function(data){	
 		window.open('data:application/xml,'+ 
@@ -460,11 +454,17 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//updated/new dataStorage field
 	$scope.save = function () {
 		if(image == configureKey){
+			deleteSavedPolicyData();
 			$scope.dataStorage["policies"]=$scope.policies;
 		}
 		$modalInstance.close($scope.dataStorage);
 	};
 
+	var deleteSavedPolicyData = function(){
+		delete $scope.dataStorage["List Of Policy"];
+		delete $scope.dataStorage["Policy Flag"];
+	};
+	
 	//On click of cancel, this function will called
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');

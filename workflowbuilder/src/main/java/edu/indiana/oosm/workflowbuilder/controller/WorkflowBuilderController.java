@@ -22,8 +22,6 @@ import edu.indiana.oosm.workflowbuilder.DAO.Data;
 public class WorkflowBuilderController{
 	static Logger log = Logger.getLogger(
 			WorkflowBuilderController.class.getName());
-	
-	private String fileName = "/Users/Gokul/workflow.xml";
 
 	@RequestMapping(value="editor", method = RequestMethod.GET)
 	public ModelAndView editorPage(){
@@ -54,13 +52,6 @@ public class WorkflowBuilderController{
 			log.error(message);
 		}
 		return xmlStringData;
-	}
-	
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
 	}
 
 //	Function to order the routePath

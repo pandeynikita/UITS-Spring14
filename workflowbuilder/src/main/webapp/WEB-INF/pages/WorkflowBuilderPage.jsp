@@ -191,8 +191,17 @@
         	</div>
     	</script>
 		<div class="outer">
-			<button class="btn btn-primary configure" style="float: left"
+			<button class="btn btn-primary configure" style="float: right"
 				id="configurationId">Configure</button>
+			<header>
+				<div id="header-content">
+					<h1>
+						<img src="./resources/images/kuali-logo.png" alt="Image cannot be loaded" style="float:left"></img>
+						
+					</h1>
+					
+				</div>
+			</header>
 			<div class="container">
 				<h1>WorkFlow Editor</h1>
 			</div>

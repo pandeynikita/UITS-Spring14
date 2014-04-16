@@ -1,15 +1,15 @@
 .outer {
     width: 1365x;
     color: black;
-    background-color: CornflowerBlue ;
+    background-color: #E1D8B7;
     border: 2px solid darkblue;
     padding: 5px;
-    text-align: center
- }
+    margin:auto;
+}
  .drop-area {
 	float: left;
 	width: 75%;
-	height:490px;
+	height: 513px;
 	padding: 5px;
 	text-align: center;
 	border: 2px solid black;
@@ -26,8 +26,9 @@
  .tool-box {
 	float: left;
 	width: 25%;
-	height:490px;
+	height:513px;
 	padding: 1%;
+	background-color: #7D110C;
 	text-align: center;
 	border: 2px solid black;
 }
@@ -156,4 +157,12 @@ background:red !important;
 .btn-primary:disabled {
 	background-color:lightgrey;
 	color:white;
+}
+
+header #header-content {
+width: 572px;
+height: 100%;
+margin: 0 auto;
+position: relative;
+float: left;
 }

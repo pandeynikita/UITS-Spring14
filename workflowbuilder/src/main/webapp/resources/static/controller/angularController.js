@@ -30,17 +30,30 @@ var angularModalCtrl = function($scope,$modal,$http){
 	$scope.angularExportFunction = function(routePath,droppedArray){
 
 		$scope.$apply(function(){
+			
+			
+			
 
 			var tempArray = new Array();
 			var i = 0;
 			$.each(routePath, function(key, value){
 				tempArray[i++] = key;
-				tempArray[i++] = value;		
+				tempArray[i++] = value;	
 			});
-
+			var flag = false;
+			var count =0;
 			var found = false;
 			//To check the entire Workflow configuration is set
 			if($scope.jsonData.hasOwnProperty("configurationId")){
+				angular.forEach($scope.jsonData, function(value, key){
+					count++;
+					if(value.image == "circle")
+					{
+						flag = true;
+					}
+				});
+				
+				
 				//To check if the individual nodes are connected and their configuration is set
 				if(droppedArray.length > 0){
 					for (var i = 1; i < droppedArray.length; i++) {
@@ -52,7 +65,13 @@ var angularModalCtrl = function($scope,$modal,$http){
 					}
 					if((found == false)&&(droppedArray.length > 2)){
 						bootbox.alert(nodesConnectivityMissingError);
-					}else {
+					}
+					else if(count > 2 && flag == false)
+						{
+						bootbox.alert("please add circle node");
+						}
+						
+						else {
 						if($scope.checkSavedNodeData(droppedArray)){
 							$scope.angularExport(routePath);
 						}else {

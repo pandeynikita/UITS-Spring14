@@ -213,7 +213,7 @@
 						<div class="panel-heading" data-toggle="collapse"
 							data-parent="accordion" href="#collapseOne">
 							<h4 class="panel-title">
-								<a class="accordion-toggle"> Components </a> <i
+								<a class="accordion-toggle" style="text-decoration: none !important;"> Components </a> <i
 									class="indicator glyphicon glyphicon-chevron-down  pull-right">
 								</i>
 							</h4>

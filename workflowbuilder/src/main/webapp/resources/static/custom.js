@@ -226,7 +226,6 @@ $(function() {
 									}
 									jsPlumb.detach(c);
 									delete routePath[c.sourceId];
-									console.log(routePath);
 								});
 
 						$(newDiv).bind("click", function() {
@@ -244,19 +243,19 @@ $(function() {
 										var divType = getNodeType($(".deleteNode"));
 										if (divType == "circle")
 											flag = 0;
-										var deleteId = $(
-										'.deleteNode')
-										.attr(
-										'id');
-										$('.deleteNode')
-										.each(
-												function() {
+										var deleteId = $('.deleteNode').attr('id');
+										$.each(routePath,function(key,value){
+											if(key == deleteId || value == deleteId){
+												delete routePath[key];
+											}
+										});	
+										
+										
+										
+										$('.deleteNode').each(function() {
 
 													var currentElement = $(this);
-													var divId = $(
-															currentElement)
-															.attr(
-																	"id");
+													var divId = $(currentElement).attr("id");
 													
 													for (var x = 0; x <= source.length; x++) {
 
@@ -267,22 +266,19 @@ $(function() {
 														if (deleteId == target[x]) {
 															source[x] = null;
 															target[x] = null;
+															
 														}
 													}
-													jsPlumb
-													.deleteEndpoint(divId);
+													jsPlumb.deleteEndpoint(divId);
 												});
-										$(".deleteNode")
-										.remove();
+										$(".deleteNode").remove();
 										for(var j=1; j < droppedArray.length; j++){
 											if (deleteId == droppedArray[j]) {
 												droppedArray.splice(
 														j, 1);
 												break;
 											}
-											
 										}
-										console.log(droppedArray);
 										_scope.deleteSavedData(deleteId);
 
 									} else {

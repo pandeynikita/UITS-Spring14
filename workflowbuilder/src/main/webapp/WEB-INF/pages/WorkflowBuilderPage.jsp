@@ -53,7 +53,7 @@
         <div class="modal-body" style="margin-left:0px;padding-left:10px">
 			<form name="form" novalidate>
 				<div ng-repeat="property in properties">
-					<div id=try style="position:relative;float:left;padding-right:150px">{{property.label}}
+					<div id=helpBtn style="position:relative;float:left;padding-right:150px">{{property.label}}
 				<button class="helpFormButton" 
 					id="propertyHelpId" popover= {{property.helpText}}
 					popover-trigger="focus" popover-placement="right" >
@@ -70,35 +70,34 @@
 								ng-value="option" > 
 								{{option}}
 							</label>
-
 					</div>
 
 					<div ng-if="isSelectType(property) && isMandatory(property)" >
-						<select ng-model="dataStorage[property.label]" class="form-control" name="selectType"  
+						<select ng-model="dataStorage[property.label]" class="form-control" name="selectType" style="float:left"  
 								ng-options="option as option for option in property.options" required>
 						</select>
 						<p  class="error" ng-show="form.selectType.$error.required">{{property.message}}</p>
 					</div>
 
 					<div ng-if="isSelectType(property) && !isMandatory(property)">
-						<select ng-model="dataStorage[property.label]" class="form-control"
+						<select ng-model="dataStorage[property.label]" class="form-control" style="float:left"
 								ng-options="option as option for option in property.options">
 						</select>
 					</div>
+
 					<br>
 					<div ng-if="isTextSelectType(property)" >
 						<form class="form-horizontal" role="form">
-							
 							<div class="form-group">
 								<div class="col-sm-6" >	
 									<label>NameSpace</label>				
-									<select ng-model="dataStorage[property.label_nameSpace]" class="form-control"
+									<select ng-model="dataStorage[property.label_nameSpace]" class="form-control" style="float:left"
 										ng-options="option as option for option in property.options">
 									</select>
 								</div>
 								<div class="col-sm-6">
 									<label>Name</label>
-									<input type="text" 
+									<input type="text"  
 										ng-model="dataStorage[property.label_group]"
 										placeholder="Text" class="form-control" />
 								</div>					
@@ -136,33 +135,36 @@
 									
 							</div>
 						</form>
-    					<div ng-repeat="policy in policies">
+    					<div ng-repeat="policy in policies" style="float:left;padding-right:150px">
       							<span>{{policy}}&nbsp&nbsp[<a href ng-click="policies.splice($index, 1)">X</a>]</span>
     					</div>
     
 					</div>
 
 					<div ng-if="isMultiSelectType(property)">
-						<select multiple="true" ng-model="dataStorage[property.label]"  class="form-control" 
+						<select multiple="true" ng-model="dataStorage[property.label]"  class="form-control" style="float:left" 
 								ng-options="option as option for option in property.options">
 						</select>
+					<br>
 					</div>
 			
 					<div ng-if="isTextType(property) && isEditable(property) && isMandatory(property)" ng-class="{ 'has-error' : form.mtext.$invalid && !form.mtext.$pristine }" >
-									<input 	type="text" style="float:left"
-									name="mtext"
+									<input 	type="text" 
+									name="mtext" style="float:left"
 									ng-model="dataStorage[property.label]" 
 									placeholder="Text" 
 									class="form-control" required /> 
- 									<p ng-show="form.mtext.$invalid && !form.mtext.$pristine" class="help-block">{{property.message}}</p>
+									<span ng-show="form.mtext.$invalid && !form.mtext.$pristine" style="float:left;padding-right:350px" class="help-block">{{property.message}}</span>
+					
 					</div>
-
+					
 					<div ng-if="isTextType(property) && isEditable(property) && !isMandatory(property)" >
 									<input 	type="text" style="float:left"
 									name="itext"
 									ng-model="dataStorage[property.label]" 
 									placeholder="Text" 
 									class="form-control" /> 
+			
 					</div>
 
 					<div ng-if="isTextType(property) && !isEditable(property)">
@@ -178,10 +180,10 @@
 							<span class="error" ng-show="myForm.input.$error.email">Not valid email!</span>
 						</form>
 					</div>				
-				</div>
-			
-        	</div>
-		</form>
+				</form>		
+			</div>
+			</div>
+		
         	<div class="modal-footer">
 				<div style="float: left">* Fill in Mandatory fields</div>
            		<button class="btn btn-primary" ng-click="save()" ng-disabled="form.$invalid">Save</button>
@@ -240,7 +242,7 @@
 								</div>
 								<button class="helpButton " style="float: right"
 									id="requestHelpId"
-									popover="The Request node cam have one incoming connection and one outgoing connection. This node contains the mandatory route and the target final approval"
+									popover="The Request node can have one incoming connection and one outgoing connection. This node contains the mandatory route and the target final approval"
 									popover-trigger="focus">
 									<i class=" glyphicon glyphicon-question-sign pull-left"
 										style="font-size: 20px"> </i>

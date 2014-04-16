@@ -188,7 +188,6 @@ $(function() {
 										var sid=c.sourceId;
 										var did=c.targetId;
 										routePath[sid]=did;
-										console.log(routePath);
 										i++;
 										fire_check = 0;
 									}

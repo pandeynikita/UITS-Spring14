@@ -17,6 +17,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 	var configurationMissingError		= "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
 	var nodesConnectivityMissingError 	= "ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
 	var workflowConfigMissingError		= "ERROR: We cant export workflow as the configuration for the entire workflow is not set. Please add the configuration and try again";
+	var startNodeNotFound				= "ERROR: We cant export workflow as the circle node should be the first node";
 	//This function is called 
 	//by jQuery event handler on click of any components
 	//$apply is to access angular function from other functions
@@ -28,30 +29,23 @@ var angularModalCtrl = function($scope,$modal,$http){
 	};
 
 	$scope.angularExportFunction = function(routePath,droppedArray){
-
 		$scope.$apply(function(){
-			
-			
-			
-
 			var tempArray = new Array();
 			var i = 0;
 			$.each(routePath, function(key, value){
 				tempArray[i++] = key;
 				tempArray[i++] = value;	
 			});
-			var flag = false;
-			var count =0;
-			var found = false;
+			var flag 	= false;
+			var count 	= 0;
+			var found 	= false;
 			//To check the entire Workflow configuration is set
 			if($scope.jsonData.hasOwnProperty("configurationId")){
 				angular.forEach($scope.jsonData, function(value, key){
-					count++;
-					if(value.image == "circle")
-					{
+				count++;
+				if(value.image == "circle"){
 						flag = true;
-					}
-				});
+				}});
 				
 				
 				//To check if the individual nodes are connected and their configuration is set
@@ -66,39 +60,34 @@ var angularModalCtrl = function($scope,$modal,$http){
 					if((found == false)&&(droppedArray.length > 2)){
 						bootbox.alert(nodesConnectivityMissingError);
 					}
-					else if(count > 2 && flag == false)
-						{
-						bootbox.alert("please add circle node");
-						}
-						
-						else {
-						if($scope.checkSavedNodeData(droppedArray)){
+					else if(count > 2 && flag == false){
+						bootbox.alert(startNodeNotFound);
+					}
+					else {
+						if(checkSavedNodeData(droppedArray)){
 							$scope.angularExport(routePath);
 						}else {
 							bootbox.alert(configurationMissingError);
 						}
 					}				
 				}
-				//To allow empty Workflow to export
-				else
+				else{
 					$scope.angularExport(routePath);
+				}
 			}
 			else
 				bootbox.alert(workflowConfigMissingError);
 		});
 	};
 
-	$scope.checkSavedNodeData = function(droppedArray) {
+	var checkSavedNodeData = function(droppedArray) {
 		for(var i=1; i <= droppedArray.length-1 ; i++){
-			if(droppedArray[i] === undefined )
-			{
-			continue;
-			}
-		else
-			{
-			if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
-				return false;
-			}
+			if(droppedArray[i] === undefined ){
+				continue;
+			} else {
+				if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
+					return false;
+				}
 			}
 		}
 		return true;
@@ -165,6 +154,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		We will receive a JSON object of attributes = error and data
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
+		console.log(routePath);
 		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData 	= 	customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post(
@@ -199,7 +189,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		3. if the next node is not empty, it has come next node, so proceed for those only
 //		4. find the next nodes name from the client side JSON object
 //		5. Create a new field called "Next Node" for each satisfying object and add it
-
 		angular.forEach(clientSideJsonData, function(value, key){
 			if(key != configureKey){
 				next = routePath[key];

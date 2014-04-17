@@ -1,6 +1,6 @@
 $(function() {
 
-	var counter = flag = fire_check = fire_check_click = save_flag = 0;
+	var count = counter = flag = fire_check = fire_check_click = save_flag = 0;
 	var i = 0, id_circle = null, source = [], target = [], original = false;
 
 	// Get the angular scope for the mentioned controller
@@ -95,7 +95,7 @@ $(function() {
 						counter++;
 						$(newDiv).attr("id", "dragged" + counter);
 						var divID = "dragged" + counter;
-						droppedArray[counter]=divID;
+						droppedArray[count++]=divID;
 						$(this).append(newDiv);
 						$(newDiv).removeClass("ui-draggable"); // removing
 						// jQuery draggable for the jsPlumb draggable to work }
@@ -272,10 +272,11 @@ $(function() {
 													jsPlumb.deleteEndpoint(divId);
 												});
 										$(".deleteNode").remove();
-										for(var j=1; j < droppedArray.length; j++){
+										for(var j=0; j < droppedArray.length; j++){
 											if (deleteId == droppedArray[j]) {
 												droppedArray.splice(
 														j, 1);
+												count--;
 												break;
 											}
 										}

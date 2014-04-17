@@ -37,30 +37,29 @@ var angularModalCtrl = function($scope,$modal,$http){
 				tempArray[i++] = value;	
 			});
 			var flag 	= false;
-			var count 	= 0;
 			var found 	= false;
 			//To check the entire Workflow configuration is set
 			if($scope.jsonData.hasOwnProperty("configurationId")){
 				angular.forEach($scope.jsonData, function(value, key){
-				count++;
 				if(value.image == "circle"){
 						flag = true;
 				}});
-				
+				console.log(droppedArray);
+				console.log(droppedArray.length);
 				
 				//To check if the individual nodes are connected and their configuration is set
 				if(droppedArray.length > 0){
-					for (var i = 1; i < droppedArray.length; i++) {
+					for (var i = 0; i < droppedArray.length; i++) {
 						if (tempArray.indexOf(droppedArray[i]) > -1){
 							found = true;
 						} else {
 							found = false;
 						}
 					}
-					if((found == false)&&(droppedArray.length > 2)){
+					if((found == false)&&(droppedArray.length > 1)){
 						bootbox.alert(nodesConnectivityMissingError);
 					}
-					else if(count > 2 && flag == false){
+					else if( droppedArray.length > 1 && flag == false){
 						bootbox.alert(startNodeNotFound);
 					}
 					else {
@@ -81,13 +80,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 	};
 
 	var checkSavedNodeData = function(droppedArray) {
-		for(var i=1; i <= droppedArray.length-1 ; i++){
-			if(droppedArray[i] === undefined ){
-				continue;
-			} else {
-				if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
+		for(var i=0; i < droppedArray.length ; i++){
+			if(($scope.jsonData.hasOwnProperty(droppedArray[i])) == false){
 					return false;
-				}
 			}
 		}
 		return true;
@@ -155,6 +150,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //		if there was any error while processing client data, then error flag will be true and data will have error message
 //		if there is no error flag set to false then the data will have serverSide data
 		console.log(routePath);
+		removeNextNodeFromClientSideData($scope.jsonData);
 		addNextNodeToClientSideData($scope.jsonData,routePath);
 		var serverSideInputData 	= 	customizeTheJsonDataForServerSide($scope.jsonData);
 		var responsePromise = $http.post(
@@ -177,6 +173,16 @@ var angularModalCtrl = function($scope,$modal,$http){
 				encodeURIComponent(data),"_blank","toolbar=yes, scrollbars=yes, resizable=yes, top=200, left=200, width=800, height=800");
 	};
 
+	var removeNextNodeFromClientSideData = function(clientSideJsonData){
+		var nextNode 	= "Next Node";
+		angular.forEach(clientSideJsonData, function(value, key){
+			if(key != configureKey){
+				if($scope.jsonData[key][nextNode]){
+					delete $scope.jsonData[key][nextNode];
+				}		
+			}
+		});
+	};
 //	Adding next node to each object if there is any and update 
 //	the client side JSON object
 	var addNextNodeToClientSideData = function(clientSideJsonData, routePath){

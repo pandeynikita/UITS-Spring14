@@ -22,6 +22,7 @@ import edu.indiana.oosm.workflowbuilder.DAO.Data;
 public class WorkflowBuilderController{
 	static Logger log = Logger.getLogger(
 			WorkflowBuilderController.class.getName());
+	static int lastLine = 0;
 
 	@RequestMapping(value="editor", method = RequestMethod.GET)
 	public ModelAndView editorPage(){
@@ -33,7 +34,7 @@ public class WorkflowBuilderController{
 	@ResponseBody
 	public String exportToXml(@RequestBody Data dataObject){
 		String convertedXml = convertPojoToXml(dataObject);
-		String orderedXml 	= orderRoutePath(convertedXml);
+		String orderedXml 	= reorderingRoutePath(convertedXml);
 		return orderedXml;
 	}
 	//Function converts the Pojo to Xml using the root class
@@ -54,8 +55,24 @@ public class WorkflowBuilderController{
 		return xmlStringData;
 	}
 
-//	Function to order the routePath
-	private String orderRoutePath(String xml){
+	//Function to Swap the given lines
+	private void swap(String[] items, int i, int j) {
+		if(i==j)
+			return;
+		String temp = items[i];
+		items[i] = items[j];
+		items[j] = temp;
+	}
+//	Function to re order the routePath
+//	1. Find the line of "<routePath>" tag line and "</routePath>" tag line and 
+//	name them as start and end
+//	2. Find the last line of the path in findLastNode function and 
+//	swap it with the current last line
+//	3. Recurse though each line in reverse order
+//		in each line find the node name and find the name in nextNode field of other line
+//		whichever line is found, should be swapped with previous line of the current line
+	
+	private String reorderingRoutePath(String xml){
 		String finalXml = "";
 		String[] items  = xml.split("\\n");
 		int routePathEnd = 0;
@@ -69,18 +86,25 @@ public class WorkflowBuilderController{
 				routePathStart = k;
 			}
 		}
-		for(int i=(routePathStart+1);i<routePathEnd;i++) {
-			if(items[i].contains("nextNode")) {
-				String[] words = items[i].split("\\s");
-				for(String word : words) {
-					if(word.startsWith("nextNode")) {
-						String node = word.substring(word.indexOf('=')+2, word.indexOf("/")-1);
-						for(int j=i+1;j<routePathEnd;j++) {
-							String nextNode = "name=\""+node+"\"";
-							if(items[j].contains(nextNode)) {
-								swap(items,i+1,j);
-								break;
-							}
+		findLastNode(items,routePathStart+1,routePathEnd-1);
+		swap(items, lastLine, routePathEnd-1);
+		for(int i=routePathEnd-1;i>routePathStart;i--){
+			String[] words = items[i].split("\\s");
+			for(String word : words) {
+				if(word.startsWith("name")) {
+					String node = word.substring(word.indexOf('=')+2);
+					if(node.contains("/>")){
+						node = node.substring(0,node.indexOf("/")-1);
+					} else {
+						node = node.substring(0,node.length()-1);
+					}
+					System.out.println(items[i]+" "+node);
+					for(int j=i-1;j>routePathStart;j--) {
+						String nextNode = "nextNode=\""+node+"\"";
+						if(items[j].contains(nextNode)) {
+							System.out.println(items[j]);
+							swap(items,i-1,j);
+							break;
 						}
 					}
 				}
@@ -92,12 +116,23 @@ public class WorkflowBuilderController{
 		}
 		return finalXml;
 	}
-	//Function to Swap the given lines
-	private void swap(String[] items, int i, int j) {
-		if(i==j)
-			return;
-		String temp = items[i];
-		items[i] = items[j];
-		items[j] = temp;
+	private void findLastNode(String[] items, int routePathStart,int routePathEnd) {
+		int diff = (routePathEnd - routePathStart);
+		if(diff == 0){
+			if(!(items[routePathStart].contains("nextNode"))){
+				lastLine = routePathStart;
+			}
+		} else if(diff == 1){
+			findLastNode(items, routePathStart, routePathStart);
+			findLastNode(items, routePathEnd, routePathEnd);
+		} else {
+			int mid = diff/2 + routePathStart;
+			if(!(items[mid].contains("nextNode"))){
+				lastLine = mid;
+			} else {
+				findLastNode(items, routePathStart, mid-1);
+				findLastNode(items, mid+1, routePathEnd);
+			}
+		}
 	}
 }

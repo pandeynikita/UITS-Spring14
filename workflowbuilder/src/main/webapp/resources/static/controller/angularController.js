@@ -17,7 +17,6 @@ var angularModalCtrl = function($scope,$modal,$http){
 	var configurationMissingError		= "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";
 	var nodesConnectivityMissingError 	= "ERROR: We cant export workflow as one or more nodes are not connected, Please connect all the nodes and try again";
 	var workflowConfigMissingError		= "ERROR: We cant export workflow as the configuration for the entire workflow is not set. Please add the configuration and try again";
-	var startNodeNotFound				= "ERROR: We cant export workflow as the circle node should be the first node";
 	//This function is called 
 	//by jQuery event handler on click of any components
 	//$apply is to access angular function from other functions
@@ -36,17 +35,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 				tempArray[i++] = key;
 				tempArray[i++] = value;	
 			});
-			var flag 	= false;
 			var found 	= false;
 			//To check the entire Workflow configuration is set
 			if($scope.jsonData.hasOwnProperty("configurationId")){
-				angular.forEach($scope.jsonData, function(value, key){
-				if(value.image == "circle"){
-						flag = true;
-				}});
-				console.log(droppedArray);
-				console.log(droppedArray.length);
-				
 				//To check if the individual nodes are connected and their configuration is set
 				if(droppedArray.length > 0){
 					for (var i = 0; i < droppedArray.length; i++) {
@@ -56,13 +47,9 @@ var angularModalCtrl = function($scope,$modal,$http){
 							found = false;
 						}
 					}
-					if((found == false)&&(droppedArray.length > 1)){
+					if((found == false) && (droppedArray.length > 1)){
 						bootbox.alert(nodesConnectivityMissingError);
-					}
-					else if( droppedArray.length > 1 && flag == false){
-						bootbox.alert(startNodeNotFound);
-					}
-					else {
+					} else {
 						if(checkSavedNodeData(droppedArray)){
 							$scope.angularExport(routePath);
 						}else {

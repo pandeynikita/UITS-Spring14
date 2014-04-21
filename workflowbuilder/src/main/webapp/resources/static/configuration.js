@@ -229,7 +229,7 @@ var nodesConfiguration = {
 			}
 		}
 
-		},
+	},
 	
 	"configure" : {
 		"image" : "configure",

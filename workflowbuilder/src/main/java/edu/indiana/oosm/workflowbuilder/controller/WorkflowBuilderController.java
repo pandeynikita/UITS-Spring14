@@ -98,11 +98,9 @@ public class WorkflowBuilderController{
 					} else {
 						node = node.substring(0,node.length()-1);
 					}
-					System.out.println(items[i]+" "+node);
 					for(int j=i-1;j>routePathStart;j--) {
 						String nextNode = "nextNode=\""+node+"\"";
 						if(items[j].contains(nextNode)) {
-							System.out.println(items[j]);
 							swap(items,i-1,j);
 							break;
 						}

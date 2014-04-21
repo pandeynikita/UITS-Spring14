@@ -264,7 +264,7 @@
 								</div>
 								<button class="helpButton " style="float: right"
 									id="simpleHelpId"
-									popover="The Simple node cam have one incoming connection and one outgoing connection. This node contains the mandatory route and the target final approval"
+									popover="The Simple node can have one incoming connection and one outgoing connection. This node contains the mandatory route and the target final approval"
 									popover-trigger="focus" container: 'body'>
 									<i class=" glyphicon glyphicon-question-sign pull-left"
 										style="font-size: 20px"> </i>
@@ -277,7 +277,7 @@
 								</div>
 								<button class="helpButton " style="float: right"
 									id="roletHelpId"
-									popover="The Role node cam have one incoming connection and one outgoing connection. This node contains the type and style"
+									popover="The Role node can have one incoming connection and one outgoing connection. This node contains the type and style"
 									popover-trigger="focus"popover-container: "body">
 									<i class=" glyphicon glyphicon-question-sign pull-left"
 										style="font-size: 20px"> </i>
@@ -290,7 +290,7 @@
 									<font color="white">NoOp</font>
 								</div>
 								<button class="helpButton " style="float: right" id="noOpHelpId"
-									popover="The NoOp node cam have one incoming connection and one outgoing connection. This node contains only a name and a type"
+									popover="The NoOp node can have one incoming connection and one outgoing connection. This node contains only a name and a type"
 									popover-trigger="focus">
 									<i class=" glyphicon glyphicon-question-sign pull-left"
 										style="font-size: 20px"> </i>

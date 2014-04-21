@@ -36,7 +36,7 @@
 .circle {
 	width: 70px;
 	height: 70px;
-	background:green;
+	background:#7D110C;
 	border-radius: 40px;
 	border:2px solid black;
 	border-style:solid;
@@ -47,7 +47,7 @@
 .square {
 	width: 70px;
 	height: 70px;
-	background: green;
+	background: #7D110C;
 	border:2px solid black;
 	border-style:solid;
 	padding:4px 3px 1px 3px;
@@ -57,7 +57,7 @@
 .rectangle {
 	width: 70px;
 	height: 35px;
-	background:green;
+	background:#7D110C;
 	border:2px solid black;
 	border-style:solid;
 	padding:4px 3px 1px 3px;
@@ -67,7 +67,7 @@
 .rectangleCoral {
 	width: 70px;
 	height: 35px;
-	background:green;
+	background:#7D110C;
 	border:2px solid black;
 	border-style:solid;
 	padding:4px 3px 1px 3px;
@@ -77,7 +77,7 @@
 .oval {
 	width: 80px;
 	height: 40px;
-	background:green;
+	background:#7D110C;
 	border-radius: 100px / 50px;
 	border:2px solid black;
 	border-style:solid;
@@ -88,7 +88,7 @@
 .ovalMagenta {
 	width: 80px;
 	height: 40px;
-	background:green;
+	background:#7D110C;
 	border-radius: 100px / 50px;
 	border:2px solid black;
 	border-style:solid;
@@ -141,6 +141,10 @@ background:red !important;
     overflow-y: auto;
 }
 
+/*.panel-default{
+background: #E1D8B7;
+}*/
+
 .panel-heading {
     cursor: pointer;
 }
@@ -152,11 +156,6 @@ background:red !important;
 #row > div + div {
 	display: inline-block;
     margin-left: 50px
-}
-
-.btn-primary:disabled {
-	background-color:lightgrey;
-	color:white;
 }
 
 header #header-content {

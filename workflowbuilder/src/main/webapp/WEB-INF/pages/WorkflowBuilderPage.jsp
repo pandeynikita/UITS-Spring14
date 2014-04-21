@@ -191,7 +191,7 @@
         	</div>
     	</script>
 		<div class="outer">
-			<button class="btn btn-primary configure" style="float: right"
+			<button class="btn btn-primary configure" style="float: right;background: orange;border:2px solid black;"
 				id="configurationId">Configure</button>
 			<header>
 				<div id="header-content">
@@ -211,7 +211,7 @@
 				<div class="panel-group" id="accordion">
 					<div class="panel panel-default">
 						<div class="panel-heading" data-toggle="collapse"
-							data-parent="accordion" href="#collapseOne">
+							data-parent="accordion" href="#collapseOne" style="background: #E1D8B7">
 							<h4 class="panel-title">
 								<a class="accordion-toggle" style="text-decoration: none !important;"> Components </a> <i
 									class="indicator glyphicon glyphicon-chevron-down  pull-right">
@@ -303,7 +303,7 @@
 			<div
 				class="drop-area statemachine-demo ui-widget-content ui-state-default"></div>
 		</div>
-		<button class="btn btn-primary" id="exportId">Export</button>
+		<button class="btn btn-primary" id="exportId" style="background:#7D110C;border:2px solid black">Export</button>
 	</div>
 </body>
 </html>

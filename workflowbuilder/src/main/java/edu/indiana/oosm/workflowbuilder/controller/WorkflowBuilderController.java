@@ -63,21 +63,21 @@ public class WorkflowBuilderController{
 		items[i] = items[j];
 		items[j] = temp;
 	}
-//	Function to re order the routePath
-//	1. Find the line of "<routePath>" tag line and "</routePath>" tag line and 
-//	name them as start and end
-//	2. Find the last line of the path in findLastNode function and 
-//	swap it with the current last line
-//	3. Recurse though each line in reverse order
-//		in each line find the node name and find the name in nextNode field of other line
-//		whichever line is found, should be swapped with previous line of the current line
-	
+	//	Function to re order the routePath
+	//	1. Find the line of "<routePath>" tag line and "</routePath>" tag line and 
+	//	name them as start and end
+	//	2. Find the last line of the path in findLastNode function and 
+	//	swap it with the current last line
+	//	3. Recurse though each line in reverse order
+	//		in each line find the node name and find the name in nextNode field of other line
+	//		whichever line is found, should be swapped with previous line of the current line
+
 	private String reorderingRoutePath(String xml){
 		String finalXml = "";
 		String[] items  = xml.split("\\n");
 		int routePathEnd = 0;
 		int routePathStart = 0;
-		
+
 		for(int k=0;k<items.length;k++) {
 			if(items[k].contains("</routePath>")){
 				routePathEnd = k;
@@ -86,23 +86,25 @@ public class WorkflowBuilderController{
 				routePathStart = k;
 			}
 		}
-		findLastNode(items,routePathStart+1,routePathEnd-1);
-		swap(items, lastLine, routePathEnd-1);
-		for(int i=routePathEnd-1;i>routePathStart;i--){
-			String[] words = items[i].split("\\s");
-			for(String word : words) {
-				if(word.startsWith("name")) {
-					String node = word.substring(word.indexOf('=')+2);
-					if(node.contains("/>")){
-						node = node.substring(0,node.indexOf("/")-1);
-					} else {
-						node = node.substring(0,node.length()-1);
-					}
-					for(int j=i-1;j>routePathStart;j--) {
-						String nextNode = "nextNode=\""+node+"\"";
-						if(items[j].contains(nextNode)) {
-							swap(items,i-1,j);
-							break;
+		if(!(routePathStart == 0)){
+			findLastNode(items,routePathStart+1,routePathEnd-1);
+			swap(items, lastLine, routePathEnd-1);
+			for(int i=routePathEnd-1;i>routePathStart;i--){
+				String[] words = items[i].split("\\s");
+				for(String word : words) {
+					if(word.startsWith("name")) {
+						String node = word.substring(word.indexOf('=')+2);
+						if(node.contains("/>")){
+							node = node.substring(0,node.indexOf("/")-1);
+						} else {
+							node = node.substring(0,node.length()-1);
+						}
+						for(int j=i-1;j>routePathStart;j--) {
+							String nextNode = "nextNode=\""+node+"\"";
+							if(items[j].contains(nextNode)) {
+								swap(items,i-1,j);
+								break;
+							}
 						}
 					}
 				}

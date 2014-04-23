@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlValue;
 public class Group {
 	private String nameSpace;
 	private String value;
-	@XmlAttribute
+	@XmlAttribute(name="namespace")
 	public String getNameSpace() {
 		return nameSpace;
 	}

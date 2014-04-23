@@ -17,7 +17,7 @@ var nodesConfiguration = {
 			"mandatoryRoute" : {
 				"label" : "Mandatory Route",
 				"type" : "radio",
-				"options" : [ "True", "False" ],
+				"options" : [ "true", "false" ],
 				"helpText" : "Define the mandatory Route"
 			},
 			"activationType" : {
@@ -29,7 +29,7 @@ var nodesConfiguration = {
 			"finalApproval" : {
 				"label" : "Final Approval",
 				"type" : "radio",
-				"options" : [ "True", "False" ],
+				"options" : [ "true", "false" ],
 				"helpText" : "Define the final approval"
 			}
 
@@ -58,7 +58,7 @@ var nodesConfiguration = {
 			"mandatoryRoute" : {
 				"label" : "Mandatory Route",
 				"type" : "radio",
-				"options" : [ "True", "False" ],
+				"options" : [ "true", "false" ],
 				"helpText" : "Define the mandatory route"
 			},
 			"ruleTemplate" : {
@@ -70,7 +70,7 @@ var nodesConfiguration = {
 			"finalApproval" : {
 				"label" : "Final Approval",
 				"type" : "radio",
-				"options" : [ "True", "False" ],
+				"options" : [ "true", "false" ],
 				"helpText" : "Define the final approval"
 			}
 
@@ -309,14 +309,14 @@ var nodesConfiguration = {
 				"label_value":"Policy Flag",
 				"type" : "selectRadio",
 				"selectOptions" : [ "DEFAULT_APPROVE", "DEFAULT_REQUEST" ],
-				"radioOptions" : [ "True", "False" ],
+				"radioOptions" : [ "true", "false" ],
 				"helpText" : "Select the policies and its flag for the workspace"
 			},
 			"active" : {
 
 					"label" : "Active",
 					"type" : "radio",
-					"options" : [ "True", "False" ],
+					"options" : [ "true", "false" ],
 					"helpText" : "Define the active field for the workspace"
 
 			},

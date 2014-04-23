@@ -113,7 +113,7 @@ public class DocumentType{
 	public void setSuperUserGroup(Group superUserGroup) {
 		this.superUserGroup = superUserGroup;
 	}
-	@XmlElement(name="repeatingGroupName")
+	@XmlElement(name="reportingGroupName")
 	public Group getReportingGroup() {
 		return reportingGroup;
 	}

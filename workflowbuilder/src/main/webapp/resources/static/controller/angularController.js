@@ -446,7 +446,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	$scope.properties = $scope.component.properties;
 	var configureKey = "configure";
 	$scope.policies = [];
-
+	
 	//Check, whether the data is already present in the system
 	//if so, please update those values through two way binding of angular
 	//else check if it has any default values display those else leave those field blank
@@ -470,11 +470,35 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, localParameter) {
 	//On click of save, this function will called and it returns with 
 	//updated/new dataStorage field
 	$scope.save = function () {
+		var gflag=true;
 		if(image == configureKey){
 			deleteSavedPolicyData();
+			gflag=checkForGroupFields();
 			$scope.dataStorage["policies"]=$scope.policies;
 		}
-		$modalInstance.close($scope.dataStorage);
+		if(gflag)
+			$modalInstance.close($scope.dataStorage);
+		else
+			bootbox.alert("Configuration cannot be saved: Please fill both group name and namespace fields");
+	};
+	
+	var checkForGroupFields = function(){
+		
+		if($scope.dataStorage["Default Exception Group Name Space"] || $scope.dataStorage["Default Exception Group"]){
+			if(!($scope.dataStorage["Default Exception Group Name Space"] && $scope.dataStorage["Default Exception Group"]))
+				return false;
+		}
+		
+		if($scope.dataStorage["Reporting Group Name Space"] || $scope.dataStorage["Reporting Group"]){
+			if(!($scope.dataStorage["Reporting Group Name Space"] && $scope.dataStorage["Reporting Group"]))
+				return false;
+		}
+		
+		if($scope.dataStorage["Super User Group Name Space"] || $scope.dataStorage["Super User Group"]){
+			if(!($scope.dataStorage["Super User Group Name Space"] && $scope.dataStorage["Super User Group"]))
+				return false;
+		}
+		return true;		
 	};
 
 	var deleteSavedPolicyData = function(){

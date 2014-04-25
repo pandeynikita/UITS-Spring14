@@ -2,7 +2,6 @@ var nodeConfigurationNotAddedError = "Error:Please define nodes configuration on
 
 var nodesConfiguration = {
 	"circle" : {
-		"name" : "requests",
 		"image" : "circle",
 		"header" : "Action Configuration",
 		"properties" : {
@@ -36,7 +35,6 @@ var nodesConfiguration = {
 		}
 	},
 	"rectangle" : {
-		"name" : "requests",
 		"image" : "rectangle",
 		"header" : "Action Configuration",
 		"properties" : {
@@ -77,7 +75,6 @@ var nodesConfiguration = {
 		}
 	},
 	"square" : {
-		"name" : "requests",
 		"image" : "square",
 		"header" : "Test.Submission.Email",
 		"properties" : {
@@ -92,35 +89,30 @@ var nodesConfiguration = {
 			"from" : {
 				"label" : "From",
 				"type" : "text",
-				"defaultVal" : "jawbenne@iu.edu",
 				"edit" : "Yes",
 				"helpText" : "Define the senders email address"
 			},
 			"to" : {
 				"label" : "To",
 				"type" : "text",
-				"defaultVal" : "pacharya@indiana.edu",
 				"edit" : "Yes",
 				"helpText" : "Define the recipients email address"
 			},
 			"testAddress" : {
 				"label" : "Test Address",
 				"type" : "text",
-				"defaultVal" : "jawbenne@iu.edu",
 				"edit" : "Yes",
 				"helpText" : "Define the test email address"
 			},
 			"style" : {
 				"label" : "Style",
 				"type" : "text",
-				"defaultVal" : "Test.Admin.Approval.Email",
 				"edit" : "Yes",
 				"helpText" : "Define the style"
 			},
 			"type" : {
 				"label" : "Type",
 				"type" : "text",
-				"defaultVal" : "org.kuali.rice.kew.mail.EmailNode",
 				"edit" : "No",
 				"helpText" : "Defines the type"
 			}
@@ -128,7 +120,6 @@ var nodesConfiguration = {
 	},
 
 	"oval" : {
-		"name" : "requests",
 		"image" : "oval",
 		"header" : "Simple Node",
 		"properties" : {
@@ -140,38 +131,9 @@ var nodesConfiguration = {
 				"message" : "Name is required.",
 				"helpText" : "Define the name"
 			},
-			"from" : {
-				"label" : "From",
-				"type" : "text",
-				"defaultVal" : "jawbenne@iu.edu",
-				"edit" : "Yes",
-				"helpText" : "Define the senders email address"
-			},
-			"to" : {
-				"label" : "To",
-				"type" : "text",
-				"defaultVal" : "npandey@indiana.edu",
-				"edit" : "Yes",
-				"helpText" : "Define the recipients email address"
-			},
-			"testAddress" : {
-				"label" : "Test Address",
-				"type" : "text",
-				"defaultVal" : "jawbenne@iu.edu",
-				"edit" : "Yes",
-				"helpText" : "Define the test email address"
-			},
-			"style" : {
-				"label" : "Style",
-				"type" : "text",
-				"defaultVal" : "Test.Admin.Approval.Email",
-				"edit" : "Yes",
-				"helpText" : "Define the style"
-			},
 			"type" : {
 				"label" : "Type",
 				"type" : "text",
-				"defaultVal" : "org.kuali.rice.kew.mail.EmailNode",
 				"edit" : "Yes",
 				"helpText" : "Define the type"
 			}
@@ -179,7 +141,6 @@ var nodesConfiguration = {
 	},
 
 	"rectangleCoral" : {
-		"name" : "requests",
 		"image" : "rectangleCoral",
 		"header" : "Role Based Routing",
 		"properties" : {
@@ -208,7 +169,6 @@ var nodesConfiguration = {
 		}
 	},
 	"ovalMagenta" : {
-		"name" : "requests",
 		"image" : "ovalMagenta",
 		"header" : "NoOp",
 		"properties" : {

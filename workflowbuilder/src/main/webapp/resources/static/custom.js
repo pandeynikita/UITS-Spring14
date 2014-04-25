@@ -228,6 +228,8 @@ $(function() {
 									delete routePath[c.sourceId];
 								});
 
+						//Each component is checked on click if it has the 'deleteNode' attached to it
+						//The node is marked for deletion in the below function
 						$(newDiv).bind("click", function() {
 							if ($(this).hasClass("deleteNode")) {
 								$(this).removeClass("deleteNode");
@@ -235,6 +237,9 @@ $(function() {
 								$(this).addClass("deleteNode");
 
 						});
+						
+						//Checks for the key event after a node is marked for deletion
+						//If the key pressed is the "Delete" button, then the node is removed from the Editor area
 						$(document)
 						.on(
 								"keyup",
@@ -251,7 +256,7 @@ $(function() {
 										});	
 										
 										
-										
+										// Removing the node which has the css class : 'deleteNode'  
 										$('.deleteNode').each(function() {
 
 													var currentElement = $(this);
@@ -287,7 +292,9 @@ $(function() {
 										"deleteNode");
 									}
 								});
-
+						
+						// Removes the "marked for deletion" color for a node 
+						//clicking anywhere on the document removes the red color styling from the node marked for deletion
 						$(document)
 						.mouseup(
 								function(e) {

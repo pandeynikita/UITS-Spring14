@@ -25,8 +25,8 @@
 <script type="text/javascript"
 	src="./resources/static/angular-route.min.js"></script>
 <script type="text/javascript"
-	src="./resources/static/controller/angularController.js"></script>
-<script type="text/javascript" src="./resources/static/configuration.js"></script>
+	src="./resources/customJS/controller/angularController.js"></script>
+<script type="text/javascript" src="./resources/customJS/configuration.js"></script>
 <script type="text/javascript"
 	src="./resources/static/jquery.jsPlumb-1.5.5-min.js"></script>
 <script type="text/javascript" src="./resources/static/demo-jquery.js"></script>
@@ -35,7 +35,7 @@
 <script type="text/javascript"
 	src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
 <script type="text/javascript" src="./resources/static/bootbox.js"></script>
-<script type="text/javascript" src="./resources/static/custom.js"></script>
+<script type="text/javascript" src="./resources/customJS/jsPlumbImpl.js"></script>
 <link rel="stylesheet" type="text/css" href="./resources/css/demo.css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.css">

@@ -29,8 +29,6 @@
 <script type="text/javascript" src="./resources/customJS/configuration.js"></script>
 <script type="text/javascript"
 	src="./resources/static/jquery.jsPlumb-1.5.5-min.js"></script>
-<script type="text/javascript" src="./resources/static/demo-jquery.js"></script>
-<script type="text/javascript" src="./resources/static/demo-list.js"></script>
 <script type="text/javascript" src="./resources/static/bootstrap.js"></script>
 <script type="text/javascript"
 	src="./resources/static/ui-bootstrap-tpls-0.10.0.min.js"></script>
@@ -39,7 +37,7 @@
 <link rel="stylesheet" type="text/css" href="./resources/css/demo.css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
+<link rel="stylesheet" type="text/css" href="./resources/css/workFlowBuilder.css">
 
 </head>
 <body>

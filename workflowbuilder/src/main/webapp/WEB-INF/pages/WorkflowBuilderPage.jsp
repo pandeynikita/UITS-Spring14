@@ -4,7 +4,7 @@
 <meta charset="utf-8" name="viewport"
 	content="width=device-width, initial-scale=1.0">
 <title>Workflow Editor</title>
-<script type="text/javascript" src="./resources/static/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="./resources/static/jquery-1.10.2.min.js"></script>
 <script type="text/javascript"
 	src="./resources/static/jquery.ui.position.js"></script>
 <script type="text/javascript"

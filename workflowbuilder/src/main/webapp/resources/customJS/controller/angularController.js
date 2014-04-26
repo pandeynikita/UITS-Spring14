@@ -12,6 +12,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 //	Need to be stored in a seperate file and assign it to this variable
 	$scope.nodes = null;
 	var configureKey = "configure";
+	$scope.nodesConfig=nodesConfiguration;
 
 //	Error messages:
 	var configurationMissingError		= "ERROR: We cant export workflow as configuration of your workflow node are missing, Please add configuration for all dropped nodes and try again";

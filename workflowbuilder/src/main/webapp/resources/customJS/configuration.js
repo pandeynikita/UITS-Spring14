@@ -4,6 +4,7 @@ var nodesConfiguration = {
 	"circle" : {
 		"image" : "circle",
 		"header" : "Action Configuration",
+		"helpText" :"The Start node can have only one outgoing connection. This node is the initiator node",
 		"properties" : {
 			"name" : {
 				"label" : "Name*",
@@ -37,6 +38,7 @@ var nodesConfiguration = {
 	"rectangle" : {
 		"image" : "rectangle",
 		"header" : "Action Configuration",
+		"helpText":"The Request node can have one incoming connection and one outgoing connection. This node contains the mandatory route and the target final approval",
 		"properties" : {
 			"name" : {
 				"label" : "Name*",
@@ -46,7 +48,6 @@ var nodesConfiguration = {
 				"message" : "Name is required.",
 				"helpText" : "Define the name"
 			},
-
 			"activationType" : {
 				"label" : "Activation Type",
 				"type" : "select",
@@ -77,6 +78,7 @@ var nodesConfiguration = {
 	"square" : {
 		"image" : "square",
 		"header" : "Test.Submission.Email",
+		"helpText":"The Email node can have one incoming connection and one outgoing connection. This node contains the source and the target email address",
 		"properties" : {
 			"name" : {
 				"label" : "Name*",
@@ -122,6 +124,7 @@ var nodesConfiguration = {
 	"oval" : {
 		"image" : "oval",
 		"header" : "Simple Node",
+		"helpText":"The Simple node can have one incoming connection and one outgoing connection. This node contains the mandatory route and the target final approval",
 		"properties" : {
 			"name" : {
 				"label" : "Name*",
@@ -143,6 +146,7 @@ var nodesConfiguration = {
 	"rectangleCoral" : {
 		"image" : "rectangleCoral",
 		"header" : "Role Based Routing",
+		"helpText":"The Role node can have one incoming connection and one outgoing connection. This node contains the type and style",
 		"properties" : {
 			"name" : {
 				"label" : "Name*",
@@ -171,6 +175,7 @@ var nodesConfiguration = {
 	"ovalMagenta" : {
 		"image" : "ovalMagenta",
 		"header" : "NoOp",
+		"helpText":"The NoOp node can have one incoming connection and one outgoing connection. This node contains only a name and a type",
 		"properties" : {
 			"name" : {
 				"label" : "Name*",

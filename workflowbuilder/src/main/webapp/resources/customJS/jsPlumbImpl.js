@@ -265,8 +265,8 @@ $(function() {
 													for (var x = 0; x <= source.length; x++) {
 
 														if (deleteId == source[x]) {
-															source[x] = 0;
-															target[x] = 0;
+															source[x] = null;
+															target[x] = null;
 														}
 														if (deleteId == target[x]) {
 															source[x] = null;

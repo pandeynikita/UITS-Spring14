@@ -101,7 +101,7 @@ $(function() {
 						// jQuery draggable for the jsPlumb draggable to work }
 						jsPlumb.draggable("dragged" + counter);
 						//Changing the CSS to indicate the configuration is not filled
-						$(newDiv).css("background","orange");
+						$(newDiv).addClass("orangeBg");
 						var endpointOptions = { // setting the
 								// parameters for the
 								// connectors.

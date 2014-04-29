@@ -120,7 +120,7 @@ var angularModalCtrl = function($scope,$modal,$http){
 			//Called when, save is pressed
 			$scope.jsonData[idOfDiv]= objectNeedToBeStored;
 			//To change the CSS of the dropped nodes after configuration is filled
-			$(document.getElementById(idOfDiv)).css("background","#7D110C");
+			$(document.getElementById(idOfDiv)).addClass("maroonBg");
 			console.log("Modal:Save has been pressed");
 		}, function (string) {
 			//Called when, cancel is pressed

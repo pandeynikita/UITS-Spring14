@@ -165,3 +165,11 @@ margin: 0 auto;
 position: relative;
 float: left;
 }
+
+.orangeBg {
+background: orange;
+}
+
+.maroonBg {
+background : #7D110C;
+}

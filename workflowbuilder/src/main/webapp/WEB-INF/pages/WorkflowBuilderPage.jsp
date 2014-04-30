@@ -215,7 +215,7 @@
 							style="background: #E1D8B7">
 							<h4 class="panel-title">
 								<a class="accordion-toggle"
-									style="text-decoration: none !important;"> Components </a> <i
+									style="text-decoration: none !important;"><b>Components</b></a> <i
 									class="indicator glyphicon glyphicon-chevron-down  pull-right">
 								</i>
 							</h4>
@@ -303,8 +303,10 @@
 			<div
 				class="drop-area statemachine-demo ui-widget-content ui-state-default"></div>
 		</div>
+		<div class="outer">
 		<button class="btn btn-primary" id="exportId"
 			style="background: #7D110C; border: 2px solid black">Export</button>
+		</div>
 	</div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 $(function() {
 
-	var count = counter = flag = fire_check = fire_check_click = save_flag = 0;
-	var i = 0, id_circle = null, source = [], target = [], original = false;
+	var count = counter = flag = fireCheck = fireCheckClick = save_flag = 0;
+	var i = 0, idCircle = null, source = [], target = [], original = false;
 
 	// Get the angular scope for the mentioned controller
 	var _scope = angular.element($('.container')).scope();
@@ -51,8 +51,8 @@ $(function() {
 	});
 	// To Create single instances of cloned object
 	$('.draggable').mousedown(function() {
-		id_circle = getNodeType($(this));
-		if ((flag == 1) && (id_circle == "circle")) {
+		idCircle = getNodeType($(this));
+		if ((flag == 1) && (idCircle == "circle")) {
 			bootbox.alert("Only one Start per Workflow is allowed");
 			exit;
 		}
@@ -142,7 +142,7 @@ $(function() {
 											+ ") reached");
 								}
 						};
-						if (id_circle == "circle") { // ensuring that
+						if (idCircle == "circle") { // ensuring that
 							// the Start
 							// component is
 							// never a
@@ -165,21 +165,21 @@ $(function() {
 								"beforeDrop",
 								function(c) {
 
-									fire_check++;
+									fireCheck++;
 									// To control the firing of
 									// this event
-									if (fire_check == counter) {
+									if (fireCheck == counter) {
 										for (var k = 0; k < source.length; k++) {
 											if (c.sourceId == source[k]) {
 												bootbox.alert("Only one outgoing connection per node is allowed");
-												fire_check = 0;
+												fireCheck = 0;
 												return false;
 											}
 										}
 										for (var k = 0; k < source.length; k++) {
 											if (c.targetId == target[k]) {
 												bootbox.alert("Only one incoming connection per node is allowed");
-												fire_check = 0;
+												fireCheck = 0;
 												return false;
 											}
 										}
@@ -189,7 +189,7 @@ $(function() {
 										var did=c.targetId;
 										routePath[sid]=did;
 										i++;
-										fire_check = 0;
+										fireCheck = 0;
 									}
 									return true;
 								});
@@ -202,15 +202,15 @@ $(function() {
 									// function of a
 									// connector to
 									// detach it
-									fire_check_click++;
+									fireCheckClick++;
 									// To control the firing of
 									// this event
-									if (fire_check_click == counter) {
+									if (fireCheckClick == counter) {
 										for (var k = 0; k < source.length; k++) {
 											if (c.sourceId == source[k]) {
 												source.splice(
 														k, 1);
-												fire_check = 0;
+												fireCheck = 0;
 												break;
 											}
 										}
@@ -218,11 +218,11 @@ $(function() {
 											if (c.targetId == target[k]) {
 												target.splice(
 														k, 1);
-												fire_check = 0;
+												fireCheck = 0;
 												break;
 											}
 										}
-										fire_check_click = 0;
+										fireCheckClick = 0;
 									}
 									jsPlumb.detach(c);
 									delete routePath[c.sourceId];
@@ -333,7 +333,7 @@ $(function() {
 												);
 										}
 								});
-						if (id_circle == "circle")
+						if (idCircle == "circle")
 							flag = 1;	
 					}
 				}
